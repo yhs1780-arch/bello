@@ -23,10 +23,6 @@ if (commitStatus !== 0) {
   run('git', ['commit', '--allow-empty', '-m', commitMsg]);
 }
 
-console.log('\n[2b] Fetch and pull from GitHub...\n');
-run('git', ['fetch', 'origin']);
-run('git', ['pull', 'origin', 'main', '--allow-unrelated-histories', '--no-edit'], { stdio: 'inherit' });
-
 console.log('\n[3/3] Push to GitHub...\n');
 const pushStatus = run('git', ['push', '-u', 'origin', 'main']);
 

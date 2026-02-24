@@ -1,59 +1,66 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageCircle, X, Send, Bot, User } from "lucide-react";
+import { MessageCircle, X, Bot, User } from "lucide-react";
 import { CompanyName } from "./CompanyName";
 
 type Message = { role: "bot" | "user"; text: string };
 
-const GREETING_TEXT = "안녕하세요, 벨로컴퍼니입니다. 무료 매출진단·비용·진행 절차·플랫폼별 견적이 궁금하시면 말씀해 주세요.";
-const BOT_REPLIES: Record<string, string> = {
-  비용: "비용은 플랫폼, 목표 건수, 기간에 따라 맞춤 견적을 드립니다. 대행 수수료 없이 실행 단가만 적용됩니다. 무료 매출진단은 하단 '무료 매출진단 받기' 폼을 이용해 주세요.",
-  "매출진단": "무료 매출진단은 하단 '무료 매출진단 받기' 폼에서 이름·연락처·이메일·업종을 남겨 주시면 담당자가 매출 구조와 개선 포인트를 분석해 연락드립니다.",
-  견적: "맞춤 견적이 필요하시면 페이지 하단 '문의 폼'에서 이름·연락처·이메일·업종·문의 내용을 남겨 주세요. 빠르게 확인 후 연락드리겠습니다.",
-  진행: "진행 절차는 ① 상담 및 목표 설정 → ② 플랫폼·캠페인 기획 → ③ 실사용자 풀 매칭 및 실행 → ④ 주기적 리포팅 및 피드백입니다. 보통 2주 내 착수 가능합니다.",
-  절차: "진행 절차는 ① 상담 및 목표 설정 → ② 플랫폼·캠페인 기획 → ③ 실사용자 풀 매칭 및 실행 → ④ 주기적 리포팅 및 피드백입니다. 보통 2주 내 착수 가능합니다.",
-  문의: "문의하신 내용은 하단 Footer의 문의 폼(이름·연락처·이메일·업종·문의 내용)으로 남겨 주시면 담당자가 확인 후 연락드립니다.",
-  기본: "관련해서는 하단 '문의 폼'에서 구체적인 내용을 남겨 주시면 담당자가 확인 후 맞춤 안내를 드리겠습니다. 비용·진행 절차는 위에서 안내해 드린 내용을 참고해 주세요.",
-};
+const GREETING_TEXT = "안녕하세요, 벨로컴퍼니입니다. 궁금한 점을 아래 버튼에서 선택해 주세요.";
 
-function getReply(input: string): string {
-  const lower = input.replace(/\s/g, "").toLowerCase();
-  if (/매출진단|진단/.test(lower)) return BOT_REPLIES["매출진단"];
-  if (/비용|얼마|가격|단가/.test(lower)) return BOT_REPLIES.비용;
-  if (/견적|quote/.test(lower)) return BOT_REPLIES.견적;
-  if (/진행|절차|과정|스텝/.test(lower)) return BOT_REPLIES.진행;
-  if (/문의|연락|상담/.test(lower)) return BOT_REPLIES.문의;
-  return BOT_REPLIES.기본;
-}
+const FAQ_CHIPS: { label: string; answer: string }[] = [
+  {
+    label: "비용/단가 문의",
+    answer:
+      "비용은 플랫폼(네이버 플레이스, 샤오홍슈, 쿠팡 등), 목표 건수, 기간에 따라 맞춤 견적을 드립니다. 대행 수수료 없이 실행 단가만 적용됩니다. 무료 매출진단은 하단 '무료 컨설팅 신청' 폼을 이용해 주세요.",
+  },
+  {
+    label: "마케팅 진행 절차",
+    answer:
+      "진행 절차는 ① 상담 및 목표 설정 → ② 플랫폼·캠페인 기획 → ③ 실사용자 풀 매칭 및 실행 → ④ 주기적 리포팅 및 피드백입니다. 보통 2주 내 착수 가능합니다.",
+  },
+  {
+    label: "어떤 플랫폼이 가능한가요?",
+    answer:
+      "네이버 플레이스, 바비톡·강남언니·화해, 당근마켓, 샤오홍슈, 카카오맵, 스마트스토어, 쿠팡, 요기요, 에어비앤비, 무신사, 블라인드, 캐치테이블 등 국내외 100+ 매체 로직을 보유하고 있습니다. 업종에 맞는 플랫폼을 제안해 드립니다.",
+  },
+  {
+    label: "계약 기간이 있나요?",
+    answer:
+      "캠페인 목표와 예산에 따라 유연하게 설정 가능합니다. 단기(1~3개월)부터 장기 연간 계약까지 맞춤 제안드리며, 별도 서면 계약 시 구체적인 기간이 정해집니다.",
+  },
+  {
+    label: "어뷰징/블라인드 걱정은 없나요?",
+    answer:
+      "BELLO는 100% 실제 유저 기반으로 실행합니다. 어뷰징(블라인드) 리스크 0%를 원칙으로 하며, 플랫폼 정책에 맞춘 안전한 시딩만 진행합니다.",
+  },
+];
 
 export function Chatbot() {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([{ role: "bot", text: GREETING_TEXT }]);
-  const [input, setInput] = useState("");
   const endRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  useEffect(() => {
-    if (open) setTimeout(() => inputRef.current?.focus(), 300);
-  }, [open]);
-
-  const send = () => {
-    const text = input.trim();
-    if (!text) return;
-    setInput("");
-    setMessages((m) => [...m, { role: "user", text }]);
-    setTimeout(() => {
-      setMessages((m) => [...m, { role: "bot", text: getReply(text) }]);
-    }, 600);
+  const handleOpen = () => {
+    setOpen(true);
   };
 
-  const quickReplies = ["무료 매출진단", "비용 문의", "진행 절차"];
+  const handleClose = () => {
+    setOpen(false);
+    setMessages([{ role: "bot", text: GREETING_TEXT }]);
+  };
+
+  const onChipClick = (label: string, answer: string) => {
+    setMessages((m) => [...m, { role: "user", text: label }]);
+    setTimeout(() => {
+      setMessages((m) => [...m, { role: "bot", text: answer }]);
+    }, 400);
+  };
 
   return (
     <>
@@ -64,7 +71,7 @@ export function Chatbot() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm"
-            onClick={() => setOpen(false)}
+            onClick={handleClose}
           />
         )}
       </AnimatePresence>
@@ -84,15 +91,15 @@ export function Chatbot() {
                   <Bot className="w-5 h-5 text-blue-400" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-white">
-                    <span className="whitespace-nowrap">벨로컴퍼니</span> 상담
+                  <h3 className="font-semibold text-white break-keep">
+                    <span className="whitespace-nowrap"><CompanyName /></span> 상담
                   </h3>
-                  <p className="text-xs text-slate-400">무료 매출진단·비용·견적 문의</p>
+                  <p className="text-xs text-slate-400 break-keep">무료 매출진단·비용·견적 문의</p>
                 </div>
               </div>
               <button
                 type="button"
-                onClick={() => setOpen(false)}
+                onClick={handleClose}
                 className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-colors"
                 aria-label="닫기"
               >
@@ -112,7 +119,7 @@ export function Chatbot() {
                     </div>
                   )}
                   <div
-                    className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-sm ${
+                    className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-sm break-keep ${
                       msg.role === "user"
                         ? "bg-blue-600 text-white rounded-br-md"
                         : "bg-white/10 text-slate-200 rounded-bl-md border border-white/5"
@@ -120,7 +127,7 @@ export function Chatbot() {
                   >
                     {i === 0 && msg.role === "bot" ? (
                       <>
-                        안녕하세요, <CompanyName />입니다. 무료 매출진단·비용·진행 절차·플랫폼별 견적이 궁금하시면 말씀해 주세요.
+                        안녕하세요, <CompanyName />입니다. 궁금한 점을 아래 버튼에서 선택해 주세요.
                       </>
                     ) : (
                       msg.text
@@ -136,54 +143,27 @@ export function Chatbot() {
               <div ref={endRef} />
             </div>
 
-            {messages.length === 1 && (
-              <div className="px-4 pb-2 flex flex-wrap gap-2 shrink-0">
-                {quickReplies.map((label) => (
-                  <button
-                    key={label}
-                    type="button"
-                    onClick={() => {
-                      setInput(label);
-                      inputRef.current?.focus();
-                    }}
-                    className="px-3 py-1.5 rounded-full text-xs font-medium bg-white/10 border border-white/10 text-slate-200 hover:bg-white/15 transition-colors"
-                  >
-                    {label}
-                  </button>
-                ))}
-              </div>
-            )}
-
-            <div className="p-4 border-t border-white/10 shrink-0 space-y-2">
+            <div className="px-4 pb-4 pt-2 border-t border-white/10 shrink-0 flex flex-wrap gap-2">
+              {FAQ_CHIPS.map(({ label, answer }) => (
+                <button
+                  key={label}
+                  type="button"
+                  onClick={() => onChipClick(label, answer)}
+                  className="px-3 py-2 rounded-full text-xs font-medium bg-white/10 border border-white/10 text-slate-200 hover:bg-white/15 hover:border-white/20 transition-colors break-keep"
+                >
+                  {label}
+                </button>
+              ))}
               <a
-                href="#footer"
+                href="#consulting-form"
                 onClick={() => {
                   setOpen(false);
-                  setTimeout(() => document.getElementById("footer")?.scrollIntoView({ behavior: "smooth" }), 100);
+                  setTimeout(() => document.getElementById("consulting-form")?.scrollIntoView({ behavior: "smooth" }), 100);
                 }}
-                className="block text-center py-1.5 text-xs text-blue-400 hover:text-blue-300 transition-colors"
+                className="w-full mt-2 block text-center py-2 text-xs text-blue-400 hover:text-blue-300 transition-colors break-keep"
               >
                 문의 폼에서 상세 문의하기
               </a>
-              <div className="flex gap-2">
-              <input
-                ref={inputRef}
-                type="text"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && send()}
-                placeholder="메시지를 입력하세요"
-                className="flex-1 px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 text-sm"
-              />
-              <button
-                type="button"
-                onClick={send}
-                className="p-3 rounded-xl bg-blue-600 text-white hover:bg-blue-500 transition-colors shrink-0"
-                aria-label="전송"
-              >
-                <Send className="w-5 h-5" />
-              </button>
-              </div>
             </div>
           </motion.div>
         )}
@@ -191,7 +171,7 @@ export function Chatbot() {
 
       <motion.button
         type="button"
-        onClick={() => setOpen(!open)}
+        onClick={handleOpen}
         className="fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-blue-600 to-purple-600 text-white shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 transition-shadow"
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.98 }}

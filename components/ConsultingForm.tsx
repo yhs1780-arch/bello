@@ -4,10 +4,12 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Send, Loader2, CheckCircle } from "lucide-react";
 
-const PRIVACY_TEXT = `개인정보 수집·이용 목적: 무료 컨설팅 신청 및 상담 응대
-수집 항목: 이름, 연락처, 이메일(선택), 업체명(선택), 문의 내용
-보유·이용 기간: 상담 완료 후 1년 (관련 법령에 따라 보관 시 해당 기간)
-동의를 거부할 수 있으며, 거부 시 서비스 이용이 제한됩니다.`;
+const PRIVACY_TEXT = `개인정보 수집 및 이용 동의
+
+1. 수집 및 이용 목적: 무료 컨설팅 신청 확인, 마케팅 진단 결과 안내, 서비스 제안 및 상담 응대
+2. 수집 항목: 이름, 연락처, 이메일(선택), 업체명(선택), 문의 내용
+3. 보유 및 이용 기간: 상담 완료 후 1년 보관 (단, 관련 법령에 따라 보관이 필요한 경우 해당 기간까지)
+4. 동의 거부권: 귀하는 개인정보 수집 및 이용에 동의를 거부할 권리가 있습니다. 단, 거부 시 무료 진단 및 상담 서비스 이용이 제한될 수 있습니다.`;
 
 export function ConsultingForm() {
   const [formData, setFormData] = useState({

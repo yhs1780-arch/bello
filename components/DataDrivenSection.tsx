@@ -53,7 +53,7 @@ export function DataDrivenSection() {
   const handleDragEnd = useCallback(() => setIsDragging(false), []);
 
   return (
-    <section className="relative py-24 lg:py-32 bg-slate-950 overflow-hidden">
+    <section className="relative py-24 lg:py-32 bg-slate-950">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal className="text-center mb-14">
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-100 mb-4 break-keep">
@@ -69,8 +69,11 @@ export function DataDrivenSection() {
         <ScrollReveal>
           <div
             ref={scrollRef}
-            className="flex gap-6 overflow-x-auto pb-6 scrollbar-hide snap-x snap-mandatory cursor-grab active:cursor-grabbing"
-            style={{ paddingLeft: "max(1rem, env(safe-area-inset-left))", paddingRight: "max(1rem, env(safe-area-inset-right))" }}
+            className="flex flex-nowrap gap-6 overflow-x-auto overflow-y-visible pb-6 scrollbar-hide snap-x snap-mandatory cursor-grab active:cursor-grabbing"
+            style={{
+              paddingLeft: "max(1rem, env(safe-area-inset-left))",
+              paddingRight: "max(1rem, env(safe-area-inset-right))",
+            }}
             onMouseDown={() => setIsDragging(true)}
             onMouseUp={handleDragEnd}
             onMouseLeave={handleDragEnd}
@@ -81,6 +84,7 @@ export function DataDrivenSection() {
                 <Card key={`${copyIdx}-${card.title}-${i}`} card={card} index={copyIdx * successCards.length + i} />
               ))
             )}
+            <div className="shrink-0 w-4" aria-hidden />
           </div>
           <div className="flex justify-center mt-10">
             <Link
