@@ -23,6 +23,9 @@ if (commitStatus !== 0) {
   run('git', ['commit', '--allow-empty', '-m', commitMsg]);
 }
 
+console.log('\n[2b] Pull from GitHub (merge unrelated histories if needed)...\n');
+run('git', ['pull', 'origin', 'main', '--allow-unrelated-histories', '-m', 'Merge remote bello into local BELLO homepage'], { stdio: 'inherit' });
+
 console.log('\n[3/3] Push to GitHub...\n');
 const pushStatus = run('git', ['push', '-u', 'origin', 'main']);
 
