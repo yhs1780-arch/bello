@@ -4,6 +4,8 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Send, Loader2, CheckCircle } from "lucide-react";
 
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/mqedwqlj";
+
 const PRIVACY_TEXT = `개인정보 수집 및 이용 동의
 
 1. 수집 및 이용 목적: 무료 컨설팅 신청 확인, 마케팅 진단 결과 안내, 서비스 제안 및 상담 응대
@@ -23,31 +25,41 @@ export function ConsultingForm() {
   const [privacyModalOpen, setPrivacyModalOpen] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [toast, setToast] = useState<"success" | null>(null);
+  const [toast, setToast] = useState<"success" | "error" | null>(null);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!privacyAgree) return;
     setSubmitting(true);
+    setToast(null);
     try {
-      const res = await fetch("/api/contact", {
+      const fd = new FormData();
+      fd.append("이름", formData.name);
+      fd.append("연락처", formData.contact);
+      fd.append("이메일", formData.email);
+      fd.append("업체명", formData.company);
+      fd.append("문의내용", formData.concern);
+      fd.append("개인정보동의", privacyAgree ? "동의함" : "");
+
+      const res = await fetch(FORMSPREE_ENDPOINT, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: fd,
+        headers: { Accept: "application/json" },
       });
-      const data = await res.json();
-      if (data.ok) {
+
+      if (res.ok) {
         setSubmitted(true);
         setFormData({ name: "", contact: "", email: "", company: "", concern: "" });
         setPrivacyAgree(false);
         setToast("success");
-        setTimeout(() => setToast(null), 4000);
+        setTimeout(() => setToast(null), 5000);
       } else {
-        setToast(null);
-        alert("전송에 실패했습니다. 잠시 후 다시 시도해 주세요.");
+        setToast("error");
+        setTimeout(() => setToast(null), 5000);
       }
     } catch {
-      alert("네트워크 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
+      setToast("error");
+      setTimeout(() => setToast(null), 5000);
     } finally {
       setSubmitting(false);
     }
@@ -81,6 +93,7 @@ export function ConsultingForm() {
                   </label>
                   <input
                     type="text"
+                    name="이름"
                     required
                     value={formData.name}
                     onChange={(e) => setFormData((p) => ({ ...p, name: e.target.value }))}
@@ -94,6 +107,7 @@ export function ConsultingForm() {
                   </label>
                   <input
                     type="tel"
+                    name="연락처"
                     required
                     value={formData.contact}
                     onChange={(e) => setFormData((p) => ({ ...p, contact: e.target.value }))}
@@ -105,6 +119,7 @@ export function ConsultingForm() {
                   <label className="block text-xs font-medium text-slate-400 mb-1.5 break-keep">이메일 (선택)</label>
                   <input
                     type="email"
+                    name="이메일"
                     value={formData.email}
                     onChange={(e) => setFormData((p) => ({ ...p, email: e.target.value }))}
                     className="w-full px-4 py-3.5 rounded-xl bg-white/5 border border-white/10 text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition break-keep"
@@ -115,6 +130,7 @@ export function ConsultingForm() {
                   <label className="block text-xs font-medium text-slate-400 mb-1.5 break-keep">업체명 (선택)</label>
                   <input
                     type="text"
+                    name="업체명"
                     value={formData.company}
                     onChange={(e) => setFormData((p) => ({ ...p, company: e.target.value }))}
                     className="w-full px-4 py-3.5 rounded-xl bg-white/5 border border-white/10 text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition break-keep"
@@ -126,6 +142,7 @@ export function ConsultingForm() {
                     현재 가장 고민이신 점
                   </label>
                   <textarea
+                    name="문의내용"
                     rows={4}
                     value={formData.concern}
                     onChange={(e) => setFormData((p) => ({ ...p, concern: e.target.value }))}
@@ -138,6 +155,7 @@ export function ConsultingForm() {
                   <input
                     type="checkbox"
                     id="privacy"
+                    name="개인정보동의"
                     checked={privacyAgree}
                     onChange={(e) => setPrivacyAgree(e.target.checked)}
                     className="mt-1 w-4 h-4 rounded border-white/20 bg-white/5 text-blue-500 focus:ring-blue-500/50"
@@ -161,13 +179,13 @@ export function ConsultingForm() {
                 >
                   {submitting ? (
                     <>
-                      <Loader2 className="w-5 h-5 animate-spin" />
-                      접수 중...
+                      <Loader2 className="w-5 h-5 animate-spin shrink-0" />
+                      전송 중...
                     </>
                   ) : (
                     <>
-                      문의하기
-                      <Send className="w-5 h-5" />
+                      무료 진단 신청하기
+                      <Send className="w-5 h-5 shrink-0" />
                     </>
                   )}
                 </button>
@@ -213,11 +231,23 @@ export function ConsultingForm() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
-            className="fixed bottom-24 left-4 right-4 sm:left-auto sm:right-6 sm:max-w-sm z-50 flex items-center gap-3 glass-strong rounded-xl border border-white/10 p-4 shadow-xl"
+            className="fixed top-1/2 left-4 right-4 sm:left-1/2 sm:right-auto sm:-translate-x-1/2 sm:max-w-sm z-50 flex items-center gap-3 glass-strong rounded-xl border border-white/10 p-4 shadow-xl -translate-y-1/2"
           >
             <CheckCircle className="w-6 h-6 text-green-400 shrink-0" />
             <p className="text-sm font-medium text-slate-100 break-keep">
-              성공적으로 접수되었습니다. 담당자가 곧 연락드리겠습니다.
+              성공적으로 접수되었습니다. 담당자가 빠르게 연락드리겠습니다.
+            </p>
+          </motion.div>
+        )}
+        {toast === "error" && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+            className="fixed top-1/2 left-4 right-4 sm:left-1/2 sm:right-auto sm:-translate-x-1/2 sm:max-w-sm z-50 flex items-center gap-3 glass-strong rounded-xl border border-red-500/30 bg-red-950/30 p-4 shadow-xl -translate-y-1/2"
+          >
+            <p className="text-sm font-medium text-red-200 break-keep">
+              앗! 전송에 실패했습니다. 잠시 후 다시 시도해 주세요.
             </p>
           </motion.div>
         )}

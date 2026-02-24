@@ -7,8 +7,6 @@ import { ScrollReveal } from "./ScrollReveal";
 import { successCards } from "@/lib/data";
 import { Plus } from "lucide-react";
 
-const CARD_WIDTH = 320;
-const GAP = 24;
 const DUPLICATE = 2;
 
 function Card({
@@ -23,8 +21,7 @@ function Card({
     <motion.article
       onHoverStart={() => setHover(true)}
       onHoverEnd={() => setHover(false)}
-      className="shrink-0 snap-center"
-      style={{ width: CARD_WIDTH }}
+      className="shrink-0 snap-center w-[85vw] min-w-[280px] md:w-[350px] md:min-w-[350px]"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -65,27 +62,34 @@ export function DataDrivenSection() {
             실제 매출·노출 데이터 기반 성공 사례입니다.
           </p>
         </ScrollReveal>
+      </div>
 
+      <div
+        ref={scrollRef}
+        className="w-full overflow-x-auto overflow-y-visible scrollbar-hide snap-x snap-mandatory cursor-grab active:cursor-grabbing"
+        onMouseDown={() => setIsDragging(true)}
+        onMouseUp={handleDragEnd}
+        onMouseLeave={handleDragEnd}
+        onTouchEnd={handleDragEnd}
+      >
+        <div
+          className="flex flex-nowrap gap-6 pb-6"
+          style={{
+            paddingLeft: "max(1rem, env(safe-area-inset-left))",
+            paddingRight: "max(1rem, env(safe-area-inset-right))",
+          }}
+        >
+          {Array.from({ length: DUPLICATE }).map((_, copyIdx) =>
+            successCards.map((card, i) => (
+              <Card key={`${copyIdx}-${card.title}-${i}`} card={card} index={copyIdx * successCards.length + i} />
+            ))
+          )}
+          <div className="w-4 md:w-8 shrink-0" aria-hidden />
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
-          <div
-            ref={scrollRef}
-            className="flex flex-nowrap gap-6 overflow-x-auto overflow-y-visible pb-6 scrollbar-hide snap-x snap-mandatory cursor-grab active:cursor-grabbing"
-            style={{
-              paddingLeft: "max(1rem, env(safe-area-inset-left))",
-              paddingRight: "max(1rem, env(safe-area-inset-right))",
-            }}
-            onMouseDown={() => setIsDragging(true)}
-            onMouseUp={handleDragEnd}
-            onMouseLeave={handleDragEnd}
-            onTouchEnd={handleDragEnd}
-          >
-            {Array.from({ length: DUPLICATE }).map((_, copyIdx) =>
-              successCards.map((card, i) => (
-                <Card key={`${copyIdx}-${card.title}-${i}`} card={card} index={copyIdx * successCards.length + i} />
-              ))
-            )}
-            <div className="shrink-0 w-4" aria-hidden />
-          </div>
           <div className="flex justify-center mt-10">
             <Link
               href="/cases"
