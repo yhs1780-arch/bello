@@ -1,0 +1,87 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-sans: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-heading: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --bg-primary: #020617;
+  --bg-secondary: #0f172a;
+  --text-primary: #f8fafc;
+  --text-muted: #94a3b8;
+  --bello-blue: #3b82f6;
+  --bello-purple: #8b5cf6;
+  --glass: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  @apply antialiased;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+p,
+h1, h2, h3, h4, h5, h6,
+label, button, span {
+  word-break: keep-all;
+}
+
+/* Mesh gradient: 벨로 블루 + 퍼플 입체감 */
+.bg-mesh {
+  background-color: #020617;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(59, 130, 246, 0.18), transparent 50%),
+    radial-gradient(ellipse 60% 40% at 85% 60%, rgba(139, 92, 246, 0.12), transparent 45%),
+    radial-gradient(ellipse 50% 30% at 15% 80%, rgba(59, 130, 246, 0.08), transparent 40%);
+}
+
+/* Glassmorphism: 공중에 떠 있는 유리 */
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+.glass-strong {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+/* 카드/버튼 호버: 살짝 떠오름 + 글로우 */
+.hover-lift {
+  @apply transition-all duration-300;
+}
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -15px rgba(59, 130, 246, 0.25);
+}
+
+/* CTA 버튼 빛나는 애니메이션 */
+@keyframes shine {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+.cta-shine {
+  background: linear-gradient(90deg, #3b82f6 0%, #60a5fa 25%, #a78bfa 50%, #60a5fa 75%, #3b82f6 100%);
+  background-size: 200% auto;
+  animation: shine 4s linear infinite;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
