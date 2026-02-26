@@ -50,14 +50,15 @@ export function DataDrivenSection() {
   const handleDragEnd = useCallback(() => setIsDragging(false), []);
 
   return (
-    <section className="relative py-24 lg:py-32 bg-slate-950">
+    <section className="relative py-16 sm:py-20 lg:py-32 bg-slate-950">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <ScrollReveal className="text-center mb-14">
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-100 mb-4 break-keep">
+        <ScrollReveal className="text-center mb-8 sm:mb-14">
+          <h2 className="text-xl sm:text-2xl lg:text-4xl font-bold text-slate-100 mb-3 sm:mb-4 break-keep">
             Data-Driven Success
           </h2>
-          <p className="text-slate-400 text-base lg:text-lg max-w-2xl mx-auto leading-relaxed break-keep">
+          <p className="text-slate-400 text-sm sm:text-base lg:text-lg max-w-2xl mx-auto leading-relaxed break-keep">
             말보다 숫자로 보여드립니다.
+            <br className="block md:hidden" />
             <br className="hidden md:block" />
             실제 매출·노출 데이터 기반 성공 사례입니다.
           </p>
@@ -73,7 +74,7 @@ export function DataDrivenSection() {
         onTouchEnd={handleDragEnd}
       >
         <div
-          className="flex flex-nowrap gap-6 pb-6"
+          className="flex flex-nowrap gap-4 sm:gap-6 pb-6"
           style={{
             paddingLeft: "max(1rem, env(safe-area-inset-left))",
             paddingRight: "max(1rem, env(safe-area-inset-right))",
@@ -84,13 +85,13 @@ export function DataDrivenSection() {
               <Card key={`${copyIdx}-${card.title}-${i}`} card={card} index={copyIdx * successCards.length + i} />
             ))
           )}
-          <div className="w-4 md:w-8 shrink-0" aria-hidden />
+          <div className="w-8 md:w-12 shrink-0" aria-hidden />
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
-          <div className="flex justify-center mt-10">
+          <div className="flex justify-center mt-6 sm:mt-10">
             <Link
               href="/cases"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-white/20 text-slate-300 font-medium hover:bg-white/10 hover:text-white transition-all duration-300 break-keep"

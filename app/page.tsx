@@ -19,9 +19,10 @@ export default function HomePage() {
       <DataDrivenSection />
       <HowWeWorkStepper />
       <TestimonialCarousel />
-      <section className="relative py-16 lg:py-20 px-4 sm:px-6 lg:px-8 text-center border-t border-white/5">
-        <p className="text-xl sm:text-2xl font-semibold text-slate-100 break-keep">
+      <section className="relative py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 text-center border-t border-white/5">
+        <p className="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-100 break-keep">
           원장님, 사장님의 진짜 비즈니스 파트너.
+          <br className="block md:hidden" />
           <br className="hidden md:block" />
           BELLO와 함께하시겠습니까?
         </p>
