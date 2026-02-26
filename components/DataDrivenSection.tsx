@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useCallback } from "react";
+import { useRef, useState, useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ScrollReveal } from "./ScrollReveal";
@@ -21,7 +21,7 @@ function Card({
     <motion.article
       onHoverStart={() => setHover(true)}
       onHoverEnd={() => setHover(false)}
-      className="shrink-0 snap-center w-[85vw] min-w-[280px] md:w-[350px] md:min-w-[350px]"
+      className="shrink-0 w-[85vw] min-w-[280px] md:w-[350px] md:min-w-[350px]"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -45,9 +45,26 @@ function Card({
 }
 
 export function DataDrivenSection() {
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [isDragging, setIsDragging] = useState(false);
-  const handleDragEnd = useCallback(() => setIsDragging(false), []);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const innerRef = useRef<HTMLDivElement>(null);
+  const [dragConstraints, setDragConstraints] = useState({ left: 0, right: 0 });
+
+  useEffect(() => {
+    const updateConstraints = () => {
+      const container = containerRef.current;
+      const inner = innerRef.current;
+      if (!container || !inner) return;
+      const viewportWidth = container.offsetWidth;
+      const contentWidth = inner.scrollWidth;
+      const maxDrag = Math.max(0, contentWidth - viewportWidth);
+      setDragConstraints({ left: -maxDrag, right: 0 });
+    };
+
+    updateConstraints();
+    const ro = new ResizeObserver(updateConstraints);
+    if (containerRef.current) ro.observe(containerRef.current);
+    return () => ro.disconnect();
+  }, [successCards.length]);
 
   return (
     <section className="relative py-16 sm:py-20 lg:py-32 bg-slate-950">
@@ -65,16 +82,14 @@ export function DataDrivenSection() {
         </ScrollReveal>
       </div>
 
-      <div
-        ref={scrollRef}
-        className="w-full overflow-x-auto overflow-y-visible scrollbar-hide snap-x snap-mandatory cursor-grab active:cursor-grabbing"
-        onMouseDown={() => setIsDragging(true)}
-        onMouseUp={handleDragEnd}
-        onMouseLeave={handleDragEnd}
-        onTouchEnd={handleDragEnd}
-      >
-        <div
-          className="flex flex-nowrap gap-4 sm:gap-6 pb-6"
+      <div ref={containerRef} className="w-full overflow-hidden cursor-grab active:cursor-grabbing touch-pan-x">
+        <motion.div
+          ref={innerRef}
+          drag="x"
+          dragConstraints={dragConstraints}
+          dragElastic={0.1}
+          dragTransition={{ bounceStiffness: 300, bounceDamping: 30 }}
+          className="flex flex-nowrap gap-4 sm:gap-6 py-2"
           style={{
             paddingLeft: "max(1rem, env(safe-area-inset-left))",
             paddingRight: "max(1rem, env(safe-area-inset-right))",
@@ -86,7 +101,7 @@ export function DataDrivenSection() {
             ))
           )}
           <div className="w-8 md:w-12 shrink-0" aria-hidden />
-        </div>
+        </motion.div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

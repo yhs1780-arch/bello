@@ -9,34 +9,34 @@ import { AnimatedCounter } from "./AnimatedCounter";
 
 const SLIDES = [
   {
-    id: "performance",
-    headline: "압도적 숫자로 증명하는 퍼포먼스",
-    lines: [
-      "월 매출 +6,018만 원 상승 (마곡 한식당)",
-      "최고 매출 경신 (위례 샤브샤브)",
-    ],
-    bg: "bg-[radial-gradient(ellipse_80%_80%_at_50%_50%,rgba(59,130,246,0.12),transparent_60%)]",
-    overlay: "bg-[linear-gradient(180deg,transparent_0%,rgba(2,6,23,0.4)_50%,#020617_100%)]",
+    id: "brand",
+    headline: "빈 테이블을 웨이팅으로 채우는 실행력, BELLO",
+    sub: "프로페셔널한 팀과 함께하는 다이렉트 마케팅",
+    image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1920&q=80",
   },
   {
-    id: "expertise",
-    headline: "플레이스 최적화의 기준, BELLO",
-    lines: [
-      "'체류시간+트래픽+저장하기' 실제 사용자 기반 로직으로",
-      "1페이지 점령.",
-    ],
-    bg: "bg-[radial-gradient(ellipse_70%_70%_at_80%_20%,rgba(139,92,246,0.15),transparent_50%)]",
-    overlay: "bg-[linear-gradient(180deg,transparent_0%,rgba(2,6,23,0.5)_60%,#020617_100%)]",
+    id: "performance",
+    headline: "데이터로 증명하는 우상향 그래프",
+    sub: "실제 매출·노출 데이터 기반 퍼포먼스 마케팅",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1920&q=80",
+  },
+  {
+    id: "local",
+    headline: "우리 동네 1등 매장의 비밀",
+    sub: "네이버 플레이스·지도 1위 노출, 체류시간·저장하기 로직",
+    image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=1920&q=80",
+  },
+  {
+    id: "global",
+    headline: "국경을 넘는 K-뷰티 관광 코스 기획",
+    sub: "샤오홍슈·글로벌 뷰티 앱 시딩",
+    image: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=1920&q=80",
   },
   {
     id: "award",
-    headline: "2024년 고객 만족 브랜드 대상 수상",
-    lines: [
-      "데이터로 입증된 실제 매출 상승 효과,",
-      "업계 1위의 품격",
-    ],
-    bg: "bg-[radial-gradient(ellipse_60%_60%_at_20%_80%,rgba(251,191,36,0.08),transparent_50%),radial-gradient(ellipse_50%_50%_at_80%_80%,rgba(59,130,246,0.1),transparent_50%)]",
-    overlay: "bg-[linear-gradient(180deg,transparent_0%,rgba(2,6,23,0.5)_70%,#020617_100%)]",
+    headline: "업계 1위, 2024 브랜드 대상 수상",
+    sub: "데이터로 입증된 실제 매출 상승 효과",
+    image: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=1920&q=80",
   },
 ];
 
@@ -54,20 +54,22 @@ export function HeroSection() {
 
   return (
     <section className="relative w-full min-h-screen flex flex-col items-center justify-center overflow-hidden pt-20 pb-12">
-      <div className="absolute inset-0 bg-mesh" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(59,130,246,0.06),transparent)] pointer-events-none" />
-
       <AnimatePresence mode="wait" initial={false}>
         <motion.div
           key={SLIDES[index].id}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.5 }}
-          className={`absolute inset-0 ${SLIDES[index].bg}`}
-        />
+          transition={{ duration: 0.6 }}
+          className="absolute inset-0"
+        >
+          <div
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: `url(${SLIDES[index].image})` }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-slate-950" />
+        </motion.div>
       </AnimatePresence>
-      <div className={`absolute inset-0 pointer-events-none ${SLIDES[index].overlay}`} />
 
       <div className="relative z-10 w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <motion.div
@@ -91,13 +93,9 @@ export function HeroSection() {
             <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold leading-tight text-white break-keep">
               {SLIDES[index].headline}
             </h1>
-            <div className="mt-3 sm:mt-4 space-y-1 sm:space-y-2">
-              {SLIDES[index].lines.map((line, i) => (
-                <p key={i} className="text-base sm:text-lg lg:text-xl text-slate-300 break-keep">
-                  {line}
-                </p>
-              ))}
-            </div>
+            <p className="mt-3 sm:mt-4 text-base sm:text-lg lg:text-xl text-slate-300 break-keep">
+              {SLIDES[index].sub}
+            </p>
           </motion.div>
         </AnimatePresence>
 

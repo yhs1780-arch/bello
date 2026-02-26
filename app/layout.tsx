@@ -7,6 +7,7 @@ import { StickyCta } from "@/components/StickyCta";
 import { LiveToast } from "@/components/LiveToast";
 import { AwardPopup } from "@/components/AwardPopup";
 import { FloatingCtaInquiry } from "@/components/FloatingCtaInquiry";
+import { FloatingMenuSolutions } from "@/components/FloatingMenuSolutions";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -29,6 +30,7 @@ export default function RootLayout({
           <Footer />
           <StickyCta />
           <LiveToast />
+          <FloatingMenuSolutions />
           <FloatingCtaInquiry />
           <Chatbot />
           <AwardPopup />

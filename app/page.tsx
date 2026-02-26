@@ -4,6 +4,7 @@ import { HeroSection } from "@/components/HeroSection";
 import { InfiniteMarquee } from "@/components/InfiniteMarquee";
 import { ComparisonTable } from "@/components/ComparisonTable";
 import { DeviceTabSection } from "@/components/DeviceTabSection";
+import { MediaReachSection } from "@/components/MediaReachSection";
 import { DataDrivenSection } from "@/components/DataDrivenSection";
 import { HowWeWorkStepper } from "@/components/HowWeWorkStepper";
 import { TestimonialCarousel } from "@/components/TestimonialCarousel";
@@ -16,6 +17,7 @@ export default function HomePage() {
       <InfiniteMarquee />
       <ComparisonTable />
       <DeviceTabSection />
+      <MediaReachSection />
       <DataDrivenSection />
       <HowWeWorkStepper />
       <TestimonialCarousel />
