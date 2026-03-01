@@ -29,17 +29,17 @@ export function ComparisonTable() {
   const isInView = useInView(ref, { once: true, amount: 0.2 });
 
   return (
-    <section ref={ref} className="relative py-24 lg:py-32 px-4 sm:px-6 lg:px-8 overflow-hidden">
-      <div className="max-w-6xl mx-auto">
+    <section ref={ref} className="relative w-full max-w-full py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 overflow-hidden">
+      <div className="max-w-6xl mx-auto min-w-0">
         {/* [1] 섹션 헤더 */}
         <motion.div
-          className="text-center mb-14"
+          className="text-center mb-10 sm:mb-14"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.5 }}
         >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-5 break-keep">
+          <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-white mb-4 sm:mb-5 break-keep">
             왜 수많은 브랜드가 대행사를 버리고 BELLO를 선택할까요?
           </h2>
           <p className="text-gray-400 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed break-keep">
@@ -48,7 +48,7 @@ export function ComparisonTable() {
         </motion.div>
 
         {/* [2] Split VS 카드 */}
-        <div className="relative flex flex-col lg:flex-row items-stretch gap-6 lg:gap-8">
+        <div className="relative flex flex-col lg:flex-row items-stretch gap-6 lg:gap-8 min-w-0">
           {/* 중앙 VS 뱃지 (PC에서만 카드 사이에) */}
           <div className="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
             <motion.span
@@ -75,9 +75,9 @@ export function ComparisonTable() {
 
           {/* 왼쪽 카드 - 기존 대행사 */}
           <motion.div
-            className="relative flex-1 rounded-2xl border border-gray-800 bg-slate-900/50 p-6 lg:p-8 overflow-hidden"
-            initial={{ opacity: 0, x: -24 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            className="relative flex-1 min-w-0 rounded-2xl border border-gray-800 bg-slate-900/50 p-5 sm:p-6 lg:p-8 overflow-hidden"
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.5 }}
           >
@@ -101,9 +101,9 @@ export function ComparisonTable() {
 
           {/* 오른쪽 카드 - BELLO (스크롤 시 scale-105) */}
           <motion.div
-            className="relative flex-1 rounded-2xl border border-blue-500/50 bg-blue-900/20 p-6 lg:p-8 overflow-hidden shadow-[0_0_30px_rgba(59,130,246,0.3)]"
-            initial={{ opacity: 0, x: 24 }}
-            whileInView={{ opacity: 1, x: 0, scale: 1.05 }}
+            className="relative flex-1 min-w-0 rounded-2xl border border-blue-500/50 bg-blue-900/20 p-5 sm:p-6 lg:p-8 overflow-hidden shadow-[0_0_30px_rgba(59,130,246,0.3)]"
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.5 }}
           >

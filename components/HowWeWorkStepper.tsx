@@ -13,14 +13,15 @@ const STEPS = [
 
 export function HowWeWorkStepper() {
   return (
-    <section className="relative py-24 lg:py-32 px-4 sm:px-6 lg:px-8 bg-slate-900/20">
-      <div className="max-w-5xl mx-auto">
-        <ScrollReveal className="text-center mb-14">
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-100 mb-4 break-keep">
+    <section className="relative w-full max-w-full overflow-hidden py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 bg-slate-900/20">
+      <div className="max-w-5xl mx-auto min-w-0">
+        <ScrollReveal className="text-center mb-10 sm:mb-14">
+          <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-slate-100 mb-3 sm:mb-4 break-keep">
             How We Work
           </h2>
-          <p className="text-slate-400 text-base lg:text-lg max-w-2xl mx-auto leading-relaxed break-keep">
+          <p className="text-slate-400 text-sm sm:text-base lg:text-lg max-w-2xl mx-auto leading-relaxed break-keep">
             클라이언트에게 전문성을 어필하기 위한
+            <br className="block md:hidden" />
             <br className="hidden md:block" />
             단계별 업무 프로세스입니다.
           </p>
@@ -28,7 +29,7 @@ export function HowWeWorkStepper() {
 
         <ScrollReveal>
           <div className="relative">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 sm:gap-8 md:gap-4 min-w-0">
               {STEPS.map((step, i) => (
                 <motion.div
                   key={step.title}

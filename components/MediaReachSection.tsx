@@ -52,8 +52,8 @@ export function MediaReachSection() {
   const [activeTab, setActiveTab] = useState<string>("online");
 
   return (
-    <section className="relative py-16 sm:py-20 lg:py-28 bg-slate-950 border-t border-white/5">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="relative w-full max-w-full overflow-hidden py-16 sm:py-20 lg:py-28 bg-slate-950 border-t border-white/5">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-w-0">
         <ScrollReveal className="text-center mb-10 sm:mb-14">
           <h2 className="text-xl sm:text-2xl lg:text-4xl font-bold text-slate-100 mb-3 sm:mb-4 break-keep">
             온라인부터 앱까지, 빈틈없는 매체 장악력

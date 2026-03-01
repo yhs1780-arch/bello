@@ -33,7 +33,7 @@ export function AnimatedCounter() {
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: 0.5 }}
-      className="flex flex-wrap justify-center gap-8 md:gap-16 pt-16 md:pt-24"
+      className="flex flex-wrap justify-center gap-6 sm:gap-8 md:gap-16 pt-10 sm:pt-16 md:pt-24 min-w-0 max-w-full"
     >
       {STATS.map((stat, i) => (
         <Stat key={stat.label} {...stat} delay={i * 0.1} />

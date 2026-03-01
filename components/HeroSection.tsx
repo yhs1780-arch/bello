@@ -53,57 +53,59 @@ export function HeroSection() {
   }, []);
 
   return (
-    <section className="relative w-full min-h-screen flex flex-col items-center justify-center overflow-hidden pt-20 pb-12">
-      <AnimatePresence mode="wait" initial={false}>
-        <motion.div
-          key={SLIDES[index].id}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.6 }}
-          className="absolute inset-0"
-        >
-          <div
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: `url(${SLIDES[index].image})` }}
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-slate-950" />
-        </motion.div>
-      </AnimatePresence>
+    <section className="relative w-full max-w-full min-h-[100svh] md:min-h-screen flex flex-col items-center justify-center overflow-hidden pt-16 pb-10 md:pt-20 md:pb-12">
+      <div className="absolute inset-0 overflow-hidden">
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.div
+            key={SLIDES[index].id}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.6 }}
+            className="absolute inset-0 min-w-0"
+          >
+            <div
+              className="absolute inset-0 bg-cover bg-center bg-no-repeat object-cover"
+              style={{ backgroundImage: `url(${SLIDES[index].image})` }}
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-slate-950" />
+          </motion.div>
+        </AnimatePresence>
+      </div>
 
-      <div className="relative z-10 w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div className="relative z-10 w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center box-border min-w-0">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
-          className="mb-4 sm:mb-6"
+          className="mb-3 sm:mb-6"
         >
-          <BelloLogo className="text-lg sm:text-xl break-keep" />
+          <BelloLogo className="text-base sm:text-lg md:text-xl break-keep" />
         </motion.div>
 
         <AnimatePresence mode="wait">
           <motion.div
             key={SLIDES[index].id}
-            initial={{ opacity: 0, y: 12 }}
+            initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
+            exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.4 }}
-            className="mb-6 sm:mb-8"
+            className="mb-4 sm:mb-8"
           >
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold leading-tight text-white break-keep">
+            <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold leading-tight text-white break-keep px-0">
               {SLIDES[index].headline}
             </h1>
-            <p className="mt-3 sm:mt-4 text-base sm:text-lg lg:text-xl text-slate-300 break-keep">
+            <p className="mt-2 sm:mt-4 text-sm sm:text-base md:text-lg lg:text-xl text-slate-300 break-keep">
               {SLIDES[index].sub}
             </p>
           </motion.div>
         </AnimatePresence>
 
         <motion.div
-          initial={{ opacity: 0, y: 12 }}
+          initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-8 sm:mb-10"
+          className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-6 sm:mb-10"
         >
           <Link
             href="#consulting-form"

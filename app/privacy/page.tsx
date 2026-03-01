@@ -23,8 +23,8 @@ const PRIVACY_FULL = `벨로컴퍼니(이하 [회사])는 고객님의 개인정
 
 export default function PrivacyPage() {
   return (
-    <div className="min-h-screen pt-16 bg-slate-950">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+    <div className="min-h-screen pt-16 bg-slate-950 w-full max-w-full overflow-x-hidden">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16 min-w-0">
         <Link
           href="/"
           className="inline-flex items-center gap-2 text-slate-400 hover:text-white mb-8 transition break-keep"

@@ -83,7 +83,7 @@ export function Chatbot() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.96 }}
             transition={{ type: "spring", damping: 28, stiffness: 300 }}
-            className="fixed bottom-20 right-6 z-50 w-[calc(100vw-3rem)] max-w-md h-[520px] rounded-2xl glass-strong border border-white/10 shadow-2xl overflow-hidden flex flex-col"
+            className="fixed bottom-20 right-4 left-4 sm:left-auto z-50 w-[calc(100vw-2rem)] sm:w-[calc(100vw-3rem)] max-w-md h-[480px] sm:h-[520px] rounded-2xl glass-strong border border-white/10 shadow-2xl overflow-hidden flex flex-col"
           >
             <div className="p-4 border-b border-white/10 flex items-center justify-between shrink-0">
               <div className="flex items-center gap-3">

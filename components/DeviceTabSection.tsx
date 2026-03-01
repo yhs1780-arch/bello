@@ -36,10 +36,10 @@ export function DeviceTabSection() {
   const content = CONTENTS[active];
 
   return (
-    <section className="relative py-24 lg:py-32 px-4 sm:px-6 lg:px-8 bg-slate-900/20">
-      <div className="max-w-5xl mx-auto">
-        <ScrollReveal className="text-center mb-14">
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-100 mb-4 break-keep">
+    <section className="relative w-full max-w-full overflow-hidden py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 bg-slate-900/20">
+      <div className="max-w-5xl mx-auto min-w-0">
+        <ScrollReveal className="text-center mb-10 sm:mb-14">
+          <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-slate-100 mb-3 sm:mb-4 break-keep">
             핵심 전략
           </h2>
           <p className="text-slate-400 text-base lg:text-lg max-w-2xl mx-auto leading-relaxed break-keep">
@@ -50,8 +50,8 @@ export function DeviceTabSection() {
         </ScrollReveal>
 
         <ScrollReveal>
-          <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
-            <div className="flex lg:flex-col gap-2 order-2 lg:order-1">
+          <div className="flex flex-col lg:flex-row items-center gap-6 sm:gap-8 lg:gap-12 min-w-0">
+            <div className="flex flex-row flex-wrap justify-center lg:flex-col gap-2 order-2 lg:order-1 w-full lg:w-auto">
               {TABS.map((tab) => (
                 <button
                   key={tab.id}

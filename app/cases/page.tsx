@@ -7,9 +7,9 @@ import { caseStudies } from "@/lib/data";
 
 export default function CasesPage() {
   return (
-    <div className="min-h-screen pt-16 bg-slate-950">
-      <section className="relative py-16 lg:py-24 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen pt-16 bg-slate-950 w-full max-w-full overflow-x-hidden">
+      <section className="relative w-full max-w-full py-16 lg:py-24 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto min-w-0">
           <Link
             href="/"
             className="inline-flex items-center gap-2 text-slate-400 hover:text-white mb-10 transition-colors break-keep"

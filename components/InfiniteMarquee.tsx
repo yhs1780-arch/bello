@@ -23,7 +23,7 @@ function Row({ items, direction }: { items: string[]; direction: "ltr" | "rtl" }
   const copy = [...items, ...items];
   const keyframes = direction === "ltr" ? ["0%", "-50%"] : ["-50%", "0%"];
   return (
-    <div className="flex w-full overflow-hidden border-y border-white/5 py-4">
+    <div className="flex w-full max-w-full overflow-hidden border-y border-white/5 py-4 min-w-0">
       <motion.div
         className="flex shrink-0 gap-6 md:gap-10"
         style={{ width: "max-content" }}
@@ -45,7 +45,7 @@ function Row({ items, direction }: { items: string[]; direction: "ltr" | "rtl" }
 
 export function InfiniteMarquee() {
   return (
-    <section className="relative w-full bg-slate-950/80 border-y border-white/5">
+    <section className="relative w-full max-w-full overflow-hidden bg-slate-950/80 border-y border-white/5">
       <Row items={ITEMS} direction="ltr" />
       <Row items={[...ITEMS].reverse()} direction="rtl" />
     </section>

@@ -22,11 +22,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ko" className="dark" suppressHydrationWarning>
-      <body className="min-h-screen bg-slate-950 text-slate-100 font-sans antialiased">
+    <html lang="ko" className="dark overflow-x-hidden" suppressHydrationWarning>
+      <body className="min-h-screen bg-slate-950 text-slate-100 font-sans antialiased overflow-x-hidden max-w-[100vw]">
         <ThemeProvider>
           <Header />
-          <main className="relative pb-20 sm:pb-0">{children}</main>
+          <main className="relative pb-20 sm:pb-0 overflow-x-hidden max-w-full">{children}</main>
           <Footer />
           <StickyCta />
           <LiveToast />

@@ -6,9 +6,9 @@ import { BelloLogo } from "./BelloLogo";
 
 export function Footer() {
   return (
-    <footer id="footer" className="relative border-t border-white/5 bg-slate-900/50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+    <footer id="footer" className="relative w-full max-w-full overflow-hidden border-t border-white/5 bg-slate-900/50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16 min-w-0">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12">
           <div>
             <Link href="/" className="inline-block mb-6">
               <BelloLogo />

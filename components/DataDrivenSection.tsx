@@ -67,8 +67,8 @@ export function DataDrivenSection() {
   }, [successCards.length]);
 
   return (
-    <section className="relative py-16 sm:py-20 lg:py-32 bg-slate-950">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="relative w-full max-w-full overflow-hidden py-16 sm:py-20 lg:py-32 bg-slate-950">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-w-0">
         <ScrollReveal className="text-center mb-8 sm:mb-14">
           <h2 className="text-xl sm:text-2xl lg:text-4xl font-bold text-slate-100 mb-3 sm:mb-4 break-keep">
             Data-Driven Success
@@ -82,7 +82,7 @@ export function DataDrivenSection() {
         </ScrollReveal>
       </div>
 
-      <div ref={containerRef} className="w-full overflow-hidden cursor-grab active:cursor-grabbing touch-pan-x">
+      <div ref={containerRef} className="w-full max-w-full overflow-hidden cursor-grab active:cursor-grabbing touch-pan-x min-w-0">
         <motion.div
           ref={innerRef}
           drag="x"

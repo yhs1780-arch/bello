@@ -12,15 +12,15 @@ import { CompanyShortWith } from "@/components/CompanyName";
 
 export default function BeautyPage() {
   return (
-    <div className="min-h-screen pt-16 bg-slate-950">
-      <section className="relative py-20 lg:py-28 px-4 sm:px-6 lg:px-8 overflow-hidden">
+    <div className="min-h-screen pt-16 bg-slate-950 w-full max-w-full overflow-x-hidden">
+      <section className="relative w-full max-w-full py-12 sm:py-20 lg:py-28 px-4 sm:px-6 lg:px-8 overflow-hidden">
         <div className="absolute inset-0 bg-mesh" />
-        <div className="relative z-10 max-w-4xl mx-auto text-center">
+        <div className="relative z-10 max-w-4xl mx-auto text-center min-w-0">
           <BelloLogo className="mb-6" />
           <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-amber-400/90 text-sm font-medium uppercase mb-4 break-keep">
             뷰티 · 의료
           </motion.p>
-          <motion.h1 initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-100 leading-tight mb-6 font-[var(--font-heading)] break-keep">
+          <motion.h1 initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-slate-100 leading-tight mb-4 sm:mb-6 font-[var(--font-heading)] break-keep">
             의료법 리스크는 완벽히 차단하고,
             <br className="hidden md:block" />
             <span className="text-amber-400">해외·국내 환자를</span> 동시에 끌어옵니다.

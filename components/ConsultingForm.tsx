@@ -67,8 +67,8 @@ export function ConsultingForm() {
 
   return (
     <>
-      <section id="consulting-form" className="relative py-20 lg:py-28 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-2xl mx-auto">
+      <section id="consulting-form" className="relative w-full max-w-full overflow-hidden py-12 sm:py-20 lg:py-28 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-2xl mx-auto min-w-0">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -231,7 +231,7 @@ export function ConsultingForm() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
-            className="fixed top-1/2 left-4 right-4 sm:left-1/2 sm:right-auto sm:-translate-x-1/2 sm:max-w-sm z-50 flex items-center gap-3 glass-strong rounded-xl border border-white/10 p-4 shadow-xl -translate-y-1/2"
+            className="fixed top-1/2 left-4 right-4 w-[calc(100vw-2rem)] max-w-sm sm:left-1/2 sm:right-auto sm:w-auto sm:-translate-x-1/2 z-50 flex items-center gap-3 glass-strong rounded-xl border border-white/10 p-4 shadow-xl -translate-y-1/2 box-border"
           >
             <CheckCircle className="w-6 h-6 text-green-400 shrink-0" />
             <p className="text-sm font-medium text-slate-100 break-keep">
@@ -244,7 +244,7 @@ export function ConsultingForm() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
-            className="fixed top-1/2 left-4 right-4 sm:left-1/2 sm:right-auto sm:-translate-x-1/2 sm:max-w-sm z-50 flex items-center gap-3 glass-strong rounded-xl border border-red-500/30 bg-red-950/30 p-4 shadow-xl -translate-y-1/2"
+            className="fixed top-1/2 left-4 right-4 w-[calc(100vw-2rem)] max-w-sm sm:left-1/2 sm:right-auto sm:w-auto sm:-translate-x-1/2 z-50 flex items-center gap-3 glass-strong rounded-xl border border-red-500/30 bg-red-950/30 p-4 shadow-xl -translate-y-1/2 box-border"
           >
             <p className="text-sm font-medium text-red-200 break-keep">
               앗! 전송에 실패했습니다. 잠시 후 다시 시도해 주세요.

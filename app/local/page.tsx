@@ -11,10 +11,10 @@ import { localTestimonialsFull } from "@/lib/data";
 
 export default function LocalPage() {
   return (
-    <div className="min-h-screen pt-16 bg-slate-950">
-      <section className="relative py-20 lg:py-28 px-4 sm:px-6 lg:px-8 overflow-hidden">
+    <div className="min-h-screen pt-16 bg-slate-950 w-full max-w-full overflow-x-hidden">
+      <section className="relative w-full max-w-full py-12 sm:py-20 lg:py-28 px-4 sm:px-6 lg:px-8 overflow-hidden">
         <div className="absolute inset-0 bg-mesh" />
-        <div className="relative z-10 max-w-4xl mx-auto text-center">
+        <div className="relative z-10 max-w-4xl mx-auto text-center min-w-0">
           <BelloLogo className="mb-6" />
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -27,7 +27,7 @@ export default function LocalPage() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-100 leading-tight mb-6 font-[var(--font-heading)] break-keep"
+            className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-slate-100 leading-tight mb-4 sm:mb-6 font-[var(--font-heading)] break-keep"
           >
             리뷰·플레이스 없이 검색도 안 나오는 가게?
             <br className="hidden md:block" />

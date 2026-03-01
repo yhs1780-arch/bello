@@ -12,7 +12,7 @@ import { ConsultingForm } from "@/components/ConsultingForm";
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-slate-950">
+    <div className="min-h-screen bg-slate-950 overflow-x-hidden max-w-full w-full">
       <HeroSection />
       <InfiniteMarquee />
       <ComparisonTable />

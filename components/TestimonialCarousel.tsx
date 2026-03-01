@@ -48,10 +48,10 @@ export function TestimonialCarousel({
   const getIdx = (offset: number) => (current + offset + n) % n;
 
   return (
-    <section className="relative py-24 lg:py-32 px-4 sm:px-6 lg:px-8 bg-slate-900/30 overflow-hidden">
-      <div className="max-w-5xl mx-auto">
-        <ScrollReveal className="text-center mb-14">
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-100 mb-4 font-[var(--font-heading)] leading-tight break-keep">
+    <section className="relative w-full max-w-full py-16 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 bg-slate-900/30 overflow-hidden">
+      <div className="max-w-5xl mx-auto min-w-0">
+        <ScrollReveal className="text-center mb-10 sm:mb-14">
+          <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-slate-100 mb-3 sm:mb-4 font-[var(--font-heading)] leading-tight break-keep">
             {title}
           </h2>
           <p className="text-slate-400 text-base lg:text-lg max-w-2xl mx-auto leading-relaxed break-keep">
