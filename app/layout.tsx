@@ -10,10 +10,36 @@ import { FloatingCtaInquiry } from "@/components/FloatingCtaInquiry";
 import { FloatingMenuSolutions } from "@/components/FloatingMenuSolutions";
 import "./globals.css";
 
+const SITE_URL = "https://bellocompany.co.kr";
+
 export const metadata: Metadata = {
-  title: "BELLO 벨로컴퍼니 | 데이터로 증명하는 압도적 실행력",
+  metadataBase: new URL(SITE_URL),
+  title: "벨로컴퍼니 | 하이엔드 B2B 마케팅 실행사",
   description:
-    "기획부터 실행까지 빈틈없는 다이렉트 솔루션. 100% 실사용자 인프라, 어뷰징 0%. 무료 매장 진단 신청.",
+    "데이터로 증명하는 압도적 퍼포먼스. 네이버 플레이스 최적화, 뷰티 시딩, 퍼포먼스 마케팅의 기준 BELLO입니다.",
+  keywords: [
+    "벨로컴퍼니",
+    "벨로",
+    "마케팅대행사",
+    "마케팅실행사",
+    "네이버플레이스",
+    "퍼포먼스마케팅",
+    "병원마케팅",
+  ],
+  verification: {
+    other: {
+      "naver-site-verification": "f60fac5db24461301132398cb3211bb00a8e250b",
+    },
+  },
+  openGraph: {
+    title: "벨로컴퍼니 | 하이엔드 B2B 마케팅 실행사",
+    description:
+      "데이터로 증명하는 압도적 퍼포먼스. 네이버 플레이스 최적화, 뷰티 시딩, 퍼포먼스 마케팅의 기준 BELLO입니다.",
+    url: SITE_URL,
+    siteName: "벨로컴퍼니",
+    locale: "ko_KR",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
