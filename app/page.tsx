@@ -1,35 +1,33 @@
 "use client";
 
-import { HeroSection } from "@/components/HeroSection";
-import { InfiniteMarquee } from "@/components/InfiniteMarquee";
-import { ComparisonTable } from "@/components/ComparisonTable";
-import { DeviceTabSection } from "@/components/DeviceTabSection";
-import { MediaReachSection } from "@/components/MediaReachSection";
-import { DataDrivenSection } from "@/components/DataDrivenSection";
-import { HowWeWorkStepper } from "@/components/HowWeWorkStepper";
-import { TestimonialCarousel } from "@/components/TestimonialCarousel";
+import { HeroSliderTrustBar } from "@/components/landing/HeroSliderTrustBar";
+import { PlatformMarquee } from "@/components/landing/PlatformMarquee";
+import { ProblemSection } from "@/components/landing/ProblemSection";
+import { SolutionSection } from "@/components/landing/SolutionSection";
+import { CaseSection } from "@/components/landing/CaseSection";
+import { PlatformFilterSection } from "@/components/landing/PlatformFilterSection";
+import { ServiceCategorySection } from "@/components/landing/ServiceCategorySection";
+import { ProcessSection } from "@/components/landing/ProcessSection";
+import { TestimonialMarquee } from "@/components/TestimonialMarquee";
 import { ConsultingForm } from "@/components/ConsultingForm";
+import { FaqSection } from "@/components/landing/FaqSection";
+import { CompanyIntroSection } from "@/components/landing/CompanyIntroSection";
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-slate-950 overflow-x-hidden max-w-full w-full">
-      <HeroSection />
-      <InfiniteMarquee />
-      <ComparisonTable />
-      <DeviceTabSection />
-      <MediaReachSection />
-      <DataDrivenSection />
-      <HowWeWorkStepper />
-      <TestimonialCarousel />
-      <section className="relative py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 text-center border-t border-white/5">
-        <p className="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-100 break-keep">
-          원장님, 사장님의 진짜 비즈니스 파트너.
-          <br className="block md:hidden" />
-          <br className="hidden md:block" />
-          BELLO와 함께하시겠습니까?
-        </p>
-      </section>
+    <div className="min-h-screen bg-[#0B1120] overflow-x-hidden max-w-full w-full">
+      <HeroSliderTrustBar />
+      <PlatformMarquee />
+      <ProblemSection />
+      <SolutionSection />
+      <CaseSection />
+      <PlatformFilterSection />
+      <ServiceCategorySection />
+      <ProcessSection />
+      <TestimonialMarquee />
       <ConsultingForm />
+      <FaqSection />
+      <CompanyIntroSection />
     </div>
   );
 }

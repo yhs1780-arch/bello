@@ -67,22 +67,32 @@ export function ConsultingForm() {
 
   return (
     <>
-      <section id="consulting-form" className="relative w-full max-w-full overflow-hidden py-12 sm:py-20 lg:py-28 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-2xl mx-auto min-w-0">
+      <section id="consulting-form" className="relative w-full max-w-full overflow-hidden py-12 sm:py-20 lg:py-28 px-4 sm:px-6 lg:px-8 bg-[#0B1120]">
+        <div className="max-w-5xl mx-auto min-w-0">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="glass-strong rounded-3xl border border-white/10 p-8 lg:p-12 shadow-2xl"
+            className="rounded-3xl border-2 border-[#FFD700]/30 bg-gradient-to-br from-[#FFD700]/10 via-amber-500/5 to-transparent p-8 lg:p-12 shadow-2xl shadow-amber-500/10"
           >
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-100 mb-2 text-center break-keep">
-              무료 컨설팅 신청
-            </h2>
-            <p className="text-slate-400 text-sm text-center mb-8 break-keep">
-              이름, 연락처를 남겨 주시면 담당자가 연락드립니다.
-            </p>
+            <div className="grid lg:grid-cols-2 gap-10 lg:gap-12 items-center">
+              <div>
+                <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4 break-keep leading-snug">
+                  무료 상담만 받아도
+                  <br />
+                  30만 원 상당의 &apos;우리 가게 맞춤 노출 전략&apos;을 드립니다.
+                </h2>
+                <p className="text-slate-300 text-sm sm:text-base leading-relaxed space-y-1 break-keep">
+                  · 우리 가게가 인터넷에서 안 보이는 이유 진단
+                  <br />
+                  · 손님들이 먼저 찾게 만드는 노하우
+                  <br />
+                  · 매출 상승 체크리스트 무료 제공
+                </p>
+              </div>
+              <div>
             {submitted ? (
-              <p className="text-center text-blue-400 font-medium py-8 break-keep">
+              <p className="text-center text-[#FFD700] font-medium py-8 break-keep">
                 접수되었습니다. 빠른 시일 내에 연락드리겠습니다.
               </p>
             ) : (
@@ -175,7 +185,7 @@ export function ConsultingForm() {
                 <button
                   type="submit"
                   disabled={!privacyAgree || submitting}
-                  className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl bg-gradient-to-r from-blue-600 to-blue-500 text-white font-semibold hover:-translate-y-0.5 hover:shadow-[0_0_30px_-5px_rgba(59,130,246,0.5)] transition-all duration-300 border border-white/10 disabled:opacity-50 disabled:pointer-events-none disabled:transform-none"
+                  className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl bg-[#FFD700] text-[#0B1120] font-semibold hover:bg-[#FFE44D] hover:-translate-y-0.5 hover:shadow-[0_0_30px_-5px_rgba(255,215,0,0.5)] transition-all duration-300 border border-amber-400/30 disabled:opacity-50 disabled:pointer-events-none disabled:transform-none"
                 >
                   {submitting ? (
                     <>
@@ -184,13 +194,15 @@ export function ConsultingForm() {
                     </>
                   ) : (
                     <>
-                      무료 진단 신청하기
+                      지금 무료 전략 받기
                       <Send className="w-5 h-5 shrink-0" />
                     </>
                   )}
                 </button>
               </form>
             )}
+              </div>
+            </div>
           </motion.div>
         </div>
       </section>

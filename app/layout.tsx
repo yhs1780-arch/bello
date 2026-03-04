@@ -2,12 +2,11 @@ import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { Chatbot } from "@/components/Chatbot";
-import { StickyCta } from "@/components/StickyCta";
+import { FloatingRight } from "@/components/FloatingRight";
 import { LiveToast } from "@/components/LiveToast";
 import { AwardPopup } from "@/components/AwardPopup";
-import { FloatingCtaInquiry } from "@/components/FloatingCtaInquiry";
-import { FloatingMenuSolutions } from "@/components/FloatingMenuSolutions";
+import { FloatingStatusBar } from "@/components/FloatingStatusBar";
+import { MobileBottomCta } from "@/components/MobileBottomCta";
 import "./globals.css";
 
 const SITE_URL = "https://bellocompany.co.kr";
@@ -54,16 +53,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko" className="dark overflow-x-hidden" suppressHydrationWarning>
-      <body className="min-h-screen bg-slate-950 text-slate-100 font-sans antialiased overflow-x-hidden max-w-[100vw]">
+      <body className="min-h-screen bg-[#0B1120] text-slate-100 font-sans antialiased overflow-x-hidden max-w-[100vw]">
         <ThemeProvider>
           <Header />
           <main className="relative pb-20 sm:pb-0 overflow-x-hidden max-w-full">{children}</main>
           <Footer />
-          <StickyCta />
+          <FloatingRight />
+          <MobileBottomCta />
           <LiveToast />
-          <FloatingMenuSolutions />
-          <FloatingCtaInquiry />
-          <Chatbot />
+          <FloatingStatusBar />
           <AwardPopup />
         </ThemeProvider>
       </body>

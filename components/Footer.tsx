@@ -17,11 +17,11 @@ export function Footer() {
               데이터로 증명하는 압도적 실행력. 기획부터 실행까지 빈틈없는 다이렉트 솔루션, BELLO.
             </p>
             <div className="flex flex-col gap-3 text-sm text-slate-400">
-              <a href="mailto:contact@example.com" className="flex items-center gap-2 hover:text-blue-400 transition-colors break-keep">
+              <a href="mailto:contact@bellocompany.co.kr" className="flex items-center gap-2 hover:text-[#FFD700] transition-colors break-keep">
                 <Mail className="w-4 h-4 shrink-0" />
-                contact@example.com
+                contact@bellocompany.co.kr
               </a>
-              <a href="tel:02-1234-5678" className="flex items-center gap-2 hover:text-blue-400 transition-colors break-keep">
+              <a href="tel:02-1234-5678" className="flex items-center gap-2 hover:text-[#FFD700] transition-colors break-keep">
                 <Phone className="w-4 h-4 shrink-0" />
                 02-1234-5678
               </a>
@@ -32,13 +32,13 @@ export function Footer() {
             </div>
           </div>
           <div className="flex flex-col justify-center gap-4">
-            <Link href="/beauty" className="text-sm text-slate-400 hover:text-slate-200 transition-colors break-keep">
+            <Link href="/beauty" className="text-sm text-slate-400 hover:text-[#FFD700] transition-colors break-keep">
               뷰티/의료
             </Link>
-            <Link href="/local" className="text-sm text-slate-400 hover:text-slate-200 transition-colors break-keep">
+            <Link href="/local" className="text-sm text-slate-400 hover:text-[#FFD700] transition-colors break-keep">
               F&B/로컬
             </Link>
-            <Link href="/commerce" className="text-sm text-slate-400 hover:text-slate-200 transition-colors break-keep">
+            <Link href="/commerce" className="text-sm text-slate-400 hover:text-[#FFD700] transition-colors break-keep">
               커머스/온라인
             </Link>
           </div>

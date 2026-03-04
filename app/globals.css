@@ -9,8 +9,11 @@
   --font-heading: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   --bg-primary: #020617;
   --bg-secondary: #0f172a;
+  --bg-midnight: #0B1120;
   --text-primary: #f8fafc;
   --text-muted: #94a3b8;
+  --bello-gold: #FFD700;
+  --bello-silver: #C0C0C0;
   --bello-blue: #3b82f6;
   --bello-purple: #8b5cf6;
   --glass: rgba(255, 255, 255, 0.05);
@@ -88,4 +91,35 @@ label, button, span {
 }
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
+}
+
+/* 고객 후기 무한 마키: 왼쪽으로 흐름 */
+@keyframes testimonial-marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-testimonial-marquee {
+  animation: testimonial-marquee 100s linear infinite;
+}
+
+/* 플랫폼 마키: 윗줄 왼쪽→오른쪽, 아랫줄 오른쪽→왼쪽 */
+@keyframes marquee-ltr {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+@keyframes marquee-rtl {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee-ltr 45s linear infinite;
+}
+.animate-marquee-reverse {
+  animation: marquee-rtl 50s linear infinite;
+}
+
+/* 플랫폼 마키: 좌우 페이드(텍스트가 양옆에서 스르륵 사라짐) */
+.marquee-mask {
+  mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
 }
