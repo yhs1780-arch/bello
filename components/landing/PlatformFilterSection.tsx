@@ -1,37 +1,16 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import {
-  SHOWCASE_ITEMS,
+  getShowcaseItemsForTab,
   SHOWCASE_TABS,
   type ShowcaseCategoryId,
 } from "@/lib/showcaseFilterData";
 
 export function PlatformFilterSection() {
   const [activeTab, setActiveTab] = useState<ShowcaseCategoryId>("all");
-
-  const displayedItems = useMemo(() => {
-    if (activeTab === "all") {
-      const byCategory = {
-        medical: SHOWCASE_ITEMS.filter((i) => i.category === "medical")[0],
-        beauty: SHOWCASE_ITEMS.filter((i) => i.category === "beauty")[0],
-        fnb: SHOWCASE_ITEMS.filter((i) => i.category === "fnb")[0],
-        health: SHOWCASE_ITEMS.filter((i) => i.category === "health")[0],
-        commerce: SHOWCASE_ITEMS.filter((i) => i.category === "commerce")[0],
-      };
-      const second = SHOWCASE_ITEMS.filter((i) => i.category === "medical")[1];
-      return [
-        byCategory.medical,
-        byCategory.beauty,
-        byCategory.fnb,
-        byCategory.health,
-        byCategory.commerce,
-        second,
-      ].filter(Boolean);
-    }
-    return SHOWCASE_ITEMS.filter((i) => i.category === activeTab).slice(0, 6);
-  }, [activeTab]);
+  const displayedItems = getShowcaseItemsForTab(activeTab);
 
   return (
     <section className="relative w-full py-12 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-slate-900/40 border-y border-white/5">
@@ -66,7 +45,7 @@ export function PlatformFilterSection() {
           key={activeTab}
           initial={{ opacity: 0.6 }}
           animate={{ opacity: 1 }}
-          className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-6"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"
         >
           {displayedItems.map((item, i) => (
             <motion.div
@@ -74,21 +53,27 @@ export function PlatformFilterSection() {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.04 }}
-              className="flex flex-col items-center group"
+              className="flex flex-col items-center"
             >
-              <div className="relative w-full max-w-[140px] sm:max-w-[200px] mx-auto aspect-[9/16] rounded-lg sm:rounded-xl overflow-hidden border border-white/10 bg-slate-800 shadow-lg group-hover:border-[#FFD700]/30 transition-colors">
+              <div className="relative w-full max-w-[200px] mx-auto aspect-[9/16] rounded-2xl overflow-hidden border border-white/10 bg-slate-800 shadow-lg">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={item.image}
                   alt=""
-                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-90" />
-                <div className="absolute bottom-0 left-0 right-0 p-2 sm:p-3 text-white">
-                  <p className="text-[10px] sm:text-xs font-semibold text-[#FFD700] drop-shadow-md line-clamp-1 break-keep">
+                {/* 하단 어둡게 처리해 오버레이 텍스트 가독성 확보 */}
+                <div
+                  className="absolute inset-0 pointer-events-none"
+                  style={{
+                    background: "linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.5) 35%, transparent 65%)",
+                  }}
+                />
+                <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
+                  <p className="text-sm font-semibold text-[#FFD700] drop-shadow-lg line-clamp-1 break-keep">
                     {item.title}
                   </p>
-                  <p className="text-[9px] sm:text-[10px] text-white/90 line-clamp-1 break-keep mt-0.5">
+                  <p className="text-xs text-white/95 drop-shadow-md line-clamp-1 break-keep mt-1">
                     {item.sub}
                   </p>
                 </div>

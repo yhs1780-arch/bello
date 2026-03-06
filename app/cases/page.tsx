@@ -64,41 +64,45 @@ export default function CasesPage() {
           >
             <AnimatePresence mode="popLayout">
               {filtered.map((item, i) => (
-                <motion.article
-                  key={item.id}
-                  layout
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.98 }}
-                  transition={{ delay: Math.min(i * 0.03, 0.3) }}
-                  className="group rounded-2xl overflow-hidden bg-[#111827] border border-gray-800 hover:border-gray-700 transition-colors"
-                >
-                  {/* 이미지 영역: 비율 4:3 고정, 상단만 라운드 */}
-                  <div className="relative w-full aspect-[4/3] overflow-hidden rounded-t-2xl bg-slate-800">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={item.image}
-                      alt=""
-                      className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110"
-                    />
-                    <span className="absolute top-4 left-4 bg-black/70 backdrop-blur-md text-[#FFD700] px-3 py-1 rounded-full text-sm font-bold break-keep">
-                      {item.badge}
-                    </span>
-                  </div>
+                <Link key={item.id} href={`/cases/${item.id}`}>
+                  <motion.article
+                    layout
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.98 }}
+                    transition={{ delay: Math.min(i * 0.03, 0.3) }}
+                    className="group rounded-2xl overflow-hidden bg-[#111827] border border-gray-800 hover:border-gray-700 transition-colors cursor-pointer"
+                  >
+                    {/* 이미지 영역: 비율 4:3 고정, 상단만 라운드 */}
+                    <div className="relative w-full aspect-[4/3] overflow-hidden rounded-t-2xl bg-slate-800">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={item.image}
+                        alt=""
+                        className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110"
+                      />
+                      <span className="absolute top-4 left-4 bg-black/70 backdrop-blur-md text-[#FFD700] px-3 py-1 rounded-full text-sm font-bold break-keep">
+                        {item.badge}
+                      </span>
+                    </div>
 
-                  {/* 텍스트 영역: 짙은 네이비, 하단만 라운드 */}
-                  <div className="bg-[#111827] p-6 rounded-b-2xl">
-                    <h4 className="text-[#FFD700] font-bold mb-2 break-keep">
-                      {item.metrics}
-                    </h4>
-                    <h3 className="text-white font-bold line-clamp-2 break-keep leading-snug">
-                      {item.title}
-                    </h3>
-                    <p className="text-gray-400 text-sm line-clamp-2 mt-3 break-keep leading-relaxed">
-                      {item.desc}
-                    </p>
-                  </div>
-                </motion.article>
+                    {/* 텍스트 영역: 짙은 네이비, 하단만 라운드 */}
+                    <div className="bg-[#111827] p-6 rounded-b-2xl">
+                      <h4 className="text-[#FFD700] font-bold mb-2 break-keep">
+                        {item.metrics}
+                      </h4>
+                      <h3 className="text-white font-bold line-clamp-2 break-keep leading-snug">
+                        {item.title}
+                      </h3>
+                      <p className="text-gray-400 text-sm line-clamp-2 mt-3 break-keep leading-relaxed">
+                        {item.desc}
+                      </p>
+                      <p className="text-slate-500 text-xs mt-3 break-keep">
+                        클릭하면 상세 분석 보기
+                      </p>
+                    </div>
+                  </motion.article>
+                </Link>
               ))}
             </AnimatePresence>
           </motion.div>
