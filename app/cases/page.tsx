@@ -39,7 +39,7 @@ export default function CasesPage() {
             </p>
           </motion.div>
 
-          {/* 필터 탭 */}
+          {/* 플랫폼 필터: 선택 시 골드·비선택 시 네이비 테두리 */}
           <div className="flex flex-wrap gap-2 sm:gap-3 mb-8 sm:mb-10">
             {CASE_FILTER_TABS.map((tab) => (
               <button
@@ -48,8 +48,8 @@ export default function CasesPage() {
                 onClick={() => setFilter(tab)}
                 className={`px-4 py-2.5 rounded-xl text-sm font-medium transition-all break-keep ${
                   filter === tab
-                    ? "bg-[#FFD700] text-[#0B1120]"
-                    : "bg-white/5 text-slate-400 border border-white/10 hover:bg-white/10 hover:text-slate-200"
+                    ? "bg-[#FFD700] text-black font-bold"
+                    : "border border-gray-700 text-gray-400 hover:border-gray-600 hover:text-gray-300"
                 }`}
               >
                 {tab}
@@ -57,42 +57,44 @@ export default function CasesPage() {
             ))}
           </div>
 
-          {/* 3열 블로그 카드 그리드 */}
+          {/* 카드 그리드: 1열 → md 2열 → lg 3열, gap-6 */}
           <motion.div
             layout
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
           >
             <AnimatePresence mode="popLayout">
               {filtered.map((item, i) => (
                 <motion.article
                   key={item.id}
                   layout
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.98 }}
                   transition={{ delay: Math.min(i * 0.03, 0.3) }}
-                  className="group rounded-2xl border border-white/10 bg-white/5 overflow-hidden hover:border-[#FFD700]/30 hover:bg-white/[0.07] transition-all duration-300"
+                  className="group rounded-2xl overflow-hidden bg-[#111827] border border-gray-800 hover:border-gray-700 transition-colors"
                 >
-                  <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-800">
+                  {/* 이미지 영역: 비율 4:3 고정, 상단만 라운드 */}
+                  <div className="relative w-full aspect-[4/3] overflow-hidden rounded-t-2xl bg-slate-800">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={item.image}
                       alt=""
-                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-                    <span className="absolute bottom-2 left-2 px-2.5 py-1 rounded-lg bg-black/60 text-xs font-medium text-white backdrop-blur-sm break-keep">
+                    <span className="absolute top-4 left-4 bg-black/70 backdrop-blur-md text-[#FFD700] px-3 py-1 rounded-full text-sm font-bold break-keep">
                       {item.badge}
                     </span>
                   </div>
-                  <div className="p-4 sm:p-5">
-                    <h2 className="text-lg sm:text-xl font-bold text-white mb-2 line-clamp-2 break-keep leading-snug">
-                      {item.title}
-                    </h2>
-                    <p className="text-[#FFD700] text-sm font-semibold mb-2 break-keep">
+
+                  {/* 텍스트 영역: 짙은 네이비, 하단만 라운드 */}
+                  <div className="bg-[#111827] p-6 rounded-b-2xl">
+                    <h4 className="text-[#FFD700] font-bold mb-2 break-keep">
                       {item.metrics}
-                    </p>
-                    <p className="text-slate-400 text-sm leading-relaxed line-clamp-3 break-keep">
+                    </h4>
+                    <h3 className="text-white font-bold line-clamp-2 break-keep leading-snug">
+                      {item.title}
+                    </h3>
+                    <p className="text-gray-400 text-sm line-clamp-2 mt-3 break-keep leading-relaxed">
                       {item.desc}
                     </p>
                   </div>
@@ -102,7 +104,7 @@ export default function CasesPage() {
           </motion.div>
 
           {filtered.length === 0 && (
-            <p className="text-center text-slate-500 py-12 break-keep">
+            <p className="text-center text-gray-500 py-12 break-keep">
               해당 플랫폼 사례가 없습니다.
             </p>
           )}
