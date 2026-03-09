@@ -22,9 +22,7 @@ export function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16 min-w-0">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12">
           <div>
-            <Link href="/" className="inline-block mb-6">
-              <BelloLogo />
-            </Link>
+            <BelloLogo className="inline-block mb-6" />
             <p className="text-slate-400 text-sm leading-relaxed max-w-md mb-6 break-keep">
               데이터로 증명하는 압도적 실행력. 기획부터 실행까지 빈틈없는 다이렉트 솔루션, BELLO.
             </p>

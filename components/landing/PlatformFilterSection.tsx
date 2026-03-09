@@ -1,234 +1,210 @@
 "use client";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
-import {
-  getMockupCardsForTab,
-  SHOWCASE_TABS,
-  type ShowcaseCategoryId,
-  type PlatformMockupType,
-} from "@/lib/showcaseFilterData";
-import { MapPin, Phone, Calendar, Heart, MessageCircle, Star } from "lucide-react";
+import { useState, useCallback } from "react";
+import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
+import { ChevronRight, Check } from "lucide-react";
 
-function NaverPlaceMockup() {
-  return (
-    <div className="h-full flex flex-col bg-white text-black overflow-hidden">
-      <div className="bg-[#03C75A] text-white p-1.5 flex items-center justify-center shrink-0">
-        <span className="text-[7px] sm:text-[8px] font-bold">네이버 플레이스</span>
-      </div>
-      <div className="flex-1 overflow-hidden p-1.5 space-y-1">
-        <p className="text-[7px] sm:text-[8px] font-bold leading-tight line-clamp-1">[강남역 맛집] 벨로 다이닝</p>
-        <div className="flex items-center gap-1">
-          <span className="text-[8px] text-amber-500">★★★★★</span>
-          <span className="text-[6px] text-gray-500">리뷰 2,540개</span>
-        </div>
-        <div className="aspect-video rounded bg-gray-200 w-full shrink-0" />
-        <div className="flex gap-1 pt-0.5">
-          <span className="flex-1 flex items-center justify-center gap-0.5 py-1 rounded bg-gray-100 text-[6px]">
-            <MapPin className="w-2.5 h-2.5" /> 길찾기
-          </span>
-          <span className="flex-1 flex items-center justify-center gap-0.5 py-1 rounded bg-gray-100 text-[6px]">
-            <Phone className="w-2.5 h-2.5" /> 전화
-          </span>
-          <span className="flex-1 flex items-center justify-center gap-0.5 py-1 rounded bg-gray-100 text-[6px]">
-            <Calendar className="w-2.5 h-2.5" /> 예약
-          </span>
-        </div>
-      </div>
-    </div>
-  );
-}
+/** 탭별 전략 & 결과 데이터 (하드코딩). 이미지는 public/images 기준(.png 사용, .jpg 미존재 시 대체). */
+const strategyData = [
+  {
+    id: "naver",
+    label: "네이버 플레이스/블로그",
+    title: "검색결과 1페이지 장악, 끊임없는 예약 알림",
+    how: "단순 배포가 아닌 고품질 네이버 블로그 포스팅 발행, 전략적 키워드 최적화(SEO), 실사용자 기반 영수증 리뷰 빌드업.",
+    result: "해당 지역 검색 1위 고정, 네이버 플레이스 유입량 300% 상승, 신규 방문 및 예약 전환 극대화.",
+    image: "/images/mockup-naver.png",
+  },
+  {
+    id: "danggeun",
+    label: "당근마켓/맘카페",
+    title: "동네 상권 초토화, 지역 주민이 줄 서는 매장",
+    how: "타겟팅된 당근마켓 동네소식 발행, 지역 맘카페 침투 바이럴, 단골 맺기 이벤트 기획 및 실행.",
+    result: "동네소식 조회수 수천 회 돌파, 맘카페 입소문 릴레이, 당근 단골 수 급증으로 인한 안정적인 매출 확보.",
+    image: "/images/mockup-danggeun.png",
+  },
+  {
+    id: "insta",
+    label: "인스타/유튜브",
+    title: "조회수 100만 뷰 폭발, 전국구 핫플레이스 등극",
+    how: "트렌디한 숏폼(릴스/쇼츠) 영상 기획, 마이크로/매크로 인플루언서 섭외 및 동시다발적 콘텐츠 배포.",
+    result: "콘텐츠 알고리즘 노출로 조회수 폭발, 2030 타겟 고객의 폭발적인 태그 및 방문 인증 릴레이.",
+    image: "/images/mockup-insta.png",
+  },
+  {
+    id: "xiaohongshu",
+    label: "샤오홍슈",
+    title: "중국인 관광객 필수 코스, 글로벌 매출 확대",
+    how: "샤오홍슈 뷰티/여행 왕홍(인플루언서) 시딩, K-뷰티/K-푸드 여행 코스로 자연스럽게 녹여낸 바이럴 작업.",
+    result: "중국인 관광객 검색 노출 최상단, 방한 전 선예약률 400% 상승, 면세/관광 상권 매출 견인.",
+    image: "/images/mockup-xiaohongshu.png",
+  },
+  {
+    id: "baemin",
+    label: "배민/커머스",
+    title: "카테고리 랭킹 1위, 멈추지 않는 주문 접수",
+    how: "배달의민족/요기요 깃발 꽂기 핫스팟 최적화, 쿠팡/스마트스토어 포토 리뷰 작업 및 찜하기/알림받기 세팅.",
+    result: "치열한 배달/쇼핑 랭킹 상단 노출, 베스트 100 진입, 리뷰 신뢰도 상승으로 구매 전환율 2배 이상 증가.",
+    image: "/images/mockup-baemin.png",
+  },
+];
 
-function DaangnMockup() {
-  return (
-    <div className="h-full flex flex-col bg-white text-black overflow-hidden">
-      <div className="bg-[#FF7E36] text-white p-1.5 flex items-center justify-center shrink-0">
-        <span className="text-[7px] sm:text-[8px] font-bold">당근마켓 동네소식</span>
+function MockupImage({
+  src,
+  alt,
+  imageError,
+  onError,
+}: {
+  src: string;
+  alt: string;
+  imageError: boolean;
+  onError: () => void;
+}) {
+  if (imageError) {
+    return (
+      <div className="absolute inset-0 z-10 bg-gray-800 flex items-center justify-center text-gray-500 text-sm">
+        이미지 적용 대기중
       </div>
-      <div className="flex-1 overflow-hidden p-1.5 space-y-1">
-        <div className="flex items-center gap-1">
-          <span className="w-3 h-3 rounded-full bg-[#FF7E36]/30 flex items-center justify-center text-[6px]">동</span>
-          <p className="text-[7px] font-bold leading-tight line-clamp-1">[단골맺기] 우리 동네 숨은 펌 맛집</p>
-        </div>
-        <p className="text-[8px] text-[#FF7E36] font-bold">단골 1,200</p>
-        <div className="h-12 rounded bg-gray-100 flex items-center justify-center text-[6px] text-gray-500">이미지 영역</div>
-        <div className="flex items-center gap-2 pt-0.5">
-          <span className="flex items-center gap-0.5 text-[6px]"><Heart className="w-2.5 h-2.5" /> 320</span>
-          <span className="flex items-center gap-0.5 text-[6px]"><MessageCircle className="w-2.5 h-2.5" /> 48</span>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function BaeminMockup() {
-  return (
-    <div className="h-full flex flex-col bg-white text-black overflow-hidden">
-      <div className="bg-[#2AC1BC] text-white p-1.5 flex items-center justify-center shrink-0">
-        <span className="text-[7px] sm:text-[8px] font-bold">배달의민족</span>
-      </div>
-      <div className="flex-1 overflow-hidden p-1.5 space-y-1">
-        <p className="text-[8px] font-bold text-[#2AC1BC]">배달 랭킹 1위</p>
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-full bg-gray-200 shrink-0" />
-          <div className="min-w-0">
-            <p className="text-[7px] font-bold truncate">벨로 키친</p>
-            <p className="text-[6px] text-gray-500 flex items-center gap-0.5">❤️ 3,420 · 리뷰 이벤트 진행 중</p>
-          </div>
-        </div>
-        <div className="space-y-0.5">
-          {["시그니처 세트 12,000원", "인기메뉴 8,500원", "세트메뉴 15,000원"].map((m, i) => (
-            <div key={i} className="flex items-center justify-between py-0.5 border-b border-gray-100 text-[6px]">
-              <span>{m}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function XiaohongshuMockup() {
-  return (
-    <div className="h-full flex flex-col bg-white text-black overflow-hidden">
-      <div className="bg-[#FF2442] text-white p-1.5 flex items-center justify-center shrink-0">
-        <span className="text-[7px] sm:text-[8px] font-bold">小红书</span>
-      </div>
-      <div className="flex-1 overflow-hidden p-1.5 space-y-1">
-        <div className="grid grid-cols-2 gap-0.5">
-          <div className="aspect-square rounded bg-gray-200" />
-          <div className="aspect-square rounded bg-gray-100" />
-          <div className="aspect-square rounded bg-gray-100" />
-          <div className="aspect-square rounded bg-gray-200" />
-        </div>
-        <p className="text-[6px] text-gray-600 line-clamp-2">韩国K-뷰티 必去 皮肤管理 前后对比 爆款...</p>
-        <div className="flex items-center gap-2 text-[6px] text-gray-500">
-          <span>♥ 2.4万</span>
-          <span>★ 收藏 1.1万</span>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function CommerceMockup() {
-  return (
-    <div className="h-full flex flex-col bg-white text-black overflow-hidden">
-      <div className="bg-[#1e3a5f] text-white p-1.5 flex items-center justify-center shrink-0">
-        <span className="text-[7px] sm:text-[8px] font-bold">BEST 100 1위</span>
-      </div>
-      <div className="flex-1 overflow-hidden p-1.5 space-y-1">
-        <div className="aspect-square rounded bg-gray-200 w-full max-w-[60%] mx-auto" />
-        <p className="text-[7px] font-bold text-center">베스트 리뷰</p>
-        <div className="flex gap-0.5 justify-center">
-          <div className="w-8 h-8 rounded bg-gray-200" />
-          <div className="w-8 h-8 rounded bg-gray-200" />
-          <div className="w-8 h-8 rounded bg-gray-200" />
-        </div>
-        <div className="flex items-center justify-center gap-0.5 text-amber-500 text-[8px]">
-          <Star className="w-3 h-3 fill-current" />★★★★★ 4.9 (2,340)
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function InstaMockup() {
-  return (
-    <div className="h-full flex flex-col bg-black text-white overflow-hidden">
-      <div className="flex items-center justify-between p-1.5 border-b border-white/20 shrink-0">
-        <span className="text-[7px] font-bold">Instagram</span>
-        <span className="text-[6px] text-white/70">•••</span>
-      </div>
-      <div className="flex-1 overflow-hidden p-1 flex flex-col items-center justify-center">
-        <div className="aspect-square w-full max-w-[85%] rounded-lg bg-gradient-to-br from-purple-900/80 to-pink-900/80 flex items-center justify-center border border-white/10">
-          <span className="text-[6px] text-white/80">Reels</span>
-        </div>
-        <div className="flex items-center gap-2 mt-1 text-[6px]">
-          <span className="flex items-center gap-0.5">♥ 150万</span>
-          <span className="flex items-center gap-0.5">💬 2,400</span>
-        </div>
-        <p className="text-[6px] text-white/90 mt-0.5">조회수 150만 돌파</p>
-      </div>
-    </div>
-  );
-}
-
-function PlatformMockupContent({ type }: { type: PlatformMockupType }) {
-  switch (type) {
-    case "naver": return <NaverPlaceMockup />;
-    case "daangn": return <DaangnMockup />;
-    case "baemin": return <BaeminMockup />;
-    case "xiaohongshu": return <XiaohongshuMockup />;
-    case "commerce": return <CommerceMockup />;
-    case "insta": return <InstaMockup />;
+    );
   }
+  return (
+    <div className="absolute inset-0 z-10 overflow-hidden bg-black">
+      <img
+        src={src}
+        alt={alt}
+        className="w-full h-full object-cover object-top min-h-full"
+        onError={onError}
+      />
+    </div>
+  );
 }
 
 export function PlatformFilterSection() {
-  const [activeTab, setActiveTab] = useState<ShowcaseCategoryId>("all");
-  const cards = getMockupCardsForTab(activeTab);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [failedImages, setFailedImages] = useState<Set<string>>(new Set());
+  const active = strategyData[activeIndex];
+
+  const handleImageError = useCallback((src: string) => {
+    setFailedImages((prev) => new Set(prev).add(src));
+  }, []);
 
   return (
-    <section className="relative w-full py-12 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-slate-900/40 border-y border-white/5">
-      <div className="max-w-6xl mx-auto">
+    <section className="relative w-full py-16 sm:py-24 lg:py-28 px-4 sm:px-6 lg:px-8 bg-[#0B1120] border-t border-white/5">
+      <div className="max-w-7xl mx-auto">
         <motion.h2
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-xl sm:text-2xl lg:text-4xl font-bold text-white text-center break-keep mb-6 sm:mb-12"
+          className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white text-center break-keep mb-4"
         >
-          사장님의 가게, 화면에 이렇게 매력적으로 보입니다.
+          단순한 노출이 아닙니다. 매출을 폭발시키는 매체별 타겟팅 전략
         </motion.h2>
+        <motion.p
+          initial={{ opacity: 0, y: 8 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-slate-400 text-sm sm:text-base text-center max-w-3xl mx-auto mb-12 sm:mb-16"
+        >
+          네이버, 당근마켓부터 샤오홍슈까지. 벨로컴퍼니의 치밀한 작업으로 만들어낸 압도적인 성과를 확인하세요.
+        </motion.p>
 
-        <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-6 sm:mb-10">
-          {SHOWCASE_TABS.map((tab) => (
-            <button
-              key={tab.id}
-              type="button"
-              onClick={() => setActiveTab(tab.id)}
-              className={`px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg sm:rounded-xl text-xs sm:text-sm font-medium transition-all break-keep ${
-                activeTab === tab.id
-                  ? "bg-[#FFD700] text-[#0B1120]"
-                  : "bg-white/10 text-slate-300 hover:bg-white/15"
-              }`}
-            >
-              {tab.label}
-            </button>
-          ))}
+        {/* 인터랙티브 탭 쇼케이스: 좌측 탭 / 우측 전략+목업 */}
+        <div className="flex flex-col lg:flex-row gap-8 sm:gap-12">
+          {/* 탭 메뉴: 모바일은 가로 스크롤, PC는 세로 리스트 */}
+          <div className="flex lg:flex-col gap-2 overflow-x-auto lg:overflow-visible pb-2 lg:pb-0 shrink-0">
+            {strategyData.map((item, index) => (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => setActiveIndex(index)}
+                className={`shrink-0 px-4 py-3 rounded-xl text-left text-sm font-medium transition-all whitespace-nowrap ${
+                  activeIndex === index
+                    ? "bg-[#FFD700] text-black font-bold"
+                    : "bg-[#0f172a] text-slate-400 border border-gray-700 hover:border-gray-600 hover:text-slate-300"
+                }`}
+              >
+                {item.label}
+              </button>
+            ))}
+          </div>
+
+          {/* 콘텐츠: 좌측 텍스트 박스 + 우측 아이폰 목업 */}
+          <div className="flex-1 grid grid-cols-1 lg:grid-cols-[1fr,auto] gap-8 lg:gap-12 items-start">
+            {/* 전략 텍스트 박스 */}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={active.id}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.25 }}
+                className="bg-gray-800/50 p-6 sm:p-8 rounded-2xl border border-gray-700"
+              >
+                <h3 className="text-white text-xl sm:text-2xl font-bold mb-6 break-keep">
+                  {active.title}
+                </h3>
+                <div className="space-y-5">
+                  <div>
+                    <p className="text-[#FFD700] text-sm font-bold mb-2">우리의 작업 (How)</p>
+                    <p className="text-slate-300 text-sm leading-relaxed flex gap-2">
+                      <Check className="w-4 h-4 shrink-0 mt-0.5 text-emerald-400" aria-hidden />
+                      <span>{active.how}</span>
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-[#FFD700] text-sm font-bold mb-2">압도적 결과 (Result)</p>
+                    <p className="text-slate-300 text-sm leading-relaxed flex gap-2">
+                      <Check className="w-4 h-4 shrink-0 mt-0.5 text-emerald-400" aria-hidden />
+                      <span>{active.result}</span>
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+
+            {/* 스마트폰 목업 (우측 1개) */}
+            <div className="flex justify-center lg:justify-end">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={active.id}
+                  initial={{ opacity: 0, scale: 0.98 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.98 }}
+                  transition={{ duration: 0.25 }}
+                  className="relative mx-auto lg:mx-0 w-full max-w-[260px] sm:max-w-[280px] aspect-[9/16] bg-black rounded-[3rem] border-[12px] border-gray-900 shadow-2xl overflow-hidden"
+                >
+                  <div
+                    className="absolute top-0 inset-x-0 w-32 h-7 bg-gray-900 rounded-b-3xl mx-auto z-20"
+                    aria-hidden
+                  />
+                  <MockupImage
+                    src={active.image}
+                    alt=""
+                    imageError={failedImages.has(active.image)}
+                    onError={() => handleImageError(active.image)}
+                  />
+                </motion.div>
+              </AnimatePresence>
+            </div>
+          </div>
         </div>
 
         <motion.div
-          key={activeTab}
-          initial={{ opacity: 0.6 }}
-          animate={{ opacity: 1 }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-14 sm:mt-18 text-center"
         >
-          {cards.map((card, i) => (
-            <motion.div
-              key={card.id}
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.05 }}
-              className="flex flex-col items-center"
-            >
-              {/* 스마트폰 목업 프레임 */}
-              <div className="relative w-full max-w-[180px] sm:max-w-[200px] mx-auto aspect-[9/16] rounded-3xl border-8 border-gray-800 shadow-xl overflow-hidden bg-white">
-                <div className="absolute inset-0 flex flex-col">
-                  <PlatformMockupContent type={card.type} />
-                </div>
-              </div>
-              {/* 목업 아래 뱃지 및 설명 (오버레이 느낌으로 바로 아래 배치) */}
-              <div className="mt-3 text-center w-full max-w-[180px] sm:max-w-[200px]">
-                <p className="text-[#FFD700] text-xs sm:text-sm font-bold break-keep">
-                  [{card.badge}]
-                </p>
-                <p className="text-white text-[10px] sm:text-xs mt-0.5 text-slate-300 break-keep">
-                  {card.sub}
-                </p>
-              </div>
-            </motion.div>
-          ))}
+          <p className="text-white/90 text-base sm:text-lg font-medium mb-6 break-keep">
+            이런 결과를 만들어 드립니다. 우리 가게도 이렇게 보이게 해보세요.
+          </p>
+          <Link
+            href="#consulting-form"
+            className="inline-flex items-center gap-2 px-6 py-3.5 sm:px-8 sm:py-4 rounded-xl bg-[#FFD700] text-[#0B1120] font-bold text-sm sm:text-base hover:bg-[#FFE44D] transition-colors"
+          >
+            무료 전략 상담받기
+            <ChevronRight className="w-5 h-5" aria-hidden />
+          </Link>
         </motion.div>
       </div>
     </section>
