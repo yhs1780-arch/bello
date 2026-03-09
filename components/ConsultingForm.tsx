@@ -67,7 +67,7 @@ export function ConsultingForm() {
 
   return (
     <>
-      <section id="consulting-form" className="relative w-full max-w-full overflow-hidden py-10 sm:py-20 lg:py-28 px-4 sm:px-6 lg:px-8 bg-[#0B1120]">
+      <section id="consulting-form" className="relative w-full max-w-full overflow-hidden py-8 sm:py-20 lg:py-28 px-3 sm:px-6 lg:px-8 bg-[#0B1120]">
         <div className="max-w-5xl mx-auto min-w-0">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

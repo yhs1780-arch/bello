@@ -39,8 +39,8 @@ export function CaseSection() {
   const [modalCase, setModalCase] = useState<typeof CASES[0] | null>(null);
 
   return (
-    <section id="case-section" className="relative w-full py-12 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-[#0B1120]">
-      <div className="max-w-6xl mx-auto">
+    <section id="case-section" className="relative w-full py-10 sm:py-20 lg:py-24 px-3 sm:px-6 lg:px-8 bg-[#0B1120] overflow-hidden">
+      <div className="max-w-6xl mx-auto min-w-0">
         <motion.h2
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}

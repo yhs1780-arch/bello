@@ -30,9 +30,9 @@ export function Header() {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 w-full max-w-full overflow-hidden border-b border-white/5 bg-[#0B1120]/80 backdrop-blur-xl">
+      <header className="fixed top-0 left-0 right-0 z-50 w-full max-w-full overflow-hidden border-b border-white/5 bg-[#0B1120]/80 backdrop-blur-xl pt-[env(safe-area-inset-top)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-w-0">
-          <div className="flex items-center justify-between h-16 lg:h-18">
+          <div className="flex items-center justify-between h-14 sm:h-16 lg:h-18 min-h-[44px]">
             <BelloLogo className="shrink-0" />
 
             <nav className="hidden md:flex items-center gap-1">
@@ -60,9 +60,9 @@ export function Header() {
                 <ArrowRight className="w-4 h-4 shrink-0" />
               </Link>
               <button
-                className="md:hidden p-2 rounded-lg text-slate-400 hover:text-slate-200"
+                className="md:hidden p-2.5 min-w-[44px] min-h-[44px] rounded-lg text-slate-400 hover:text-slate-200 flex items-center justify-center"
                 onClick={() => setMobileOpen(!mobileOpen)}
-                aria-label="메뉴"
+                aria-label="메뉴 열기"
               >
                 {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
               </button>

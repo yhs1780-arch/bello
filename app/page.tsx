@@ -16,7 +16,7 @@ import { CompanyIntroSection } from "@/components/landing/CompanyIntroSection";
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-[#0B0F1A] overflow-x-hidden max-w-full w-full">
+    <div className="min-h-screen bg-[#0B0F1A] overflow-x-hidden max-w-full w-full min-w-0">
       <HeroSliderTrustBar />
       <PlatformMarquee />
       <ProblemSection />

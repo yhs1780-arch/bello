@@ -214,21 +214,21 @@ export function IndustryChannelSection() {
   const imgSrc = INDUSTRY_IMAGES[active.imageKey] || INDUSTRY_IMAGES.hospital;
 
   return (
-    <section className="relative w-full py-16 sm:py-24 lg:py-28 px-4 sm:px-6 lg:px-8 border-t border-white/10" style={{ backgroundColor: BG }}>
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-12 sm:mb-16">
-          <span className="inline-block px-3 py-1 rounded-full border text-xs font-semibold mb-4" style={{ borderColor: ACCENT, color: ACCENT }}>CUSTOM STRATEGY</span>
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4 break-keep">우리 가게엔 어떤 채널이 맞을까요?</h2>
-          <p className="text-slate-400 text-sm sm:text-base max-w-2xl mx-auto">업종마다 효과적인 플랫폼이 다릅니다. 벨로컴퍼니는 필요한 채널만 골라 집중 공략합니다.</p>
+    <section className="relative w-full py-10 sm:py-24 lg:py-28 px-3 sm:px-6 lg:px-8 border-t border-white/10 overflow-hidden" style={{ backgroundColor: BG }}>
+      <div className="max-w-7xl mx-auto min-w-0">
+        <div className="text-center mb-8 sm:mb-16">
+          <span className="inline-block px-3 py-1 rounded-full border text-xs font-semibold mb-3 sm:mb-4" style={{ borderColor: ACCENT, color: ACCENT }}>CUSTOM STRATEGY</span>
+          <h2 className="text-xl sm:text-3xl lg:text-4xl font-bold text-white mb-3 sm:mb-4 break-keep px-1">우리 가게엔 어떤 채널이 맞을까요?</h2>
+          <p className="text-slate-400 text-xs sm:text-base max-w-2xl mx-auto">업종마다 효과적인 플랫폼이 다릅니다. 벨로컴퍼니는 필요한 채널만 골라 집중 공략합니다.</p>
         </div>
 
-        <div className="flex flex-wrap justify-center gap-2 mb-10 overflow-x-auto">
+        <div className="flex flex-wrap justify-center gap-2 mb-8 sm:mb-10 overflow-x-auto overflow-y-hidden scroll-touch scrollbar-hide snap-x snap-mandatory sm:snap-none -mx-3 px-3 sm:mx-0 sm:px-0 pb-1">
           {DATA.map((item, index) => (
             <button
               key={item.id}
               type="button"
               onClick={() => setActiveIndex(index)}
-              className={`shrink-0 px-4 py-3 rounded-xl text-sm font-medium transition-all flex items-center gap-2 ${
+              className={`shrink-0 min-h-[44px] px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-medium transition-all flex items-center gap-1.5 sm:gap-2 snap-start ${
                 activeIndex === index ? "border-2" : "bg-white/5 border border-transparent hover:bg-white/10"
               }`}
               style={activeIndex === index ? { borderColor: ACCENT, backgroundColor: "rgba(255,214,0,0.12)", color: "#fff" } : {}}
@@ -247,37 +247,37 @@ export function IndustryChannelSection() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -16 }}
               transition={{ duration: 0.3 }}
-              className="grid grid-cols-1 lg:grid-cols-5 gap-8"
+              className="grid grid-cols-1 lg:grid-cols-5 gap-6 sm:gap-8"
             >
               {/* 좌측 60%: 실제 성과 사례 카드 */}
-              <div className="lg:col-span-3">
+              <div className="lg:col-span-3 min-w-0">
                 <div className="bg-white rounded-2xl overflow-hidden shadow-xl">
-                  <div className="relative h-[180px] bg-gray-200">
+                  <div className="relative h-[140px] sm:h-[180px] bg-gray-200">
                     <ImgFallback src={imgSrc} alt="" fill className="object-cover" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                    <p className="absolute bottom-4 left-4 text-white font-bold text-lg">{active.performance.type}</p>
-                    <span className="absolute bottom-4 right-4 px-3 py-1 rounded-full bg-white/90 text-black text-xs font-bold">진행 {active.performance.period}차</span>
+                    <p className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 text-white font-bold text-sm sm:text-lg">{active.performance.type}</p>
+                    <span className="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full bg-white/90 text-black text-[10px] sm:text-xs font-bold">진행 {active.performance.period}차</span>
                   </div>
-                  <div className="p-6">
-                    <div className="grid grid-cols-3 gap-4 mb-4">
+                  <div className="p-4 sm:p-6">
+                    <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-3 sm:mb-4">
                       {active.performance.metrics.map((m, i) => (
-                        <div key={i} className="text-center">
-                          <p className="text-gray-500 text-xs mb-1">{m.label}</p>
-                          <p className="text-black font-bold text-lg">
+                        <div key={i} className="text-center min-w-0">
+                          <p className="text-gray-500 text-[10px] sm:text-xs mb-0.5 sm:mb-1 truncate">{m.label}</p>
+                          <p className="text-black font-bold text-sm sm:text-lg truncate">
                             {m.before} <span className="text-gray-400">→</span> <span style={{ color: m.after.startsWith("+") ? RESULT_GREEN : "#2563eb" }}>{m.after}</span>
                           </p>
                         </div>
                       ))}
                     </div>
-                    <div className="border-t border-gray-200 my-4" />
-                    <div className="bg-gray-100 rounded-xl p-4 relative pl-8">
-                      <span className="absolute left-3 top-4 text-3xl text-gray-300 font-serif">&ldquo;</span>
-                      <p className="text-gray-700 text-sm italic">&ldquo;{active.performance.quote}&rdquo;</p>
-                      <div className="flex items-center gap-3 mt-3">
-                        <div className="relative w-10 h-10 rounded-full overflow-hidden shrink-0">
+                    <div className="border-t border-gray-200 my-3 sm:my-4" />
+                    <div className="bg-gray-100 rounded-xl p-3 sm:p-4 relative pl-7 sm:pl-8">
+                      <span className="absolute left-2 sm:left-3 top-3 sm:top-4 text-2xl sm:text-3xl text-gray-300 font-serif">&ldquo;</span>
+                      <p className="text-gray-700 text-xs sm:text-sm italic line-clamp-3 sm:line-clamp-none">&ldquo;{active.performance.quote}&rdquo;</p>
+                      <div className="flex items-center gap-2 sm:gap-3 mt-2 sm:mt-3">
+                        <div className="relative w-8 h-8 sm:w-10 sm:h-10 rounded-full overflow-hidden shrink-0">
                           <ImgFallback src={FACE_IMG} alt="" fill className="object-cover" />
                         </div>
-                        <p className="text-gray-600 text-xs">{active.performance.source}</p>
+                        <p className="text-gray-600 text-[10px] sm:text-xs truncate">{active.performance.source}</p>
                       </div>
                     </div>
                   </div>
@@ -285,32 +285,32 @@ export function IndustryChannelSection() {
               </div>
 
               {/* 우측 40%: 추천 채널 조합 */}
-              <div className="lg:col-span-2">
-                <h3 className="text-white font-bold mb-4">이 업종 추천 채널</h3>
-                <div className="space-y-3">
+              <div className="lg:col-span-2 min-w-0">
+                <h3 className="text-white font-bold text-sm sm:text-base mb-3 sm:mb-4">이 업종 추천 채널</h3>
+                <div className="space-y-2 sm:space-y-3">
                   {active.channels.map((ch, i) => (
                     <motion.div
                       key={ch.name}
                       initial={{ opacity: 0, x: 8 }}
                       animate={cardInView.inView ? { opacity: 1, x: 0 } : {}}
                       transition={{ delay: i * 0.06 }}
-                      className="flex items-start gap-3 p-3 rounded-xl border border-white/10 bg-gray-800/40"
+                      className="flex items-start gap-2 sm:gap-3 p-2.5 sm:p-3 rounded-xl border border-white/10 bg-gray-800/40"
                     >
-                      <div className="w-1 rounded-full shrink-0 self-stretch min-h-[40px]" style={{ backgroundColor: ch.color }} />
+                      <div className="w-0.5 sm:w-1 rounded-full shrink-0 self-stretch min-h-[36px] sm:min-h-[40px]" style={{ backgroundColor: ch.color }} />
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center justify-between gap-2">
-                          <span className="text-white font-medium text-sm">{ch.name}</span>
-                          <span className="text-yellow-400 text-xs shrink-0">{"★".repeat(ch.stars)}</span>
+                          <span className="text-white font-medium text-xs sm:text-sm truncate">{ch.name}</span>
+                          <span className="text-yellow-400 text-[10px] sm:text-xs shrink-0">{"★".repeat(ch.stars)}</span>
                         </div>
-                        <p className="text-slate-400 text-xs mt-0.5">{ch.reason}</p>
+                        <p className="text-slate-400 text-[10px] sm:text-xs mt-0.5 line-clamp-2">{ch.reason}</p>
                       </div>
-                      <span className="shrink-0 px-2 py-0.5 rounded text-xs font-medium" style={{ backgroundColor: "rgba(74,222,128,0.2)", color: RESULT_GREEN }}>{ch.effectBadge}</span>
+                      <span className="shrink-0 px-1.5 sm:px-2 py-0.5 rounded text-[10px] sm:text-xs font-medium" style={{ backgroundColor: "rgba(74,222,128,0.2)", color: RESULT_GREEN }}>{ch.effectBadge}</span>
                     </motion.div>
                   ))}
                 </div>
-                <div className="mt-6 p-4 rounded-xl bg-white/5 border border-white/10 space-y-2">
-                  <p className="text-slate-300 text-sm flex items-center gap-2">✅ 무조건 패키지 강요 없음</p>
-                  <p className="text-slate-300 text-sm flex items-center gap-2">✅ 필요한 채널만 골라서 진행</p>
+                <div className="mt-4 sm:mt-6 p-3 sm:p-4 rounded-xl bg-white/5 border border-white/10 space-y-1.5 sm:space-y-2">
+                  <p className="text-slate-300 text-xs sm:text-sm flex items-center gap-2">✅ 무조건 패키지 강요 없음</p>
+                  <p className="text-slate-300 text-xs sm:text-sm flex items-center gap-2">✅ 필요한 채널만 골라서 진행</p>
                 </div>
               </div>
             </motion.div>
@@ -318,27 +318,27 @@ export function IndustryChannelSection() {
         </div>
 
         {/* 채널 비교 테이블 */}
-        <div className="mt-14">
-          <h3 className="text-white font-bold mb-4">어떤 채널이 효과가 빠를까요?</h3>
-          <div className="overflow-x-auto rounded-xl border border-white/10">
-            <table className="w-full min-w-[640px] text-sm">
+        <div className="mt-8 sm:mt-14">
+          <h3 className="text-white font-bold text-sm sm:text-base mb-3 sm:mb-4">어떤 채널이 효과가 빠를까요?</h3>
+          <div className="overflow-x-auto rounded-xl border border-white/10 scroll-touch scrollbar-hide -mx-3 px-3 sm:mx-0 sm:px-0">
+            <table className="w-full min-w-[520px] sm:min-w-[640px] text-xs sm:text-sm">
               <thead>
                 <tr>
-                  <th className="text-left py-3 px-4 font-semibold text-black" style={{ backgroundColor: ACCENT }}>플랫폼</th>
-                  <th className="text-left py-3 px-4 font-semibold text-black" style={{ backgroundColor: ACCENT }}>주요 효과</th>
-                  <th className="text-left py-3 px-4 font-semibold text-black" style={{ backgroundColor: ACCENT }}>효과 시점</th>
-                  <th className="text-left py-3 px-4 font-semibold text-black" style={{ backgroundColor: ACCENT }}>추천 업종</th>
-                  <th className="text-left py-3 px-4 font-semibold text-black" style={{ backgroundColor: ACCENT }}>벨로 관리</th>
+                  <th className="text-left py-2 sm:py-3 px-2 sm:px-4 font-semibold text-black text-xs sm:text-sm" style={{ backgroundColor: ACCENT }}>플랫폼</th>
+                  <th className="text-left py-2 sm:py-3 px-2 sm:px-4 font-semibold text-black text-xs sm:text-sm" style={{ backgroundColor: ACCENT }}>주요 효과</th>
+                  <th className="text-left py-2 sm:py-3 px-2 sm:px-4 font-semibold text-black text-xs sm:text-sm" style={{ backgroundColor: ACCENT }}>효과 시점</th>
+                  <th className="text-left py-2 sm:py-3 px-2 sm:px-4 font-semibold text-black text-xs sm:text-sm" style={{ backgroundColor: ACCENT }}>추천 업종</th>
+                  <th className="text-left py-2 sm:py-3 px-2 sm:px-4 font-semibold text-black text-xs sm:text-sm" style={{ backgroundColor: ACCENT }}>벨로 관리</th>
                 </tr>
               </thead>
               <tbody>
                 {TABLE_ROWS.map((row, i) => (
                   <tr key={i} className={`border-b border-white/10 ${i % 2 === 1 ? "bg-white/5" : ""}`}>
-                    <td className="py-3 px-4 text-white">{row.platform}</td>
-                    <td className="py-3 px-4 text-slate-300">{row.effect}</td>
-                    <td className="py-3 px-4 text-slate-300">{row.when}</td>
-                    <td className="py-3 px-4 text-slate-300">{row.industry}</td>
-                    <td className="py-3 px-4"><span style={{ color: RESULT_GREEN }}>✅ 직접 실행</span></td>
+                    <td className="py-2 sm:py-3 px-2 sm:px-4 text-white text-xs sm:text-sm">{row.platform}</td>
+                    <td className="py-2 sm:py-3 px-2 sm:px-4 text-slate-300 text-xs sm:text-sm">{row.effect}</td>
+                    <td className="py-2 sm:py-3 px-2 sm:px-4 text-slate-300 text-xs sm:text-sm">{row.when}</td>
+                    <td className="py-2 sm:py-3 px-2 sm:px-4 text-slate-300 text-xs sm:text-sm">{row.industry}</td>
+                    <td className="py-2 sm:py-3 px-2 sm:px-4 text-xs sm:text-sm"><span style={{ color: RESULT_GREEN }}>✅ 직접 실행</span></td>
                   </tr>
                 ))}
               </tbody>

@@ -56,7 +56,7 @@ export function HeroSliderTrustBar() {
   }, []);
 
   return (
-    <section className="relative w-full max-w-full min-h-[100dvh] sm:min-h-[100svh] flex flex-col overflow-hidden bg-[#0B1120] pt-14 sm:pt-16 pb-0">
+    <section className="relative w-full max-w-full min-h-[100dvh] sm:min-h-[100svh] flex flex-col overflow-hidden bg-[#0B1120] pt-[max(3.5rem,env(safe-area-inset-top))] sm:pt-16 pb-0">
       {/* 배경 슬라이더 + 어두운 오버레이 */}
       <div className="absolute inset-0">
         <AnimatePresence mode="wait">
@@ -118,7 +118,7 @@ export function HeroSliderTrustBar() {
           </Link>
         </motion.div>
 
-        <div className="absolute bottom-20 sm:bottom-24 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+        <div className="absolute bottom-[max(5rem,calc(env(safe-area-inset-bottom)+4rem))] sm:bottom-24 left-1/2 -translate-x-1/2 flex gap-2 z-10">
           {SLIDES.map((_, i) => (
             <button
               key={i}

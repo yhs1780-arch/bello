@@ -67,7 +67,7 @@ export function CompanyIntroSection() {
     <section
       id="company-intro"
       ref={ref}
-      className="relative w-full py-14 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 overflow-hidden"
+      className="relative w-full py-10 sm:py-24 lg:py-32 px-3 sm:px-6 lg:px-8 overflow-hidden"
     >
       {/* 배경: 짙은 네이비 + 미세 골드 메쉬/점 패턴 */}
       <div
@@ -83,7 +83,7 @@ export function CompanyIntroSection() {
       />
       <div className="absolute inset-0 opacity-30" style={{ backgroundImage: "radial-gradient(circle, rgba(255,215,0,0.06) 1px, transparent 1px)", backgroundSize: "32px 32px" }} />
 
-      <div className="relative z-10 max-w-7xl mx-auto">
+      <div className="relative z-10 max-w-7xl mx-auto min-w-0">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-center">
           {/* 좌측: 타이틀 및 철학 (모바일에서 먼저 노출) */}
           <div className="space-y-4 sm:space-y-8 order-2 lg:order-1">
