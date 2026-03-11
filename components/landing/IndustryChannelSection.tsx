@@ -214,7 +214,7 @@ export function IndustryChannelSection() {
   const imgSrc = INDUSTRY_IMAGES[active.imageKey] || INDUSTRY_IMAGES.hospital;
 
   return (
-    <section className="relative w-full py-10 sm:py-24 lg:py-28 px-3 sm:px-6 lg:px-8 border-t border-white/10 overflow-hidden" style={{ backgroundColor: BG }}>
+    <section className="relative w-full py-10 sm:py-24 lg:py-28 px-4 sm:px-6 lg:px-8 border-t border-white/10 overflow-hidden" style={{ backgroundColor: BG }}>
       <div className="max-w-7xl mx-auto min-w-0">
         <div className="text-center mb-8 sm:mb-16">
           <span className="inline-block px-3 py-1 rounded-full border text-xs font-semibold mb-3 sm:mb-4" style={{ borderColor: ACCENT, color: ACCENT }}>CUSTOM STRATEGY</span>
@@ -222,7 +222,7 @@ export function IndustryChannelSection() {
           <p className="text-slate-400 text-xs sm:text-base max-w-2xl mx-auto">업종마다 효과적인 플랫폼이 다릅니다. 벨로컴퍼니는 필요한 채널만 골라 집중 공략합니다.</p>
         </div>
 
-        <div className="flex flex-wrap justify-center gap-2 mb-8 sm:mb-10 overflow-x-auto overflow-y-hidden scroll-touch scrollbar-hide snap-x snap-mandatory sm:snap-none -mx-3 px-3 sm:mx-0 sm:px-0 pb-1">
+        <div className="grid grid-cols-2 sm:flex sm:flex-wrap justify-center gap-2 mb-8 sm:mb-10 overflow-x-auto overflow-y-hidden scroll-touch scrollbar-hide snap-x snap-mandatory sm:snap-none -mx-3 px-3 sm:mx-0 sm:px-0 pb-1">
           {DATA.map((item, index) => (
             <button
               key={item.id}

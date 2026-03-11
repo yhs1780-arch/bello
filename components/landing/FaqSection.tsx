@@ -11,15 +11,15 @@ const FAQ_ITEMS = [
   },
   {
     q: "효과를 보려면 얼마나 걸리나요?",
-    a: "업종에 따라 다르지만 보통 2~4주 내에 뚜렷한 변화를 확인하실 수 있습니다.",
+    a: "대부분의 경우 실행 시작 후 2~3주 내에 순위 변화가 감지되고, 4주차부터 전화 문의·예약 증가를 체감하시는 분들이 많습니다. 업종과 현재 매장 상태에 따라 다를 수 있어 무료 상담 시 예상 일정을 함께 안내드립니다.",
   },
   {
     q: "계약은 어떻게 진행되나요?",
-    a: "매장 진단 후 꼭 필요한 맞춤형 플랜만 제안해 드립니다. 필요한 채널만 선택하실 수 있습니다.",
+    a: "무료 상담 → 매장 진단 → 맞춤 전략 제안 → 계약의 순서로 진행됩니다. 장기 계약 강요는 없으며, 월 단위로 진행해 성과를 확인하며 연장 여부를 결정하실 수 있습니다.",
   },
   {
     q: "가게에 피해가 가는 일은 없나요?",
-    a: "계정이 멈추거나 정보가 지워지는 불법 꼼수는 절대 쓰지 않으니 안심하셔도 됩니다.",
+    a: "벨로컴퍼니는 계정 정지 위험이 있는 불법 프로그램을 절대 사용하지 않습니다. 100% 실제 반응 기반의 안전한 방식으로만 운영하며, 네이버 정책 변화도 실시간으로 모니터링합니다.",
   },
 ];
 
@@ -27,7 +27,7 @@ export function FaqSection() {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section className="relative w-full py-10 sm:py-20 lg:py-24 px-3 sm:px-6 lg:px-8 bg-slate-900/40 border-y border-white/5 overflow-hidden">
+    <section className="relative w-full py-10 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-slate-900/40 border-y border-white/5 overflow-hidden">
       <div className="max-w-2xl mx-auto min-w-0">
         <motion.h2
           initial={{ opacity: 0, y: 12 }}
@@ -59,7 +59,7 @@ export function FaqSection() {
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: "auto", opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
+                    transition={{ duration: 0.25, ease: "easeInOut" }}
                     className="overflow-hidden"
                   >
                     <p className="px-5 pb-4 text-slate-400 text-sm leading-relaxed border-t border-white/5 pt-2 break-keep">

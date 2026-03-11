@@ -1,9 +1,9 @@
 "use client";
 
 import { StickyCta } from "./StickyCta";
-import { Chatbot } from "./Chatbot";
+import { KakaoFloatingButton } from "./KakaoFloatingButton";
 
-/** 우측 하단 플로팅: 무료 전략 받기 + 챗봇 */
+/** 우측 하단 플로팅: 무료 전략 받기 + 카카오톡 상담 */
 export function FloatingRight() {
   return (
     <div
@@ -11,7 +11,7 @@ export function FloatingRight() {
       aria-label="상담 신청 및 문의"
     >
       <StickyCta />
-      <Chatbot />
+      <KakaoFloatingButton />
     </div>
   );
 }

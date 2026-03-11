@@ -1,11 +1,11 @@
 import type { MetadataRoute } from "next";
+import { getSiteUrl } from "@/app/lib/site";
 
-const SITE_URL = "https://bellocompany.co.kr";
+const SITE_URL = getSiteUrl();
 
 /**
  * sitemap.xml — 검색엔진에 페이지 목록 제공 (네이버·구글 인덱싱 지원)
- * @see https://searchadvisor.naver.com/guide/sitemap
- * @see https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap
+ * 프리뷰 배포에서도 해당 URL 기준으로 생성됨 (테스트용)
  */
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();

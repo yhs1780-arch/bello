@@ -67,7 +67,7 @@ export function ConsultingForm() {
 
   return (
     <>
-      <section id="consulting-form" className="relative w-full max-w-full overflow-hidden py-8 sm:py-20 lg:py-28 px-3 sm:px-6 lg:px-8 bg-[#0B1120]">
+      <section id="consulting-form" className="relative w-full max-w-full overflow-hidden py-8 sm:py-20 lg:py-28 px-4 sm:px-6 lg:px-8 bg-[#0B1120]">
         <div className="max-w-5xl mx-auto min-w-0">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -107,7 +107,7 @@ export function ConsultingForm() {
                     required
                     value={formData.name}
                     onChange={(e) => setFormData((p) => ({ ...p, name: e.target.value }))}
-                    className="w-full px-4 py-3 sm:py-3.5 rounded-xl bg-white/5 border border-white/10 text-slate-100 text-base placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition break-keep"
+                    className="w-full min-h-[48px] px-4 py-3 sm:py-3.5 rounded-xl bg-white/5 border border-white/10 text-slate-100 text-base placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition break-keep"
                     placeholder="홍길동"
                   />
                 </div>
@@ -121,7 +121,7 @@ export function ConsultingForm() {
                     required
                     value={formData.contact}
                     onChange={(e) => setFormData((p) => ({ ...p, contact: e.target.value }))}
-                    className="w-full px-4 py-3 sm:py-3.5 rounded-xl bg-white/5 border border-white/10 text-slate-100 text-base placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition break-keep"
+                    className="w-full min-h-[48px] px-4 py-3 sm:py-3.5 rounded-xl bg-white/5 border border-white/10 text-slate-100 text-base placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition break-keep"
                     placeholder="010-0000-0000"
                   />
                 </div>
@@ -132,7 +132,7 @@ export function ConsultingForm() {
                     name="이메일"
                     value={formData.email}
                     onChange={(e) => setFormData((p) => ({ ...p, email: e.target.value }))}
-                    className="w-full px-4 py-3 sm:py-3.5 rounded-xl bg-white/5 border border-white/10 text-slate-100 text-base placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition break-keep"
+                    className="w-full min-h-[48px] px-4 py-3 sm:py-3.5 rounded-xl bg-white/5 border border-white/10 text-slate-100 text-base placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition break-keep"
                     placeholder="example@email.com"
                   />
                 </div>
@@ -143,7 +143,7 @@ export function ConsultingForm() {
                     name="업체명"
                     value={formData.company}
                     onChange={(e) => setFormData((p) => ({ ...p, company: e.target.value }))}
-                    className="w-full px-4 py-3 sm:py-3.5 rounded-xl bg-white/5 border border-white/10 text-slate-100 text-base placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition break-keep"
+                    className="w-full min-h-[48px] px-4 py-3 sm:py-3.5 rounded-xl bg-white/5 border border-white/10 text-slate-100 text-base placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition break-keep"
                     placeholder="ex. 벨로 식당/의원"
                   />
                 </div>

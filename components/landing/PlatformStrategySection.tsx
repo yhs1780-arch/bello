@@ -231,11 +231,20 @@ function ImgFallback({ src, alt, className, fill, ...props }: { src: string; alt
 export function PlatformStrategySection() {
   const [activeIndex, setActiveIndex] = useState(0);
   const contentInView = useInView(0.15);
+  const beforeAfterRef = useRef<HTMLDivElement>(null);
+  const [beforeAfterInView, setBeforeAfterInView] = useState(false);
+  useEffect(() => {
+    const el = beforeAfterRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(([e]) => setBeforeAfterInView(e.isIntersecting), { threshold: 0.2 });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
   const active = PLATFORM_DATA[activeIndex];
-  const inViewAndActive = contentInView.inView;
+  const inViewAndActive = contentInView.inView && beforeAfterInView;
 
   return (
-    <section className="relative w-full py-10 sm:py-24 lg:py-28 px-3 sm:px-6 lg:px-8 overflow-hidden" style={{ backgroundColor: BG }}>
+    <section className="relative w-full py-10 sm:py-24 lg:py-28 px-4 sm:px-6 lg:px-8 overflow-hidden" style={{ backgroundColor: BG }}>
       <div className="max-w-7xl mx-auto min-w-0">
         <div className="text-center mb-8 sm:mb-16">
           <span className="inline-block px-3 py-1 rounded-full border text-xs font-semibold mb-3 sm:mb-4" style={{ borderColor: ACCENT, color: ACCENT }}>PROVEN RESULTS</span>
@@ -444,7 +453,7 @@ export function PlatformStrategySection() {
                 </div>
 
                 {/* Before/After 수치 카드 */}
-                <div className="xl:w-72 shrink-0 space-y-4 w-full">
+                <div ref={beforeAfterRef} className="xl:w-72 shrink-0 space-y-4 w-full">
                   <h4 className="text-white font-bold text-sm">실행 전 vs 실행 후</h4>
                   {active.beforeAfter.map((row, i) => (
                     <BeforeAfterCard key={i} row={row} inView={inViewAndActive} />
@@ -468,7 +477,7 @@ export function PlatformStrategySection() {
         <div className="mt-12 sm:mt-24 pt-8 sm:pt-16 border-t border-white/10 rounded-2xl px-3 sm:px-6 py-6 sm:py-10" style={{ backgroundColor: BG_LIGHT }}>
           <h3 className="text-center text-lg sm:text-xl font-bold text-white mb-1 sm:mb-2 px-2">계약 후 4주, 실제로 이렇게 달라집니다</h3>
           <p className="text-center text-slate-500 text-xs sm:text-sm mb-6 sm:mb-10">벨로컴퍼니 진행 사례 평균 데이터</p>
-          <div className="flex flex-col md:flex-row md:items-stretch gap-4 md:gap-4 overflow-x-auto pb-2 md:pb-4 scroll-touch scrollbar-hide snap-x snap-mandatory md:snap-none -mx-3 px-3 md:mx-0 md:px-0">
+          <div className="flex flex-col md:flex-row md:items-stretch gap-4 md:gap-4 overflow-x-auto pb-2 md:pb-4 scroll-touch scrollbar-hide snap-x snap-mandatory md:snap-none -mx-4 px-4 md:mx-0 md:px-0">
             {TIMELINE.map((step, i) => (
               <motion.div
                 key={step.week}
@@ -479,7 +488,10 @@ export function PlatformStrategySection() {
                 className="relative flex flex-col shrink-0 md:flex-1 min-w-[280px] sm:min-w-0 snap-center snap-always"
               >
                 {i > 0 && (
-                  <div className="hidden md:block absolute top-8 -left-4 w-8 h-0.5 border-t-2 border-dashed border-white/20" style={{ left: "calc(-0.5rem)" }} />
+                  <>
+                    <div className="hidden md:block absolute top-8 -left-4 w-8 h-0.5 border-t-2 border-dashed border-white/20" style={{ left: "calc(-0.5rem)" }} />
+                    <div className="md:hidden absolute left-6 -top-4 h-4 w-0.5 border-l-2 border-dashed border-white/20" aria-hidden />
+                  </>
                 )}
                 <div className="rounded-xl border border-white/20 bg-gray-900/50 p-4 sm:p-5 h-full flex flex-col">
                   <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">

@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 import { ArrowRight, Store, Shield, Users, CheckCircle } from "lucide-react";
 
 const SLIDES = [
@@ -47,8 +47,52 @@ const TRUST_ITEMS = [
 
 const INTERVAL_MS = 5500;
 
+const HERO_STATS = [
+  { end: 300, suffix: "+", label: "월간 관리 매장" },
+  { end: 0, suffix: "%", label: "수수료" },
+  { end: 97, suffix: "%", label: "재계약률" },
+  { end: 10000, suffix: "+", label: "누적 캠페인" },
+];
+
+function useCountUp(end: number, inView: boolean, duration = 2000) {
+  const [value, setValue] = useState(0);
+  useEffect(() => {
+    if (!inView) return;
+    const startTime = Date.now();
+    const tick = () => {
+      const elapsed = Date.now() - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const easeOut = 1 - Math.pow(1 - progress, 3);
+      setValue(Math.round(end * easeOut));
+      if (progress < 1) requestAnimationFrame(tick);
+    };
+    const id = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(id);
+  }, [end, inView, duration]);
+  return value;
+}
+
+function HeroStat({ end, suffix, label, inView, delay }: { end: number; suffix: string; label: string; inView: boolean; delay: number }) {
+  const value = useCountUp(end, inView, 2000);
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay, duration: 0.4 }}
+      className="flex flex-col items-center"
+    >
+      <span className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-[#FFD700] tabular-nums">
+        {value >= 10000 ? value.toLocaleString() : value}{suffix}
+      </span>
+      <span className="text-slate-400 text-xs sm:text-sm mt-0.5">{label}</span>
+    </motion.div>
+  );
+}
+
 export function HeroSliderTrustBar() {
   const [index, setIndex] = useState(0);
+  const statsRef = useRef<HTMLDivElement>(null);
+  const statsInView = useInView(statsRef, { once: true, amount: 0.3 });
 
   useEffect(() => {
     const t = setInterval(() => setIndex((i) => (i + 1) % SLIDES.length), INTERVAL_MS);
@@ -56,7 +100,16 @@ export function HeroSliderTrustBar() {
   }, []);
 
   return (
-    <section className="relative w-full max-w-full min-h-[100dvh] sm:min-h-[100svh] flex flex-col overflow-hidden bg-[#0B1120] pt-[max(3.5rem,env(safe-area-inset-top))] sm:pt-16 pb-0">
+    <section className="relative w-full max-w-full min-h-[100dvh] sm:min-h-[100svh] flex flex-col overflow-hidden pt-[max(3.5rem,env(safe-area-inset-top))] sm:pt-16 pb-0">
+      {/* 배경 그라디언트 애니메이션 (5~10초 주기) */}
+      <div
+        className="absolute inset-0 animate-hero-gradient opacity-90"
+        style={{
+          background: "linear-gradient(135deg, #0B0F1A 0%, #0d1a2e 50%, #0B0F1A 100%)",
+          backgroundSize: "200% 200%",
+        }}
+        aria-hidden
+      />
       {/* 배경 슬라이더 + 어두운 오버레이 */}
       <div className="absolute inset-0">
         <AnimatePresence mode="wait">
@@ -87,7 +140,7 @@ export function HeroSliderTrustBar() {
             transition={{ duration: 0.45 }}
             className="space-y-4 sm:space-y-6"
           >
-            <h1 className="text-xl min-[380px]:text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-snug sm:leading-tight text-white break-keep px-0">
+            <h1 className="text-[26px] min-[380px]:text-[28px] sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-snug sm:leading-tight text-white break-keep px-0">
               {SLIDES[index].h1}
             </h1>
             <p className="text-sm sm:text-base md:text-lg lg:text-xl text-slate-300 break-keep max-w-2xl mx-auto px-1">
@@ -95,6 +148,20 @@ export function HeroSliderTrustBar() {
             </p>
           </motion.div>
         </AnimatePresence>
+
+        {/* 숫자 카운터 4개: 데스크톱 가로 4개 / 모바일 2x2 */}
+        <div ref={statsRef} className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-8 w-full max-w-3xl mx-auto pt-6 sm:pt-8">
+          {HERO_STATS.map((stat, i) => (
+            <HeroStat
+              key={stat.label}
+              end={stat.end}
+              suffix={stat.suffix}
+              label={stat.label}
+              inView={statsInView}
+              delay={i * 0.08}
+            />
+          ))}
+        </div>
 
         {/* 항상 보이는 CTA 버튼 2개 */}
         <motion.div

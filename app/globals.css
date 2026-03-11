@@ -137,6 +137,15 @@ label, button, span {
   animation: marquee-rtl 50s linear infinite;
 }
 
+/* 히어로 배경 그라디언트: 5~10초 주기로 #0B0F1A ↔ #0d1a2e */
+@keyframes hero-gradient {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+.animate-hero-gradient {
+  animation: hero-gradient 8s ease-in-out infinite;
+}
+
 /* 플랫폼 마키: 좌우 페이드(텍스트가 양옆에서 스르륵 사라짐) */
 .marquee-mask {
   mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);

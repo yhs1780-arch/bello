@@ -12,8 +12,8 @@ const COMPANY = {
   bizNo: "184-14-01696",
   address: "전라남도 화순군 동복면 만수동길 58",
   openDate: "2022년 3월 15일",
-  email: "contact@bellocompany.co.kr",
-  phone: "02-1234-5678",
+  email: "ccoma2522@naver.com",
+  phone: "010-6409-9549",
 };
 
 export function Footer() {

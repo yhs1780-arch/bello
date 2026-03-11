@@ -1,13 +1,20 @@
 import type { MetadataRoute } from "next";
+import { getSiteUrl, isProductionSite } from "@/app/lib/site";
 
-const SITE_URL = "https://bellocompany.co.kr";
+const SITE_URL = getSiteUrl();
+const IS_PRODUCTION = isProductionSite();
 
 /**
  * robots.txt — 네이버·구글 등 검색엔진 봇 크롤링 규칙
- * @see https://searchadvisor.naver.com/guide/robots
- * @see https://developers.google.com/search/docs/crawling-indexing/robots/create-robots-txt
+ * 프리뷰(비프로덕션) 배포 시에는 전체 비허용(noindex)으로 검색 노출 방지
  */
 export default function robots(): MetadataRoute.Robots {
+  if (!IS_PRODUCTION) {
+    return {
+      rules: [{ userAgent: "*", allow: "/", disallow: "/" }],
+      host: SITE_URL,
+    };
+  }
   return {
     rules: [
       {

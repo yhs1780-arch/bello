@@ -4,8 +4,8 @@ import { useEffect, useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 
 const STATS = [
-  { end: 100, suffix: "억+", label: "월간 마케팅 취급액", format: (n: number) => `${n}억+` },
-  { end: 2000, suffix: "명+", label: "각 분야별 전문 투입 인력", format: (n: number) => `${n.toLocaleString()}명+` },
+  { end: 3, suffix: "억+", label: "월간 마케팅 취급액", format: (n: number) => `${n}억+` },
+  { end: 25, suffix: "명+", label: "각 분야별 전문 투입 인력", format: (n: number) => `${n.toLocaleString()}명+` },
   { end: 10000, suffix: "건+", label: "누적 진행 성공 캠페인", format: (n: number) => `${n.toLocaleString()}건+` },
   { end: 3, suffix: "개 지사", label: "서울(본사) · 전북 · 전남 지사 운영", format: (n: number) => `${n}개 지사` },
 ];
@@ -60,14 +60,15 @@ function StatCard({
 }
 
 export function CompanyIntroSection() {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, amount: 0.15 });
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const statsRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(statsRef, { once: true, amount: 0.2 });
 
   return (
     <section
       id="company-intro"
-      ref={ref}
-      className="relative w-full py-10 sm:py-24 lg:py-32 px-3 sm:px-6 lg:px-8 overflow-hidden"
+      ref={sectionRef}
+      className="relative w-full py-10 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 overflow-hidden"
     >
       {/* 배경: 짙은 네이비 + 미세 골드 메쉬/점 패턴 */}
       <div
@@ -116,7 +117,7 @@ export function CompanyIntroSection() {
           </div>
 
           {/* 우측: 2x2 스탯 그리드 (모바일에서 먼저 노출) */}
-          <div className="grid grid-cols-2 gap-3 sm:gap-5 order-1 lg:order-2">
+          <div ref={statsRef} className="grid grid-cols-2 gap-3 sm:gap-5 order-1 lg:order-2">
             {STATS.map((stat, i) => (
               <StatCard
                 key={stat.label}

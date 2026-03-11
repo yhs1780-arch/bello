@@ -1,0 +1,23 @@
+# Netlify 빌드 설정 — Next.js 자동 감지됨
+# https://docs.netlify.com/frameworks/next-js/
+
+[build]
+  command = "npm run build"
+  # Next.js 플러그인이 자동으로 감지하여 출력 디렉터리 처리
+
+[build.environment]
+  NODE_VERSION = "18"
+
+# 프로덕션(메인 도메인) 배포 시에만 사용할 환경 변수
+# Netlify 대시보드에서 "Production" 브랜치를 설정한 뒤, 여기 값을 사용합니다.
+[context.production.environment]
+  SITE_URL = "https://bellocompany.co.kr"
+
+# 프리뷰·브랜치 배포에는 SITE_URL을 넣지 않음 → DEPLOY_PRIME_URL이 자동 주입되어
+# 해당 프리뷰 URL(예: https://xxxx--site-name.netlify.app)이 SITE_URL로 사용됨
+
+# 리다이렉트: 루트가 아닌 경로 접근 시 SPA처럼 동작 (필요 시 사용)
+# [[redirects]]
+#   from = "/*"
+#   to = "/index.html"
+#   status = 200

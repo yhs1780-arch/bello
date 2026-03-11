@@ -7,9 +7,11 @@ import { LiveToast } from "@/components/LiveToast";
 import { AwardPopup } from "@/components/AwardPopup";
 import { FloatingStatusBar } from "@/components/FloatingStatusBar";
 import { MobileBottomCta } from "@/components/MobileBottomCta";
+import { getSiteUrl, isProductionSite } from "@/app/lib/site";
 import "./globals.css";
 
-const SITE_URL = "https://bellocompany.co.kr";
+const SITE_URL = getSiteUrl();
+const IS_PRODUCTION = isProductionSite();
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -63,14 +65,9 @@ export const metadata: Metadata = {
     title: "벨로컴퍼니 | 진짜 성과를 만드는 마케팅 실행사",
     description: "네이버 플레이스 1위, 당근마켓 단골 폭발. 결과로 증명하는 하이엔드 실행팀입니다.",
   },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-    },
-  },
+  robots: IS_PRODUCTION
+    ? { index: true, follow: true, googleBot: { index: true, follow: true } }
+    : { index: false, follow: false, googleBot: { index: false, follow: false } },
   alternates: {
     canonical: SITE_URL,
   },
