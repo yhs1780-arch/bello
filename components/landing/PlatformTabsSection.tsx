@@ -82,21 +82,27 @@ function Img({ src, alt, className, fill, ...props }: { src: string; alt: string
 
 function BeforeAfterBar({ row, active }: { row: BarRow; active: boolean }) {
   const [afterWidth, setAfterWidth] = useState(0);
-  const [countVal, setCountVal] = useState(typeof row.afterVal === "number" ? 0 : row.afterVal);
+  const [beforeWidth, setBeforeWidth] = useState(0);
 
   useEffect(() => {
     if (!active) {
       setAfterWidth(0);
-      setCountVal(typeof row.afterVal === "number" ? 0 : row.afterVal);
+      setBeforeWidth(0);
       return;
     }
-    const t = setTimeout(() => setAfterWidth(row.afterPct), 50);
+    const t = setTimeout(() => {
+      setBeforeWidth(row.beforeShow ? Math.max(row.beforePct, 12) : 0);
+      setAfterWidth(row.afterPct);
+    }, 50);
     return () => clearTimeout(t);
-  }, [active, row.afterPct, row.afterVal]);
+  }, [active, row.afterPct, row.beforePct, row.beforeShow]);
+
+  const beforeText = row.beforeShow ? String(row.beforeVal) : "—";
+  const afterText = String(row.afterVal);
 
   return (
-    <div className="mb-5">
-      <div className="flex items-center justify-between mb-1.5">
+    <div className="mb-4 p-3.5 rounded-xl border border-white/10 bg-white/[0.03]">
+      <div className="flex items-center justify-between mb-2">
         <span className="text-slate-300 text-sm flex items-center gap-1.5">
           <span>{row.icon}</span>
           {row.name}
@@ -112,24 +118,34 @@ function BeforeAfterBar({ row, active }: { row: BarRow; active: boolean }) {
           {row.badge}
         </span>
       </div>
-      <div className="flex items-center gap-2">
-        <div className="flex-1 min-w-0 h-2 rounded overflow-hidden flex bg-[#1f2937]">
-          {row.beforeShow && (
-            <div
-              className="h-full rounded-l shrink-0 bg-[#374151] transition-all duration-700 ease-out"
-              style={{ width: active ? `${Math.max(row.beforePct, 12)}%` : "0%" }}
-            />
+      <div className="space-y-2">
+        <div>
+          <div className="flex items-center justify-between text-[12px] mb-1">
+            <span className="text-[#6B7280]">실행 전</span>
+            <span className="font-semibold text-slate-300 tabular-nums">{beforeText}</span>
+          </div>
+          {row.beforeShow ? (
+            <div className="h-2 rounded bg-[#1f2937] overflow-hidden">
+              <div
+                className="h-full bg-[#4B5563] rounded transition-all duration-700 ease-out"
+                style={{ width: `${beforeWidth}%` }}
+              />
+            </div>
+          ) : (
+            <div className="h-2 rounded bg-[#1f2937] border border-dashed border-[#374151]" />
           )}
-          <div
-            className="h-full rounded bg-[#4ADE80] shrink-0 transition-all duration-[800ms] ease-out"
-            style={{ width: `${afterWidth}%` }}
-          />
         </div>
-        <div className="flex items-end gap-1 shrink-0 text-right min-w-[80px]">
-          {row.beforeShow && (
-            <span className="text-[13px] text-[#6B7280]">{String(row.beforeVal)}</span>
-          )}
-          <span className="text-[14px] font-bold text-[#4ADE80]">{String(row.afterVal)}</span>
+        <div>
+          <div className="flex items-center justify-between text-[12px] mb-1">
+            <span className="text-[#9CA3AF]">실행 후</span>
+            <span className="font-bold text-[#4ADE80] tabular-nums">{afterText}</span>
+          </div>
+          <div className="h-2 rounded bg-[#1f2937] overflow-hidden">
+            <div
+              className="h-full rounded bg-[#4ADE80] transition-all duration-[800ms] ease-out"
+              style={{ width: `${afterWidth}%` }}
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -236,16 +252,28 @@ export function PlatformTabsSection() {
                           <Img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80" alt="" fill className="object-cover" />
                         </div>
                         <p className="text-sm text-[#555] mt-2">❤️ 328 &nbsp; 💬 47 &nbsp; 🥕 단골 1,840명</p>
-                        <p className="text-xs text-[#9CA3AF] mt-3 mb-1">단골 증가 추이</p>
-                        <div className="flex items-end gap-1 h-20">
-                          {[20, 35, 50, 65, 80, 100].map((h, i) => (
-                            <div key={i} className="flex-1 rounded-t min-w-0 flex flex-col items-center">
-                              <div className="w-full flex-1 flex items-end"><div className="w-full rounded-t transition-all duration-700" style={{ height: `${h}%`, backgroundColor: DANGGEUN }} /></div>
-                              <span className="text-[10px] text-[#666] mt-1">{i + 1}주</span>
+                        <p className="text-xs font-medium text-[#374151] mt-3 mb-2">단골 증가 추이 (1주 → 6주)</p>
+                        <div className="flex items-end gap-1" style={{ height: 80 }}>
+                          {[
+                            { pct: 20, label: "1주" },
+                            { pct: 35, label: "2주" },
+                            { pct: 50, label: "3주" },
+                            { pct: 65, label: "4주" },
+                            { pct: 80, label: "5주" },
+                            { pct: 100, label: "6주" },
+                          ].map(({ pct, label }, i) => (
+                            <div key={i} className="flex-1 min-w-0 flex flex-col items-center justify-end">
+                              <div className="w-full h-14 flex items-end">
+                                <div
+                                  className="w-full rounded-t min-w-[6px] transition-all duration-700"
+                                  style={{ height: `${pct}%`, backgroundColor: DANGGEUN, minHeight: 8 }}
+                                />
+                              </div>
+                              <span className="text-[10px] text-[#666] mt-1.5 font-medium">{label}</span>
                             </div>
                           ))}
                         </div>
-                        <p className="text-xs text-center mt-1 font-bold text-[#111]">6주 1,840명</p>
+                        <p className="text-xs text-center mt-2 font-bold text-[#111]">6주 차: 단골 1,840명</p>
                       </div>
                     </div>
                   )}

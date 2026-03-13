@@ -7,6 +7,11 @@ import { X, Award } from "lucide-react";
 const STORAGE_KEY = "bello-award-popup-dismissed";
 const DELAY_MS = 5000;
 const SCROLL_TRIGGER_RATIO = 0.25;
+const AWARD_HISTORY = [
+  { year: "2024", title: "퍼스트브랜드 대상", detail: "클리닉/로컬마케팅 부문" },
+  { year: "2025", title: "퍼스트브랜드 대상", detail: "브랜드 신뢰도 우수기업" },
+  { year: "2026", title: "퍼스트브랜드 대상", detail: "성과 데이터 기반 운영" },
+];
 
 function getTodayKey() {
   return new Date().toDateString();
@@ -101,8 +106,23 @@ export function AwardPopup() {
                   <Award className="w-8 h-8 text-amber-400/90" />
                 </div>
                 <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 break-keep">
-                  2024 대한민국 퍼스트 브랜드 대상 수상
+                  대한민국 퍼스트브랜드 대상 수상
                 </h3>
+                <p className="text-slate-400 text-xs sm:text-sm mb-4">3년 연속 수상 아카이브</p>
+                <div className="w-full mb-5">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                    {AWARD_HISTORY.map((award) => (
+                      <div
+                        key={award.year}
+                        className="rounded-xl border border-white/10 bg-white/[0.04] px-3 py-3 text-left"
+                      >
+                        <p className="text-amber-400 font-black text-base leading-none">{award.year}</p>
+                        <p className="text-slate-100 text-xs mt-1.5 font-semibold break-keep">{award.title}</p>
+                        <p className="text-slate-400 text-[11px] mt-1 break-keep">{award.detail}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
                 <p className="text-slate-400 text-sm sm:text-base leading-relaxed break-keep mb-6">
                   데이터로 입증된 실제 매출 상승 효과,
                   <br className="block md:hidden" />
