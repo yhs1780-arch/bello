@@ -202,22 +202,29 @@ label, button, span {
   opacity: 1;
 }
 
-/* CTA 버튼 상시 Shimmer (2~3초 주기 사선 빛) */
-@keyframes cta-shimmer-diagonal {
+/* 세일즈 CTA: 항상 켜진 Shimmer + 호버 시 확대/그림자 */
+@keyframes cta-shimmer {
   0% { background-position: -200% 0; }
   100% { background-position: 200% 0; }
 }
-.btn-cta-shimmer {
+.btn-cta-gold {
   position: relative;
   overflow: hidden;
 }
-.btn-cta-shimmer::before {
+.btn-cta-gold::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.5) 40%, rgba(255,255,255,0.9) 50%, rgba(255,255,255,0.5) 60%, transparent 100%);
+  background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.5) 45%, rgba(255,255,255,0.9) 50%, rgba(255,255,255,0.5) 55%, transparent 100%);
   background-size: 250% 250%;
-  mix-blend-mode: overlay;
+  mix-blend-mode: screen;
   pointer-events: none;
-  animation: cta-shimmer-diagonal 2.5s linear infinite;
+  animation: cta-shimmer 2.5s linear infinite;
+}
+.btn-cta-gold {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.btn-cta-gold:hover {
+  transform: scale(1.05);
+  box-shadow: 0 25px 50px -12px rgba(255, 215, 0, 0.4);
 }
