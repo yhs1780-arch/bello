@@ -1,143 +1,152 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
+import { useState } from "react";
 
 export function HeroSection() {
+  const [imgErr, setImgErr] = useState(false);
+
   return (
-    <section className="relative overflow-hidden bg-[#0B1120] pt-24 pb-20">
-      {/* 깊이감 있는 그라데이션 배경 */}
-      <div className="absolute inset-0 bg-mesh opacity-80 animate-hero-gradient" />
-      <div className="pointer-events-none absolute -left-40 top-0 h-80 w-80 rounded-full bg-blue-500/25 blur-3xl" />
-      <div className="pointer-events-none absolute right-[-120px] top-24 h-72 w-72 rounded-full bg-yellow-500/15 blur-3xl" />
-      <div className="pointer-events-none absolute bottom-[-140px] right-10 h-80 w-80 rounded-full bg-sky-500/20 blur-3xl" />
+    <section
+      className="relative overflow-hidden"
+      style={{ backgroundColor: "#070B16", paddingTop: 84, paddingBottom: 72 }}
+    >
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_20%,rgba(255,214,0,0.10),transparent_32%),radial-gradient(circle_at_85%_25%,rgba(56,189,248,0.12),transparent_28%),linear-gradient(180deg,#070B16_0%,#091227_100%)]" />
+      <div
+        className="absolute inset-0 opacity-[0.03]"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h40v40H0z' fill='none'/%3E%3Cpath d='M0 40V0h40' stroke='%23fff' stroke-width='0.5' fill='none'/%3E%3C/svg%3E")`,
+        }}
+      />
 
-      <div className="relative z-10 mx-auto grid w-full max-w-6xl grid-cols-1 items-center gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:gap-14">
-        {/* 좌측: 카피 & CTA */}
+      <div
+        className="relative z-10 w-full grid grid-cols-1 lg:grid-cols-2 items-center max-w-[1240px] mx-auto gap-10 lg:gap-14"
+        style={{ padding: "0 40px" }}
+      >
         <div className="text-center lg:text-left">
-          <div className="inline-flex items-center gap-2 rounded-full border border-gray-700 bg-white/5 px-4 py-1.5 text-xs font-medium text-gray-200 shadow-sm backdrop-blur-md">
-            <span className="text-base">✨</span>
-            <span className="tracking-tight">월 매출 100억 실행사의 압도적 퍼포먼스</span>
-          </div>
-
-          <h1 className="mt-6 text-4xl font-extrabold leading-tight text-white md:text-6xl lg:text-7xl">
-            말뿐인 대행사에 지치셨습니까?
+          <span
+            className="inline-flex items-center gap-2 border rounded-[30px] font-semibold mb-5"
+            style={{ borderWidth: "1.5px", borderColor: "#FFD600", color: "#FFD600", padding: "8px 18px", fontSize: 13 }}
+          >
+            📞 상담 후 평균 4주, 매출이 달라집니다
+          </span>
+          <h1
+            className="font-black text-white leading-tight mb-4 break-keep"
+            style={{ fontSize: "clamp(38px, 5.2vw, 66px)", lineHeight: 1.1, letterSpacing: "-1px" }}
+          >
+            광고비만 쓰던 매장을
             <br />
-            <span className="bg-gradient-to-r from-[#FFD700] to-[#FDB931] bg-clip-text text-transparent">
-              결과로 증명하는 1% 실행팀
-            </span>
+            <span className="text-[#FFD600]">매출이 터지는 매장</span>으로
           </h1>
-
-          <p className="mt-6 text-lg text-gray-400 md:text-xl">
-            하청에 하청을 거치는 거품을 뺐습니다.
+          <p className="mb-6 break-keep" style={{ fontSize: 17, color: "#A3AEC2", lineHeight: 1.7 }}>
+            사장님이 원하는 건 노출이 아니라 매출입니다.
             <br />
-            기획부터 촬영, 배포까지 100% 직접 실행하여 사장님의 매장을 지역 1등으로 만듭니다.
+            벨로컴퍼니는 기획부터 실행까지 직접 운영해 결과로 증명합니다.
           </p>
-
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-3 lg:justify-start">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-7">
+            {[
+              ["300+", "월간 관리 매장"],
+              ["0%", "수수료"],
+              ["97%", "재계약률"],
+              ["10,000+", "누적 캠페인"],
+            ].map(([value, label]) => (
+              <div key={label} className="rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2 text-left">
+                <p className="text-[#FFD600] font-extrabold text-lg leading-none">{value}</p>
+                <p className="text-slate-400 text-[11px] mt-1">{label}</p>
+              </div>
+            ))}
+          </div>
+          <div className="flex gap-3 flex-wrap mb-5">
             <Link
               href="#consulting-form"
-              className="btn-gold-shimmer relative inline-flex items-center justify-center rounded-xl px-7 py-3.5 text-sm font-bold text-black shadow-[0_18px_45px_rgba(250,204,21,0.45)] transition-transform hover:-translate-y-0.5"
-              style={{ background: "linear-gradient(135deg,#FFD700,#FDB931)" }}
+              className="inline-flex items-center justify-center rounded-[10px] font-bold cursor-pointer border-0"
+              style={{ background: "#FFD600", color: "#000", fontSize: 16, padding: "15px 30px" }}
             >
               무료 진단 받기
             </Link>
             <Link
               href="#case-section"
-              className="inline-flex items-center justify-center rounded-xl border border-gray-600 px-6 py-3 text-sm font-semibold text-gray-100 transition-colors hover:bg-white/5"
+              className="inline-flex items-center justify-center rounded-[10px] font-semibold cursor-pointer"
+              style={{ background: "transparent", color: "#fff", fontSize: 16, padding: "15px 24px", border: "1.5px solid #3A475F" }}
             >
-              성과 사례 보기
+              성과 사례 보기 →
             </Link>
           </div>
-
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs text-gray-400 lg:justify-start">
-            <span>✔ 300+ 월간 관리 매장</span>
-            <span className="hidden text-gray-600 sm:inline">|</span>
-            <span>✔ 97% 재계약률</span>
-            <span className="hidden text-gray-600 sm:inline">|</span>
-            <span>✔ 0% 대행 수수료</span>
+          <div className="flex gap-4 flex-wrap" style={{ fontSize: 13, color: "#6B7280" }}>
+            <span>✅ 상담 무료</span>
+            <span>✅ 계약 강요 없음</span>
+            <span>✅ 10분이면 충분</span>
           </div>
         </div>
 
-        {/* 우측: 플로팅 성과 카드 UI */}
-        <div className="relative flex h-[340px] items-center justify-center lg:h-[380px]">
-          {/* 베이스 플로팅 패널 */}
-          <div className="glass relative h-full w-full max-w-md rounded-3xl border border-white/10 bg-white/5 p-6 shadow-[0_30px_120px_rgba(15,23,42,0.9)] backdrop-blur-2xl">
-            <div className="mb-5 flex items-center justify-between text-xs text-slate-300">
-              <span className="inline-flex items-center gap-1 rounded-full bg-slate-900/70 px-3 py-1">
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                라이브 캠페인 대시보드
-              </span>
-              <span className="text-[10px] text-slate-400">실시간 업데이트</span>
-            </div>
-
-            {/* 중앙: 매출 그래프 카드 */}
-            <div className="animate-float-medium glass-strong relative mx-auto w-[88%] rounded-2xl px-4 py-4">
-              <div className="mb-3 flex items-center justify-between text-xs text-slate-200">
-                <span className="font-semibold">월 매출 추이</span>
-                <span className="rounded-full bg-emerald-500/10 px-2 py-0.5 text-[10px] text-emerald-300">+280% 상승</span>
+        <div className="relative w-full flex justify-center lg:justify-end">
+          <div className="relative w-full max-w-[520px]">
+            <p className="absolute left-0 -top-6 text-xs" style={{ fontSize: 12, color: "#9CA3AF" }}>
+              벨로컴퍼니 실행 후 4주차
+            </p>
+            <div
+              className="bg-white rounded-[20px] overflow-hidden w-full"
+              style={{ boxShadow: "0 35px 90px rgba(0,0,0,0.65)" }}
+            >
+              <div className="text-white font-bold text-sm flex items-center" style={{ background: "#03C75A", padding: "12px 16px" }}>
+                NAVER 플레이스
               </div>
-              <div className="relative h-28 overflow-hidden rounded-xl bg-slate-900/80">
-                {/* 가짜 그래프 라인들 */}
-                <div className="absolute inset-x-3 bottom-3 h-20">
-                  <div className="absolute inset-x-0 top-1 h-px bg-slate-800/80" />
-                  <div className="absolute inset-x-0 top-1/2 h-px bg-slate-800/60" />
-                  <div className="absolute inset-x-0 bottom-1 h-px bg-slate-800/40" />
-                  <svg
-                    viewBox="0 0 160 80"
-                    className="absolute inset-0 h-full w-full"
-                    aria-hidden="true"
-                  >
-                    <defs>
-                      <linearGradient id="hero-line" x1="0" x2="1" y1="0" y2="0">
-                        <stop offset="0%" stopColor="#FACC15" />
-                        <stop offset="100%" stopColor="#FDBA74" />
-                      </linearGradient>
-                    </defs>
-                    <path
-                      d="M4 70 C 24 62, 36 54, 52 58 C 70 64, 78 40, 96 36 C 114 32, 122 26, 144 18"
-                      fill="none"
-                      stroke="url(#hero-line)"
-                      strokeWidth="3"
-                      strokeLinecap="round"
+              <div className="relative w-full overflow-hidden" style={{ aspectRatio: "16/10", minHeight: 200, backgroundColor: "#1a1a1a" }}>
+                {imgErr ? (
+                  <div className="w-full h-full bg-gray-300" />
+                ) : (
+                  <>
+                    <Image
+                      src="/images/hero-gopchang.png"
+                      alt="홍대 곱창집 그릴"
+                      fill
+                      className="object-contain"
+                      sizes="(max-width: 1024px) 100vw, 520px"
+                      onError={() => setImgErr(true)}
                     />
-                    <path
-                      d="M4 70 C 24 62, 36 54, 52 58 C 70 64, 78 40, 96 36 C 114 32, 122 26, 144 18 L 160 80 L 0 80 Z"
-                      fill="url(#hero-line)"
-                      opacity="0.15"
+                    <div
+                      className="absolute inset-0 pointer-events-none"
+                      style={{
+                        background: "radial-gradient(ellipse 100% 80% at 100% 100%, #0f0f0f 0%, #141414 25%, rgba(20,20,20,0.85) 45%, rgba(10,10,10,0.4) 65%, transparent 85%)",
+                      }}
                     />
-                  </svg>
+                  </>
+                )}
+                <span
+                  className="absolute rounded-[20px] text-black font-bold text-xs"
+                  style={{ top: 10, right: 10, background: "#FFD600", padding: "4px 10px" }}
+                >
+                  🥇 홍대 곱창 검색 1위
+                </span>
+              </div>
+              <div className="px-5 py-3" style={{ padding: "14px 20px" }}>
+                <h3 className="font-bold text-[#111]" style={{ fontSize: 17 }}>홍대 OO곱창집</h3>
+                <p className="text-sm mt-0.5">
+                  <span className="text-[#FFD600]">★★★★★ 4.9</span> <span className="text-[#666]">(리뷰 2,180개)</span>
+                </p>
+                <div className="border-t border-[#f0f0f0] pt-2.5 mt-2.5 grid grid-cols-2 sm:grid-cols-4 gap-2 text-center">
+                  <div>
+                    <p className="font-extrabold text-[#111]" style={{ fontSize: 17 }}>5,240회</p>
+                    <p className="text-[11px] text-[#888]">월 클릭</p>
+                  </div>
+                  <div>
+                    <p className="font-extrabold text-[#111]" style={{ fontSize: 17 }}>128건</p>
+                    <p className="text-[11px] text-[#888]">전화문의</p>
+                  </div>
+                  <div>
+                    <p className="font-extrabold text-[#111]" style={{ fontSize: 17 }}>2,410회</p>
+                    <p className="text-[11px] text-[#888]">길찾기</p>
+                  </div>
+                  <div className="col-span-2 sm:col-span-1">
+                    <p className="font-extrabold text-[#03C75A]" style={{ fontSize: 17 }}>+156명</p>
+                    <p className="text-[11px] text-[#888]">실방문</p>
+                  </div>
                 </div>
-              </div>
-              <div className="mt-3 flex items-center justify-between text-[11px] text-slate-300">
-                <span>실행 전 대비</span>
-                <span className="font-semibold text-emerald-300">매출 지표 +280% / 4주</span>
-              </div>
-            </div>
-
-            {/* 좌측 상단: 모바일 알림 카드 */}
-            <div className="animate-float-slow glass absolute -left-4 top-4 w-44 -translate-y-2 rounded-2xl border border-white/15 bg-slate-900/80 px-3 py-3 text-[11px] text-slate-100 shadow-lg">
-              <div className="mb-1.5 flex items-center gap-2">
-                <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#FF6F0F] text-xs font-bold text-white">
-                  당
+                <div className="mt-3 pt-3 border-t border-[#e5e7eb] flex items-center justify-between gap-2">
+                  <span className="text-[13px] font-bold text-[#111]">매출 전환 (4주차 기준)</span>
+                  <span className="text-[16px] font-extrabold text-[#03C75A]">+280%</span>
                 </div>
-                <span className="text-[10px] text-slate-400">방금 전 · 당근마켓</span>
-              </div>
-              <p className="leading-snug">
-                <span className="font-semibold text-white">동네 주민 12명</span>이
-                <br />
-                단골을 새로 맺었습니다.
-              </p>
-            </div>
-
-            {/* 우측 하단: 네이버 플레이스 랭킹 카드 */}
-            <div className="animate-float-fast glass absolute -right-3 bottom-4 w-48 translate-y-2 rounded-2xl border border-white/15 bg-slate-900/85 px-3 py-3 text-[11px] text-slate-100 shadow-xl">
-              <div className="mb-2 rounded-full bg-[#03C75A] px-3 py-1 text-[10px] font-semibold text-black">
-                NAVER 플레이스 · 지역 검색
-              </div>
-              <p className="text-xs font-semibold text-white">홍대 맛집 검색 1위 고정</p>
-              <div className="mt-1 flex items-center justify-between">
-                <span className="text-[11px] text-slate-300">지난 90일 유지</span>
-                <span className="text-[11px] text-[#FFD700]">★★★★★ 4.9</span>
               </div>
             </div>
           </div>
@@ -146,4 +155,3 @@ export function HeroSection() {
     </section>
   );
 }
-
