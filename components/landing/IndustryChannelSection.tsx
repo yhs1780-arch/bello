@@ -26,7 +26,7 @@ const DATA: CaseData[] = [
     id: "hospital",
     label: "병원/의료",
     emoji: "🏥",
-    image: "https://images.unsplash.com/photo-1631815588090-d4bfec5b1ccb?w=700&q=80",
+    image: "https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=800&q=80",
     type: "강남 피부과 / 시술 전문",
     period: "6주차",
     metrics: [
@@ -47,7 +47,7 @@ const DATA: CaseData[] = [
     id: "beauty",
     label: "뷰티/시술",
     emoji: "💄",
-    image: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=700&q=80",
+    image: "/images/nail-salon-case.png",
     type: "홍대 네일샵 / 뷰티 전문",
     period: "6주차",
     metrics: [
@@ -68,7 +68,7 @@ const DATA: CaseData[] = [
     id: "fnb",
     label: "음식점",
     emoji: "🍽️",
-    image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=700&q=80",
+    image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80",
     type: "마포구 한식당 / F&B",
     period: "6주차",
     metrics: [
@@ -89,7 +89,7 @@ const DATA: CaseData[] = [
     id: "health",
     label: "헬스/학원",
     emoji: "🏋️",
-    image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=700&q=80",
+    image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&q=80",
     type: "강남구 키즈 체육 / 학원",
     period: "6주차",
     metrics: [
@@ -110,7 +110,7 @@ const DATA: CaseData[] = [
     id: "commerce",
     label: "쇼핑몰",
     emoji: "🛒",
-    image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=700&q=80",
+    image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&q=80",
     type: "뷰티 커머스 / 쿠팡 스토어",
     period: "6주차",
     metrics: [
@@ -131,7 +131,7 @@ const DATA: CaseData[] = [
     id: "etc",
     label: "인테리어/기타",
     emoji: "🏠",
-    image: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=700&q=80",
+    image: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800&q=80",
     type: "수원 인테리어 / 시공",
     period: "6주차",
     metrics: [
@@ -213,9 +213,9 @@ export function IndustryChannelSection() {
           {/* 좌측 60%: 성과 사례 카드 */}
           <div className="lg:col-span-3 min-w-0">
             <div className="rounded-[20px] overflow-hidden" style={{ backgroundColor: "#131929" }}>
-              <div className="relative h-[220px]">
+              <div className="relative w-full bg-[#0f1623]" style={{ aspectRatio: "16/10", minHeight: 200 }}>
                 <ImgFallback src={active.image} alt="" fill className="object-cover" />
-                <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, transparent 40%, #131929 100%)" }} />
+                <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(to bottom, transparent 35%, #131929 95%)" }} />
                 <p className="absolute bottom-4 left-4 text-white font-bold text-base sm:text-lg">{active.type}</p>
                 <span className="absolute bottom-4 right-4 px-3 py-1 rounded-full text-white text-xs font-medium" style={{ backgroundColor: "rgba(0,0,0,0.7)" }}>
                   진행 {active.period}

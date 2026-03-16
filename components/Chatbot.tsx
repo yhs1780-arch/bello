@@ -172,7 +172,7 @@ export function Chatbot() {
       <motion.button
         type="button"
         onClick={handleOpen}
-        className="flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-blue-600 to-purple-600 text-white shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 transition-shadow shrink-0"
+        className="fixed bottom-20 md:bottom-6 right-4 md:right-6 z-40 flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-blue-600 to-purple-600 text-white shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 transition-shadow shrink-0 pb-[env(safe-area-inset-bottom)] pr-[env(safe-area-inset-right)]"
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.98 }}
         aria-label="챗봇 열기"

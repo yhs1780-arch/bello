@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
-import { FloatingRight } from "./FloatingRight";
+import { Chatbot } from "./Chatbot";
 import { MobileBottomCta } from "./MobileBottomCta";
 import { LiveToast } from "./LiveToast";
 import { FloatingStatusBar } from "./FloatingStatusBar";
@@ -20,7 +20,7 @@ export function ConditionalLayout({ children }: { children: React.ReactNode }) {
         {children}
       </main>
       <Footer />
-      <FloatingRight />
+      <Chatbot />
       {!isHome && <MobileBottomCta />}
       {!isHome && <LiveToast />}
       <FloatingStatusBar />

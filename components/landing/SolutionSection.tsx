@@ -14,8 +14,17 @@ const REASONS = [
 
 export function SolutionSection() {
   return (
-    <section className="relative w-full py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-slate-900/40 border-y border-white/5 overflow-hidden">
-      <div className="max-w-6xl mx-auto">
+    <section className="relative w-full py-16 sm:py-24 px-4 sm:px-6 lg:px-8 border-y border-white/5 overflow-hidden bg-[#0A1020]">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_15%,rgba(255,214,0,0.08),transparent_28%),radial-gradient(circle_at_80%_85%,rgba(34,197,94,0.10),transparent_32%)]" />
+      <div className="relative max-w-6xl mx-auto">
+        <motion.p
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center text-xs sm:text-sm text-amber-300/90 font-semibold tracking-[0.12em] mb-3"
+        >
+          BELLO EXECUTION SYSTEM
+        </motion.p>
         <motion.h2
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -32,13 +41,19 @@ export function SolutionSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.08 }}
-              className="p-5 sm:p-6 rounded-xl bg-white/5 border border-white/10 hover:border-[#FFD600]/30 transition-colors"
+              className="group relative p-5 sm:p-6 rounded-2xl border transition-all duration-300 hover:-translate-y-1"
+              style={{
+                background: "linear-gradient(145deg, rgba(18,25,46,0.92) 0%, rgba(9,14,30,0.92) 100%)",
+                borderColor: "rgba(255,214,0,0.20)",
+                boxShadow: "inset 0 1px 0 rgba(255,255,255,0.06), 0 12px 30px rgba(2,6,23,0.35)",
+              }}
             >
-              <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4" style={{ backgroundColor: "rgba(255,214,0,0.2)" }}>
-                <Icon className="w-6 h-6 text-[#FFD700]" />
+              <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-[radial-gradient(circle_at_80%_20%,rgba(255,214,0,0.08),transparent_45%)]" />
+              <div className="relative w-12 h-12 rounded-xl flex items-center justify-center mb-4 border border-amber-300/30 bg-amber-300/10">
+                <Icon className="w-5 h-5 text-[#FFD700]" />
               </div>
-              <h3 className="text-lg font-bold text-white mb-2 break-keep">{title}</h3>
-              <p className="text-slate-300 text-sm leading-relaxed break-keep">{desc}</p>
+              <h3 className="relative text-lg font-bold text-white mb-2 break-keep">{title}</h3>
+              <p className="relative text-slate-300 text-sm leading-relaxed break-keep">{desc}</p>
             </motion.div>
           ))}
         </div>

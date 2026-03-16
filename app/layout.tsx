@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { ConditionalLayout } from "@/components/ConditionalLayout";
+import { JsonLd } from "@/app/components/JsonLd";
 import { getSiteUrl, isProductionSite } from "@/app/lib/site";
 import "./globals.css";
 
@@ -9,21 +10,29 @@ const IS_PRODUCTION = isProductionSite();
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "벨로컴퍼니 | 매출을 폭발시키는 하이엔드 마케팅 실행사",
+  title: "벨로컴퍼니 | 마케팅 실행사 · 네이버플레이스·광고·바이럴 마케팅",
   description:
-    "광고비 낭비는 이제 그만. 네이버 플레이스, 블로그, 당근마켓, 인스타, 샤오홍슈까지. 데이터로 증명하는 B2B 마케팅 실행사 벨로컴퍼니가 사장님의 매출을 올려드립니다.",
+    "마케팅사 벨로컴퍼니는 마케팅 실행사로 네이버플레이스, 광고, 바이럴 마케팅을 직접 실행합니다. 마케팅·네이버플레이스·광고·바이럴 전문. 수수료 0%, 매출로 증명.",
   keywords: [
-    "벨로컴퍼니",
+    "마케팅사",
     "마케팅",
     "마케팅 실행사",
+    "네이버플레이스",
+    "네이버 플레이스",
+    "광고",
+    "바이럴",
+    "바이럴 마케팅",
+    "벨로컴퍼니",
     "마케팅 대행사",
     "네이버 플레이스 상위노출",
+    "네이버 플레이스 마케팅",
+    "광고 대행",
     "병원 마케팅",
     "식당 마케팅",
     "카페 마케팅",
     "당근마켓 마케팅",
+    "인스타그램 마케팅",
     "샤오홍슈 마케팅",
-    "바이럴 마케팅",
     "B2B 마케팅",
   ],
   // 네이버 서치어드바이저 소유자 확인: 서치어드바이저에서 발급한 코드로 교체하세요.
@@ -37,27 +46,29 @@ export const metadata: Metadata = {
     shortcut: "/favicon.png",
     apple: "/favicon.png",
   },
+  // 카카오·네이버는 og:image에 절대 URL 필수. 동적 이미지 경로를 절대 URL로 명시.
   openGraph: {
-    title: "벨로컴퍼니 | 진짜 성과를 만드는 마케팅 실행사",
+    title: "벨로컴퍼니 | 마케팅 실행사 · 네이버플레이스·광고·바이럴 마케팅",
     description:
-      "네이버 플레이스 1위, 당근마켓 단골 폭발. 결과로 증명하는 하이엔드 실행팀입니다.",
+      "마케팅사 벨로컴퍼니. 마케팅·네이버플레이스·광고·바이럴 전문 실행사. 수수료 0%, 매출로 증명.",
     type: "website",
     url: SITE_URL,
     siteName: "벨로컴퍼니",
     locale: "ko_KR",
     images: [
       {
-        url: "/images/og-image.jpg",
+        url: `${SITE_URL}/opengraph-image`,
         width: 1200,
         height: 630,
-        alt: "벨로컴퍼니 | 매출을 폭발시키는 하이엔드 마케팅 실행사",
+        alt: "벨로컴퍼니 | 마케팅 실행사 · 네이버플레이스·광고·바이럴 마케팅",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "벨로컴퍼니 | 진짜 성과를 만드는 마케팅 실행사",
-    description: "네이버 플레이스 1위, 당근마켓 단골 폭발. 결과로 증명하는 하이엔드 실행팀입니다.",
+    title: "벨로컴퍼니 | 마케팅 실행사 · 네이버플레이스·광고·바이럴 마케팅",
+    description: "마케팅사 벨로컴퍼니. 마케팅·네이버플레이스·광고·바이럴 전문 실행사.",
+    images: [`${SITE_URL}/opengraph-image`],
   },
   robots: IS_PRODUCTION
     ? { index: true, follow: true, googleBot: { index: true, follow: true } }
@@ -75,6 +86,7 @@ export default function RootLayout({
   return (
     <html lang="ko" className="dark overflow-x-hidden" suppressHydrationWarning>
       <body className="min-h-screen bg-[#0B1120] text-slate-100 font-sans antialiased overflow-x-hidden max-w-[100vw]">
+        <JsonLd />
         <ThemeProvider>
           <ConditionalLayout>{children}</ConditionalLayout>
         </ThemeProvider>

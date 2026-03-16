@@ -10,9 +10,9 @@ const KPI = [
 ];
 
 const CASES = [
-  { name: "OO 한의원", period: "4주차", rank: "22위 → 12위", result: "길찾기·전화 문의 대폭 상승" },
-  { name: "OO 치과", period: "3주차", rank: "11위 → 5위", result: "네이버 예약률 급증" },
-  { name: "OO 헬스장", period: "5주차", rank: "14위 → 8위", result: "동네 노출 및 방문 상담 증가" },
+  { name: "OO한의원", period: "4주차", rank: "22위 → 12위", result: "길찾기 및 전화 문의 대폭 상승" },
+  { name: "OO치과", period: "3주차", rank: "11위 → 5위", result: "네이버 예약률 급증" },
+  { name: "OO헬스장", period: "5주차", rank: "14위 → 8위", result: "동네 노출 및 방문 상담 증가" },
 ];
 
 export function CaseSection() {
@@ -25,7 +25,7 @@ export function CaseSection() {
           viewport={{ once: true }}
           className="text-xl sm:text-2xl lg:text-4xl font-bold text-white text-center break-keep mb-2"
         >
-          긴말 않겠습니다. 단 몇 주 만에 만든 성과입니다
+          긴말하지 않겠습니다. 단 몇 주 만에 만들어낸 사장님들의 성과입니다.
         </motion.h2>
         <motion.p
           initial={{ opacity: 0 }}
@@ -61,6 +61,11 @@ export function CaseSection() {
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
               className="p-5 sm:p-6 rounded-xl bg-white/5 border border-white/10 hover:border-[#FFD600]/30 transition-colors"
+              style={{
+                background: "linear-gradient(145deg, rgba(8,35,42,0.72) 0%, rgba(8,22,37,0.86) 100%)",
+                borderColor: "rgba(16,185,129,0.26)",
+                boxShadow: "inset 0 1px 0 rgba(255,255,255,0.05), 0 16px 34px rgba(2,12,27,0.35)",
+              }}
             >
               <span className="inline-block px-2.5 py-0.5 rounded-full text-xs font-medium text-emerald-400 bg-emerald-500/20 mb-3">
                 업종
@@ -71,7 +76,9 @@ export function CaseSection() {
                 순위 변화: <span className="text-[#FFD600]">{c.rank}</span>
               </p>
               <p className="text-slate-300 text-sm mt-1">{c.result}</p>
-              <p className="text-[#FFD600] text-sm font-medium mt-4">상세 보기 →</p>
+              <Link href="/cases" className="text-[#FFD600] text-sm font-medium mt-4 inline-block hover:underline">
+                상세 보기 →
+              </Link>
             </motion.div>
           ))}
         </div>

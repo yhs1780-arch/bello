@@ -13,3 +13,13 @@
 | `mockup-blog.png` | 네이버 블로그 파급력 |
 
 파일이 없으면 "이미지 적용 대기중"이 표시됩니다.
+
+---
+
+## 네이버·카카오톡 링크 공유 시 대표 이미지 (OG 이미지)
+
+- **현재 설정**: `app/layout.tsx`에서 `/showcase/showcase-naver-1st.png`를 사용 중입니다.
+- **커스텀 이미지**로 바꾸려면:
+  1. **회사 대표/바이럴용 이미지**를 준비합니다 (가로 1200px × 세로 630px 권장).
+  2. `public/images/og-image.jpg`로 저장한 뒤, `app/layout.tsx`의 `openGraph.images[0].url`과 `twitter.images[0]`을 `"/images/og-image.jpg"`로 수정합니다.
+- 또는 `public/showcase/showcase-naver-1st.png` 파일을 같은 비율의 원하는 이미지로 **덮어쓰기**해도 됩니다.

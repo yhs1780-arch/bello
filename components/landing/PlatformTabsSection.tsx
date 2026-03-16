@@ -31,14 +31,16 @@ const TABS = [
   { id: "baemin", label: "배민/커머스", color: BAEMIN },
 ];
 
-const BAR_DATA: Record<string, { bars: BarRow[]; tags: string[] }> = {
+const BAR_DATA: Record<string, { bars: BarRow[]; tags: string[]; resultLine?: string }> = {
   naver: {
     bars: [
       { icon: "👁", name: "월간 노출", beforeShow: true, beforeVal: 320, afterVal: "4,100", beforePct: 18, afterPct: 82, badge: "▲380%", badgeYellow: false },
       { icon: "📞", name: "전화 문의", beforeShow: true, beforeVal: 8, afterVal: 94, beforePct: 12, afterPct: 68, badge: "▲340%", badgeYellow: false },
-      { icon: "📅", name: "신규 예약", beforeShow: true, beforeVal: 12, afterVal: 187, beforePct: 12, afterPct: 78, badge: "▲420%", badgeYellow: false },
+      { icon: "👣", name: "실방문 전환", beforeShow: true, beforeVal: 18, afterVal: "156", beforePct: 10, afterPct: 72, badge: "▲267%", badgeYellow: false },
+      { icon: "💰", name: "매출 증가", beforeShow: true, beforeVal: "기준", afterVal: "+280%", beforePct: 15, afterPct: 88, badge: "4주차", badgeYellow: true },
     ],
     tags: ["#고품질블로그포스팅", "#전략키워드SEO", "#실사용자리뷰빌드업", "#플레이스최적화", "#메뉴사진교체", "#답변관리"],
+    resultLine: "실방문 156건 · 매출 전환 가시화 (4주차 기준)",
   },
   danggeun: {
     bars: [
@@ -155,7 +157,7 @@ function BeforeAfterBar({ row, active }: { row: BarRow; active: boolean }) {
 export function PlatformTabsSection() {
   const [activeIndex, setActiveIndex] = useState(0);
   const activeId = TABS[activeIndex].id;
-  const { bars, tags } = BAR_DATA[activeId];
+  const { bars, tags, resultLine } = BAR_DATA[activeId];
 
   return (
     <section id="platform-section" className="relative w-full py-16 sm:py-24 px-4 sm:px-6 lg:px-8 overflow-hidden bg-[#0B0F1A]">
@@ -207,8 +209,8 @@ export function PlatformTabsSection() {
                       <div className="h-11 flex items-center px-4 text-white font-bold text-sm" style={{ backgroundColor: NAVER_GREEN }}>
                         NAVER 플레이스
                       </div>
-                      <div className="relative h-40 bg-gray-200">
-                        <Img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&q=80" alt="" fill className="object-cover" />
+                      <div className="relative w-full bg-gray-100" style={{ aspectRatio: "16/10", minHeight: 200 }}>
+                        <Img src="/images/hanwon-naver-place.png" alt="강남 한의원" fill className="object-cover" />
                         <span className="absolute top-3 right-3 px-2.5 py-1 rounded-[20px] text-black font-bold text-xs bg-[#FFD600]">🥇 지역 검색 1위</span>
                       </div>
                       <div className="p-4">
@@ -220,18 +222,15 @@ export function PlatformTabsSection() {
                           <div><p className="text-[11px] text-[#888]">전화문의</p><p className="text-[20px] font-extrabold text-[#111]">94건</p></div>
                           <div><p className="text-[11px] text-[#888]">길찾기</p><p className="text-[20px] font-extrabold text-[#111]">1,832회</p></div>
                         </div>
+                        <p className="text-[12px] text-[#03C75A] font-medium mt-3 pt-2 border-t border-gray-100">실방문 156건 · 매출 전환 +280% (4주차)</p>
                       </div>
                       <div className="bg-[#F8F9FA] px-4 py-3">
                         <div className="flex gap-2 items-start mb-2">
-                          <div className="w-10 h-10 rounded-full overflow-hidden shrink-0 relative bg-gray-300">
-                            <Img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&q=80" alt="" fill className="object-cover" />
-                          </div>
+                          <div className="w-10 h-10 rounded-full shrink-0 flex items-center justify-center text-white font-bold text-sm" style={{ backgroundColor: "#03C75A" }}>김</div>
                           <div><p className="text-[13px] text-[#333]">체형교정 후 확실히 달라졌어요...</p><p className="text-[11px] text-[#FFD600]">★★★★★</p></div>
                         </div>
                         <div className="flex gap-2 items-start">
-                          <div className="w-10 h-10 rounded-full overflow-hidden shrink-0 relative bg-gray-300">
-                            <Img src="https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?w=80&q=80" alt="" fill className="object-cover" />
-                          </div>
+                          <div className="w-10 h-10 rounded-full shrink-0 flex items-center justify-center text-white font-bold text-sm" style={{ backgroundColor: "#0ea5e9" }}>이</div>
                           <div><p className="text-[13px] text-[#333]">추나요법 받고 허리 통증이 나았어요...</p><p className="text-[11px] text-[#FFD600]">★★★★★</p></div>
                         </div>
                       </div>
@@ -248,8 +247,8 @@ export function PlatformTabsSection() {
                         </div>
                         <p className="text-[16px] font-bold text-[#111]">🍜 오늘 점심, 줄 서지 말고 미리 예약하세요</p>
                         <p className="text-[14px] text-[#555] mt-1">저희 가게 다음 주부터 웨이팅 시작됩니다...</p>
-                        <div className="relative h-[140px] rounded-lg mt-2 overflow-hidden bg-gray-200">
-                          <Img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80" alt="" fill className="object-cover" />
+                        <div className="relative w-full rounded-lg mt-2 overflow-hidden bg-gray-200" style={{ aspectRatio: "16/10", minHeight: 100 }}>
+                          <Img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80" alt="" fill className="object-contain" />
                         </div>
                         <p className="text-sm text-[#555] mt-2">❤️ 328 &nbsp; 💬 47 &nbsp; 🥕 단골 1,840명</p>
                         <p className="text-xs font-medium text-[#374151] mt-3 mb-2">단골 증가 추이 (1주 → 6주)</p>
@@ -290,8 +289,8 @@ export function PlatformTabsSection() {
                           <span className="ml-auto text-[12px] text-gray-400">팔로워 18,400명</span>
                         </div>
                         <div className="grid grid-cols-2 gap-0">
-                          <div className="col-span-2 relative h-[260px] bg-gray-900">
-                            <Img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80" alt="" fill className="object-cover" />
+                          <div className="col-span-2 relative w-full bg-gray-900" style={{ aspectRatio: "16/10", minHeight: 200 }}>
+                            <Img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80" alt="" fill className="object-contain" />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
                             <span className="absolute top-2.5 right-2.5 text-white text-xs rounded px-2 py-0.5" style={{ background: "rgba(0,0,0,0.6)", padding: "3px 8px" }}>
                               ▶ 릴스
@@ -307,12 +306,12 @@ export function PlatformTabsSection() {
                               </div>
                             </div>
                           </div>
-                          <div className="relative h-[140px] bg-gray-800">
-                            <Img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&q=80" alt="" fill className="object-cover" />
+                          <div className="relative w-full bg-gray-800" style={{ aspectRatio: "1", minHeight: 100 }}>
+                            <Img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&q=80" alt="" fill className="object-contain" />
                             <div className="absolute bottom-0 left-0 right-0 p-2 bg-black/50 text-white text-xs">❤️ 2.1만</div>
                           </div>
-                          <div className="relative h-[140px] bg-gray-800">
-                            <Img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&q=80" alt="" fill className="object-cover" />
+                          <div className="relative w-full bg-gray-800" style={{ aspectRatio: "1", minHeight: 100 }}>
+                            <Img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&q=80" alt="" fill className="object-contain" />
                             <div className="absolute bottom-0 left-0 right-0 p-2 bg-black/50 text-white text-xs">❤️ 1.8만</div>
                           </div>
                         </div>
@@ -329,8 +328,8 @@ export function PlatformTabsSection() {
                   {activeId === "xiaohongshu" && (
                     <div className="bg-white rounded-[20px] overflow-hidden shadow-[0_25px_60px_rgba(0,0,0,0.5)]">
                       <div className="h-11 flex items-center px-4 text-white font-bold text-sm" style={{ backgroundColor: XIAOHONGSHU }}>小红书 샤오홍슈</div>
-                      <div className="relative h-40 bg-gray-200">
-                        <Img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=600&q=80" alt="" fill className="object-cover" />
+                      <div className="relative w-full bg-gray-200" style={{ aspectRatio: "16/10", minHeight: 160 }}>
+                        <Img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=600&q=80" alt="" fill className="object-contain" />
                         <span className="absolute top-3 right-3 px-2 py-0.5 rounded text-xs font-bold text-white" style={{ backgroundColor: XIAOHONGSHU }}>K-뷰티 추천</span>
                       </div>
                       <div className="p-4">
@@ -346,8 +345,8 @@ export function PlatformTabsSection() {
                   {activeId === "baemin" && (
                     <div className="bg-white rounded-[20px] overflow-hidden shadow-[0_25px_60px_rgba(0,0,0,0.5)]">
                       <div className="h-11 flex items-center px-4 text-white font-bold text-sm" style={{ backgroundColor: BAEMIN }}>배달의민족</div>
-                      <div className="relative h-[140px] bg-gray-200">
-                        <Img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&q=80" alt="" fill className="object-cover" />
+                      <div className="relative w-full bg-gray-200" style={{ aspectRatio: "16/10", minHeight: 140 }}>
+                        <Img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&q=80" alt="" fill className="object-contain" />
                         <span className="absolute top-3 left-3 px-2 py-0.5 rounded text-xs font-bold text-black bg-yellow-400">🏆 이 시간 1위</span>
                       </div>
                       <div className="p-4">
@@ -377,22 +376,23 @@ export function PlatformTabsSection() {
               </AnimatePresence>
             </div>
 
-            {/* Before/After 30% */}
-            <div className="xl:w-[30%] min-w-0 shrink-0">
+            {/* 실행 전 vs 실행 후 + 결과 한 블록 */}
+            <div className="xl:w-[30%] min-w-0 shrink-0 flex flex-col">
               <h4 className="text-[13px] mb-4" style={{ color: "#9CA3AF" }}>실행 전 vs 실행 후</h4>
               {bars.map((row, i) => (
                 <BeforeAfterBar key={i} row={row} active={true} />
               ))}
-              <div className="pt-2">
-                <h4 className="text-[12px] mb-3" style={{ color: "#9CA3AF" }}>이렇게 실행합니다</h4>
+              {resultLine && (
+                <p className="text-[12px] text-emerald-300/95 mt-3 pt-3 border-t border-white/10 font-medium">{resultLine}</p>
+              )}
+              <div className="mt-3 pt-3 border-t border-white/10">
                 <div className="flex flex-wrap gap-1.5">
                   {tags.map((tag, i) => (
-                    <span key={i} className="px-2.5 py-1 rounded-[20px] text-[11px] border border-[#374151] text-[#D1D5DB]">
+                    <span key={i} className="px-2 py-0.5 rounded-md text-[11px] bg-white/5 text-slate-300 border border-white/10">
                       {tag}
                     </span>
                   ))}
                 </div>
-                <p className="text-[11px] text-[#6B7280] mt-3">벨로컴퍼니가 직접 기획·실행합니다. 외주 없음.</p>
               </div>
             </div>
           </div>
