@@ -47,7 +47,9 @@ export function Footer() {
           <div className="lg:col-span-5">
             <BelloLogo className="inline-block mb-4" />
             <p className="text-slate-400 text-sm leading-relaxed max-w-md mb-6 break-keep">
-              데이터로 증명하는 압도적 실행력. 기획부터 실행까지 빈틈없는 다이렉트 솔루션, BELLO.
+              데이터로 증명하는 압도적 실행력.
+              <br />
+              기획부터 실행까지 빈틈없는 다이렉트 솔루션, BELLO.
             </p>
             <dl className="grid grid-cols-1 gap-3 text-sm">
               <div className="flex items-start gap-3">

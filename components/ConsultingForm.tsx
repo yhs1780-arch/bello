@@ -80,7 +80,9 @@ export function ConsultingForm() {
                 <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white mb-3 sm:mb-4 break-keep leading-snug">
                   무료 상담만 받아도
                   <br />
-                  30만 원 상당의 &apos;우리 가게 맞춤 노출 전략&apos;을 드립니다.
+                  30만 원 상당의 우리 가게 맞춤 노출
+                  <br />
+                  전략을 드립니다.
                 </h2>
                 <p className="text-slate-300 text-xs sm:text-sm lg:text-base leading-relaxed space-y-1 break-keep">
                   ✅ 우리 가게가 안 보이는 이유 진단

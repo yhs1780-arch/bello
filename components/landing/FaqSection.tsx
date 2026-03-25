@@ -4,10 +4,20 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 
-const FAQ_ITEMS = [
+import type { ReactNode } from "react";
+
+type FAQItem = { q: string; a: ReactNode };
+
+const FAQ_ITEMS: FAQItem[] = [
   {
     q: "정말로 손님이 늘어날까요?",
-    a: "100% 실제 반응을 모아 홍보합니다. 97%의 높은 재계약률이 증명합니다. 성과가 없으면 저희도 재계약을 받을 수 없습니다.",
+    a: (
+      <>
+        100% 실제 반응을 모아 홍보합니다. 97%의 높은 재계약률이 증명합니다.
+        <br />
+        성과가 없으면 저희도 재계약을 받을 수 없습니다.
+      </>
+    ),
   },
   {
     q: "효과를 보려면 얼마나 걸리나요?",
@@ -15,7 +25,13 @@ const FAQ_ITEMS = [
   },
   {
     q: "계약은 어떻게 진행되나요?",
-    a: "무료 상담 → 매장 진단 → 맞춤 전략 제안 → 계약 순서로 진행됩니다. 장기 계약 강요는 없으며, 월 단위로 진행해 성과를 확인하며 연장 여부를 결정하실 수 있습니다.",
+    a: (
+      <>
+        무료 상담 → 매장 진단 → 맞춤 전략 제안 → 계약 순서로 진행됩니다.
+        <br />
+        장기 계약 강요는 없으며, 월 단위로 진행해 성과를 확인하며 연장 여부를 결정하실 수 있습니다.
+      </>
+    ),
   },
   {
     q: "가게에 피해가 가는 일은 없나요?",

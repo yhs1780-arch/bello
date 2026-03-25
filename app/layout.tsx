@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     shortcut: "/favicon.png",
     apple: "/favicon.png",
   },
-  // 카카오·네이버는 og:image에 절대 URL 필수. 동적 이미지 경로를 절대 URL로 명시.
+  // 카카오·네이버는 og:image에 절대 URL 필수. 카카오톡 공유 썸네일은 og-kakao.png 사용.
   openGraph: {
     title: "벨로컴퍼니 | 마케팅 실행사 · 네이버플레이스·광고·바이럴 마케팅",
     description:
@@ -57,7 +57,7 @@ export const metadata: Metadata = {
     locale: "ko_KR",
     images: [
       {
-        url: `${SITE_URL}/opengraph-image`,
+        url: `${SITE_URL}/og-kakao.png`,
         width: 1200,
         height: 630,
         alt: "벨로컴퍼니 | 마케팅 실행사 · 네이버플레이스·광고·바이럴 마케팅",
@@ -68,7 +68,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "벨로컴퍼니 | 마케팅 실행사 · 네이버플레이스·광고·바이럴 마케팅",
     description: "마케팅사 벨로컴퍼니. 마케팅·네이버플레이스·광고·바이럴 전문 실행사.",
-    images: [`${SITE_URL}/opengraph-image`],
+    images: [`${SITE_URL}/og-kakao.png`],
   },
   robots: IS_PRODUCTION
     ? { index: true, follow: true, googleBot: { index: true, follow: true } }
@@ -90,6 +90,14 @@ export default function RootLayout({
         <ThemeProvider>
           <ConditionalLayout>{children}</ConditionalLayout>
         </ThemeProvider>
+        {/* 우측 하단 워터마크 가림 (극히 좁은 코너만, 챗봇 버튼은 가리지 않음) */}
+        <div
+          className="fixed bottom-0 right-0 z-[35] h-14 w-14 pointer-events-none"
+          style={{
+            background: "radial-gradient(circle at 100% 100%, #0B1120 50%, transparent 70%)",
+          }}
+          aria-hidden
+        />
       </body>
     </html>
   );

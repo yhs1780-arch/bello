@@ -7,7 +7,7 @@ const STATS = [
   { end: 100, suffix: "억+", label: "월간 마케팅 취급액" },
   { end: 2000, suffix: "명+", label: "각 분야별 전문 투입 인력" },
   { end: 10000, suffix: "건+", label: "누적 진행 성공 캠페인" },
-  { end: 3, suffix: "개 지사", label: "서울·전북·전남 지사" },
+  { end: 4, suffix: "개 지사", label: "서울·광주·전북·전남 지사" },
 ];
 
 function useCountUp(end: number, inView: boolean, duration = 2000) {
@@ -78,10 +78,16 @@ export function CompanyIntroSection() {
             <h2 className="text-xl sm:text-2xl lg:text-4xl xl:text-[2.25rem] font-bold text-white leading-snug break-keep mb-4">
               우리는 말뿐인 &apos;대행사&apos;가 아니라,
               <br />
-              진짜 성과를 만드는 &apos;초대형 실행팀&apos;입니다.
+              진짜 성과를 만드는
+              <br />
+              초대형 실행팀 입니다.
             </h2>
             <p className="text-slate-400 text-sm sm:text-base leading-relaxed break-keep max-w-lg">
-              수많은 대행사들이 결국 벨로컴퍼니를 찾습니다. 하청에 하청을 거치는 거품을 걷어내고, 사장님과 다이렉트로 만나 최고의 퍼포먼스를 제공합니다.
+              수많은 대행사들이 결국 벨로컴퍼니를 찾습니다.
+              <br />
+              하청에 하청을 거치는 거품을 걷어내고,
+              <br />
+              사장님과 다이렉트로 만나 최고의 퍼포먼스를 제공합니다.
             </p>
           </div>
           <div className="grid grid-cols-2 gap-3 sm:gap-4">
