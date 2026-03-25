@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Send, Loader2, CheckCircle } from "lucide-react";
 
@@ -14,6 +14,18 @@ const PRIVACY_TEXT = `개인정보 수집 및 이용 동의
 4. 동의 거부권: 귀하는 개인정보 수집 및 이용에 동의를 거부할 권리가 있습니다. 단, 거부 시 무료 진단 및 상담 서비스 이용이 제한될 수 있습니다.`;
 
 export function ConsultingForm() {
+  const [leadSource, setLeadSource] = useState<string>("direct");
+
+  // URL 파라미터로 유입경로를 받고, 폼까지 스크롤해도 유지되도록 localStorage에 저장
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const fromParam = params.get("src")?.trim() || params.get("utm_source")?.trim();
+    const fromStorage = window.localStorage.getItem("bello_lead_source");
+    const next = fromParam || fromStorage || "direct";
+    if (fromParam) window.localStorage.setItem("bello_lead_source", fromParam);
+    setLeadSource(next);
+  }, []);
+
   const [formData, setFormData] = useState({
     name: "",
     contact: "",
@@ -39,6 +51,8 @@ export function ConsultingForm() {
       fd.append("이메일", formData.email);
       fd.append("업체명", formData.company);
       fd.append("문의내용", formData.concern);
+      // 리드 출처 (방문 경로) 함께 전송
+      fd.append("유입경로", leadSource);
       fd.append("개인정보동의", privacyAgree ? "동의함" : "");
 
       const res = await fetch(FORMSPREE_ENDPOINT, {
