@@ -160,9 +160,9 @@ export function PlatformTabsSection() {
   const { bars, tags, resultLine } = BAR_DATA[activeId];
 
   return (
-    <section id="platform-section" className="relative w-full py-16 sm:py-24 px-4 sm:px-6 lg:px-8 overflow-hidden bg-[#0B0F1A]">
+    <section id="platform-section" className="relative w-full py-12 sm:py-20 px-4 sm:px-6 lg:px-8 overflow-hidden bg-[#0B0F1A]">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-10 sm:mb-12">
+        <div className="text-center mb-8 sm:mb-10">
           <span className="inline-block px-4 py-1.5 rounded-full border-2 border-[#FFD600] text-[#FFD600] text-xs font-semibold mb-4">
             PROVEN RESULTS
           </span>

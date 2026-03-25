@@ -66,7 +66,7 @@ export function CompanyIntroSection() {
     <section
       id="company-intro"
       ref={ref}
-      className="relative w-full py-16 sm:py-24 lg:py-28 px-4 sm:px-6 lg:px-8 overflow-hidden border-t border-white/5"
+      className="relative w-full py-12 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 overflow-hidden border-t border-white/5"
       style={{ backgroundColor: "#0B1120" }}
     >
       <div className="max-w-7xl mx-auto">

@@ -13,13 +13,13 @@ const PAINS = [
 
 export function PainSection() {
   return (
-    <section className="relative w-full py-16 sm:py-24 px-4 sm:px-6 lg:px-8 overflow-hidden" style={{ backgroundColor: "#0B0F1A" }}>
+    <section className="relative w-full py-12 sm:py-20 px-4 sm:px-6 lg:px-8 overflow-hidden" style={{ backgroundColor: "#0B0F1A" }}>
       <div className="max-w-6xl mx-auto">
         <motion.h2
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-xl sm:text-2xl lg:text-4xl font-bold text-white text-center break-keep mb-10 sm:mb-14"
+          className="text-xl sm:text-2xl lg:text-4xl font-bold text-white text-center break-keep mb-8 sm:mb-12"
         >
           광고비는 계속 쓰는데, 왜 매출은 그대로일까요?
         </motion.h2>
@@ -47,7 +47,7 @@ export function PainSection() {
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-12 sm:mt-16 p-6 sm:p-8 rounded-2xl text-center"
+          className="mt-10 sm:mt-14 p-5 sm:p-7 rounded-2xl text-center"
           style={{ backgroundColor: "#FFD600" }}
         >
           <p className="text-black font-bold text-xl sm:text-2xl lg:text-[24px] leading-snug break-keep">

@@ -40,11 +40,11 @@ function StatCard({ value, title, desc }: { value: string; title: string; desc: 
 export function TrustStatsBar() {
   return (
     <section
-      className="w-full py-10 sm:py-14 border-y border-white/10"
+      className="w-full py-8 sm:py-12 border-y border-white/10"
       style={{ backgroundColor: "#131929" }}
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-4">
           {STATS.map((stat, i) => (
             <div
               key={stat.title}

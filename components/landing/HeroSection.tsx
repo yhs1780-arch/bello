@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export function HeroSection() {
   return (
-    <section className="relative overflow-hidden bg-[#0B1120] pt-24 pb-20">
+    <section className="relative overflow-hidden bg-[#0B1120] pt-20 pb-16 sm:pt-24 sm:pb-20">
       {/* 깊이감 있는 그라데이션 배경 */}
       <div className="absolute inset-0 bg-mesh opacity-80 animate-hero-gradient" />
       <div className="pointer-events-none absolute -left-40 top-0 h-80 w-80 rounded-full bg-blue-500/25 blur-3xl" />
@@ -59,9 +59,9 @@ export function HeroSection() {
         </div>
 
         {/* 우측: 플로팅 성과 카드 UI */}
-        <div className="relative flex h-[340px] items-center justify-center lg:h-[380px]">
+        <div className="relative flex h-[300px] sm:h-[340px] items-center justify-center lg:h-[380px]">
           {/* 베이스 플로팅 패널 */}
-          <div className="glass relative h-full w-full max-w-md rounded-3xl border border-white/10 bg-white/5 p-6 shadow-[0_30px_120px_rgba(15,23,42,0.9)] backdrop-blur-2xl">
+          <div className="glass relative h-full w-full max-w-sm sm:max-w-md rounded-3xl border border-white/10 bg-white/5 p-5 sm:p-6 shadow-[0_30px_120px_rgba(15,23,42,0.9)] backdrop-blur-2xl">
             <div className="mb-5 flex items-center justify-between text-xs text-slate-300">
               <span className="inline-flex items-center gap-1 rounded-full bg-slate-900/70 px-3 py-1">
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
@@ -76,7 +76,7 @@ export function HeroSection() {
                 <span className="font-semibold">월 매출 추이</span>
                 <span className="rounded-full bg-emerald-500/10 px-2 py-0.5 text-[10px] text-emerald-300">+280% 상승</span>
               </div>
-              <div className="relative h-28 overflow-hidden rounded-xl bg-slate-900/80">
+              <div className="relative h-24 sm:h-28 overflow-hidden rounded-xl bg-slate-900/80">
                 {/* 가짜 그래프 라인들 */}
                 <div className="absolute inset-x-3 bottom-3 h-20">
                   <div className="absolute inset-x-0 top-1 h-px bg-slate-800/80" />
@@ -115,7 +115,7 @@ export function HeroSection() {
             </div>
 
             {/* 좌측 상단: 모바일 알림 카드 */}
-            <div className="animate-float-slow glass absolute -left-4 top-4 w-44 -translate-y-2 rounded-2xl border border-white/15 bg-slate-900/80 px-3 py-3 text-[11px] text-slate-100 shadow-lg">
+            <div className="animate-float-slow glass absolute -left-4 top-4 w-36 sm:w-44 -translate-y-2 rounded-2xl border border-white/15 bg-slate-900/80 px-3 py-3 text-[11px] text-slate-100 shadow-lg">
               <div className="mb-1.5 flex items-center gap-2">
                 <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#FF6F0F] text-xs font-bold text-white">
                   당
@@ -130,7 +130,7 @@ export function HeroSection() {
             </div>
 
             {/* 우측 하단: 네이버 플레이스 랭킹 카드 */}
-            <div className="animate-float-fast glass absolute -right-3 bottom-4 w-48 translate-y-2 rounded-2xl border border-white/15 bg-slate-900/85 px-3 py-3 text-[11px] text-slate-100 shadow-xl">
+            <div className="animate-float-fast glass absolute -right-2 bottom-3 w-40 sm:w-48 translate-y-2 rounded-2xl border border-white/15 bg-slate-900/85 px-3 py-3 text-[11px] text-slate-100 shadow-xl">
               <div className="mb-2 rounded-full bg-[#03C75A] px-3 py-1 text-[10px] font-semibold text-black">
                 NAVER 플레이스 · 지역 검색
               </div>

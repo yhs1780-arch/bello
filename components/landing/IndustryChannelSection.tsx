@@ -171,7 +171,7 @@ export function IndustryChannelSection() {
   const active = DATA[activeIndex];
 
   return (
-    <section className="relative w-full py-16 sm:py-24 px-4 sm:px-6 lg:px-8 overflow-hidden bg-[#0B0F1A] border-t border-white/5">
+    <section className="relative w-full py-12 sm:py-20 px-4 sm:px-6 lg:px-8 overflow-hidden bg-[#0B0F1A] border-t border-white/5">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-10 sm:mb-14">
           <span className="inline-block px-4 py-1.5 rounded-full border-2 border-[#FFD600] text-[#FFD600] text-xs font-semibold mb-4">
@@ -213,7 +213,7 @@ export function IndustryChannelSection() {
           {/* 좌측 60%: 성과 사례 카드 */}
           <div className="lg:col-span-3 min-w-0">
             <div className="rounded-[20px] overflow-hidden" style={{ backgroundColor: "#131929" }}>
-              <div className="relative w-full bg-[#0f1623]" style={{ aspectRatio: "16/10", minHeight: 200 }}>
+              <div className="relative w-full bg-[#0f1623]" style={{ aspectRatio: "16/10", minHeight: 180 }}>
                 <ImgFallback src={active.image} alt="" fill className="object-cover" />
                 <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(to bottom, transparent 35%, #131929 95%)" }} />
                 <p className="absolute bottom-4 left-4 text-white font-bold text-base sm:text-lg">{active.type}</p>
@@ -221,7 +221,7 @@ export function IndustryChannelSection() {
                   진행 {active.period}
                 </span>
               </div>
-              <div className="p-6">
+              <div className="p-5 sm:p-6">
                 <div className="grid grid-cols-3 gap-4 border-b border-[#2a3347] pb-6">
                   {active.metrics.map((m, i) => (
                     <div key={i} className={i < 2 ? "border-r border-[#2a3347]" : ""}>

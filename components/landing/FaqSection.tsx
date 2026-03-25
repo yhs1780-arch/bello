@@ -43,7 +43,7 @@ export function FaqSection() {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section className="relative w-full py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-slate-900/40 border-y border-white/5 overflow-hidden">
+    <section className="relative w-full py-12 sm:py-20 px-4 sm:px-6 lg:px-8 bg-slate-900/40 border-y border-white/5 overflow-hidden">
       <div className="max-w-2xl mx-auto">
         <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white text-center break-keep mb-2">
           자주 묻는 질문

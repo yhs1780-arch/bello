@@ -46,7 +46,7 @@ function MarqueeRow({ items, reverse }: { items: string[]; reverse?: boolean }) 
         className={`flex w-max items-center gap-3 sm:gap-6 ${reverse ? "animate-marquee-reverse" : "animate-marquee"}`}
       >
         {list.map((name, i) => (
-          <span key={i} className="flex-shrink-0 flex items-center gap-3 sm:gap-[1.5rem] whitespace-nowrap text-base sm:text-lg md:text-xl font-semibold text-slate-400">
+          <span key={i} className="flex-shrink-0 flex items-center gap-3 sm:gap-[1.5rem] whitespace-nowrap text-sm sm:text-lg md:text-xl font-semibold text-slate-400">
             <span className={i % 5 === 0 ? "text-[#FFD700]/90" : "text-slate-400"}>{name}</span>
             <span className="text-[#FFD700]/40 select-none">{BULLET}</span>
           </span>

@@ -54,7 +54,7 @@ export function TestimonialsSection() {
   const displayList = showAll ? REVIEWS : REVIEWS.slice(0, INITIAL_COUNT);
 
   return (
-    <section className="relative w-full py-16 sm:py-24 px-4 sm:px-6 lg:px-8 overflow-hidden bg-slate-900/40 border-y border-white/5">
+    <section className="relative w-full py-12 sm:py-20 px-4 sm:px-6 lg:px-8 overflow-hidden bg-slate-900/40 border-y border-white/5">
       <div className="max-w-6xl mx-auto">
         <p className="text-center mb-4">
           <span className="inline-block px-4 py-1.5 rounded-[20px] border border-[#FFD600] text-[#FFD600] text-xs font-medium">

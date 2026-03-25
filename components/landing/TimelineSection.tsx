@@ -58,7 +58,7 @@ const MILESTONES: Milestone[] = [
 
 export function TimelineSection() {
   return (
-    <section id="timeline-section" className="relative w-full overflow-hidden py-20 sm:py-24" style={{ backgroundColor: "#0A0F1C" }}>
+    <section id="timeline-section" className="relative w-full overflow-hidden py-16 sm:py-20" style={{ backgroundColor: "#0A0F1C" }}>
       <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10">
         <h2 className="text-center font-extrabold text-white" style={{ fontSize: "clamp(30px, 4.2vw, 48px)" }}>
           계약 후 4주, 실제로 이렇게 달라집니다
@@ -67,7 +67,7 @@ export function TimelineSection() {
           벨로컴퍼니 진행 사례 평균 데이터
         </p>
 
-        <div className="relative mt-12">
+        <div className="relative mt-10">
           <div className="hidden lg:block absolute left-4 right-4 top-10 h-px bg-gradient-to-r from-transparent via-[#2A3347] to-transparent" />
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-4 xl:gap-3">
             {MILESTONES.map((step, i) => (

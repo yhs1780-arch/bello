@@ -14,7 +14,7 @@ const REASONS = [
 
 export function SolutionSection() {
   return (
-    <section className="relative w-full py-16 sm:py-24 px-4 sm:px-6 lg:px-8 border-y border-white/5 overflow-hidden bg-[#0A1020]">
+    <section className="relative w-full py-12 sm:py-20 px-4 sm:px-6 lg:px-8 border-y border-white/5 overflow-hidden bg-[#0A1020]">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_15%,rgba(255,214,0,0.08),transparent_28%),radial-gradient(circle_at_80%_85%,rgba(34,197,94,0.10),transparent_32%)]" />
       <div className="relative max-w-6xl mx-auto">
         <motion.p
@@ -29,7 +29,7 @@ export function SolutionSection() {
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-xl sm:text-2xl lg:text-4xl font-bold text-white text-center break-keep mb-10 sm:mb-14"
+          className="text-xl sm:text-2xl lg:text-4xl font-bold text-white text-center break-keep mb-8 sm:mb-12"
         >
           벨로컴퍼니의 실행 구조는 시작부터 다릅니다
         </motion.h2>

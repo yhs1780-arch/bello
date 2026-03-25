@@ -17,7 +17,7 @@ const CASES = [
 
 export function CaseSection() {
   return (
-    <section id="case-section" className="relative w-full py-16 sm:py-24 px-4 sm:px-6 lg:px-8 overflow-hidden" style={{ backgroundColor: "#0B0F1A" }}>
+    <section id="case-section" className="relative w-full py-12 sm:py-20 px-4 sm:px-6 lg:px-8 overflow-hidden" style={{ backgroundColor: "#0B0F1A" }}>
       <div className="max-w-6xl mx-auto">
         <motion.h2
           initial={{ opacity: 0, y: 12 }}
@@ -31,12 +31,12 @@ export function CaseSection() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="text-slate-400 text-center text-sm sm:text-base mb-10 break-keep"
+          className="text-slate-400 text-center text-sm sm:text-base mb-8 sm:mb-10 break-keep"
         >
           상세 캡처 자료는 상담 시 투명하게 공개드립니다
         </motion.p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-10">
           {KPI.map(({ value, label, sub }, i) => (
             <motion.div
               key={i}
