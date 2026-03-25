@@ -64,6 +64,7 @@ export function TrustStatsBar() {
           </p>
           <Link
             href="#consulting-form"
+            data-cta="free_strategy_report"
             className="btn-cta-gold inline-flex items-center justify-center rounded-full bg-[#FFD700] text-black font-extrabold px-8 py-4 text-base sm:text-lg shadow-lg"
           >
             지금 바로 무료 전략 리포트 받기 ➔

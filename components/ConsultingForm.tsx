@@ -66,6 +66,16 @@ export function ConsultingForm() {
         setFormData({ name: "", contact: "", email: "", company: "", concern: "" });
         setPrivacyAgree(false);
         setToast("success");
+        // GA4 이벤트: 상담 제출(lead_submit)
+        try {
+          window.dispatchEvent(
+            new CustomEvent("bello_lead_submit", {
+              detail: { leadSource },
+            })
+          );
+        } catch {
+          // ignore
+        }
         setTimeout(() => setToast(null), 5000);
       } else {
         setToast("error");

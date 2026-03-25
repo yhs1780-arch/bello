@@ -176,6 +176,7 @@ export function Chatbot() {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.98 }}
         aria-label="챗봇 열기"
+        data-cta="chatbot_open"
       >
         <MessageCircle className="w-6 h-6" />
       </motion.button>

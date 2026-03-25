@@ -22,6 +22,7 @@ export function UnifiedCTASection() {
         <div className="shrink-0 flex flex-col items-center lg:items-end gap-2 sm:gap-3 w-full lg:w-auto order-1 lg:order-2">
           <a
             href="#consulting-form"
+            data-cta="unified_free_diagnosis"
             className="inline-flex items-center justify-center min-h-[48px] w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl font-bold text-base sm:text-lg text-white transition-colors hover:opacity-90"
             style={{ backgroundColor: BG_DARK }}
           >

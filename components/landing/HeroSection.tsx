@@ -36,6 +36,7 @@ export function HeroSection() {
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3 lg:justify-start">
             <Link
               href="#consulting-form"
+              data-cta="free_diagnosis"
               className="btn-gold-shimmer relative inline-flex items-center justify-center rounded-xl px-7 py-3.5 text-sm font-bold text-black shadow-[0_18px_45px_rgba(250,204,21,0.45)] transition-transform hover:-translate-y-0.5"
               style={{ background: "linear-gradient(135deg,#FFD700,#FDB931)" }}
             >
@@ -43,6 +44,7 @@ export function HeroSection() {
             </Link>
             <Link
               href="#case-section"
+              data-cta="case_section"
               className="inline-flex items-center justify-center rounded-xl border border-gray-600 px-6 py-3 text-sm font-semibold text-gray-100 transition-colors hover:bg-white/5"
             >
               성과 사례 보기
