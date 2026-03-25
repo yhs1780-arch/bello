@@ -11,7 +11,8 @@ declare global {
   }
 }
 
-const GA4_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID;
+const GA4_MEASUREMENT_ID =
+  process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID || "G-22TTM62517";
 
 function safeGtag(...args: unknown[]) {
   if (typeof window === "undefined") return;
