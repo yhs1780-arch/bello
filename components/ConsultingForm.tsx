@@ -15,15 +15,28 @@ const PRIVACY_TEXT = `개인정보 수집 및 이용 동의
 
 export function ConsultingForm() {
   const [leadSource, setLeadSource] = useState<string>("direct");
+  const [leadOrigin, setLeadOrigin] = useState<string>("direct");
 
   // URL 파라미터로 유입경로를 받고, 폼까지 스크롤해도 유지되도록 localStorage에 저장
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const fromParam = params.get("src")?.trim() || params.get("utm_source")?.trim();
+    const originParam = params.get("origin")?.trim() || params.get("req")?.trim();
     const fromStorage = window.localStorage.getItem("bello_lead_source");
-    const next = fromParam || fromStorage || "direct";
+
+    // 폼 요청 경로(짧은 링크를 눌러 들어온 실제 경로)를 남깁니다.
+    const originStorage = window.localStorage.getItem("bello_lead_origin");
+    const nextLeadSource = fromParam || fromStorage || "direct";
+    const nextLeadOrigin =
+      originParam ||
+      originStorage ||
+      `${window.location.pathname}${window.location.search}`;
+
     if (fromParam) window.localStorage.setItem("bello_lead_source", fromParam);
-    setLeadSource(next);
+    if (originParam) window.localStorage.setItem("bello_lead_origin", originParam);
+
+    setLeadSource(nextLeadSource);
+    setLeadOrigin(nextLeadOrigin);
   }, []);
 
   const [formData, setFormData] = useState({
@@ -53,6 +66,8 @@ export function ConsultingForm() {
       fd.append("문의내용", formData.concern);
       // 리드 출처 (방문 경로) 함께 전송
       fd.append("유입경로", leadSource);
+      // 폼 요청 경로(사용자가 누른 짧은 링크 경로 포함) 함께 전송
+      fd.append("유입요청경로", leadOrigin);
       fd.append("개인정보동의", privacyAgree ? "동의함" : "");
 
       const res = await fetch(FORMSPREE_ENDPOINT, {
@@ -70,7 +85,7 @@ export function ConsultingForm() {
         try {
           window.dispatchEvent(
             new CustomEvent("bello_lead_submit", {
-              detail: { leadSource },
+              detail: { leadSource, leadOrigin },
             })
           );
         } catch {

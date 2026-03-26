@@ -112,7 +112,9 @@ export function Ga4Analytics() {
   useEffect(() => {
     const handler = (event: Event) => {
       if (!GA4_MEASUREMENT_ID) return;
-      const detail = (event as CustomEvent).detail as { leadSource?: string } | undefined;
+      const detail = (event as CustomEvent).detail as
+        | { leadSource?: string; leadOrigin?: string }
+        | undefined;
 
       let scrollPercent: string | null = null;
       let lastCta: string | null = null;
@@ -125,6 +127,7 @@ export function Ga4Analytics() {
 
       safeGtag("event", "lead_submit", {
         lead_source: detail?.leadSource || "direct",
+        lead_request_path: detail?.leadOrigin || "direct",
         scroll_depth_percent: scrollPercent,
         last_cta: lastCta,
       });
