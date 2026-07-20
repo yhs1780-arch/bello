@@ -9,7 +9,7 @@ const COMPANY = {
   nameEn: "BELLO COMPANY",
   ceo: "한민영",
   bizNo: "184-14-01696",
-  address: "전라남도 화순군 동복면 만수동길 58",
+  address: "서울특별시 강남구 테헤란로 521",
   openDate: "2022년 3월 15일",
   email: "ccoma2522@naver.com",
   phone: "010-6409-9549",
