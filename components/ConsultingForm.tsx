@@ -2,11 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Send, Loader2, CheckCircle } from "lucide-react";
+import { Send, Loader2, CheckCircle, ChevronLeft, ChevronRight } from "lucide-react";
 import {
   CHANNEL_OPTIONS,
   CONTACT_TIME_OPTIONS,
   FORM_FIELD_LABELS,
+  FORM_STEPS,
   FORMSPREE_ENDPOINT,
   INDUSTRY_OPTIONS,
   MARKETING_BUDGET_OPTIONS,
@@ -31,6 +32,8 @@ const EMPTY_FORM = {
   preferredContactTimeNote: "",
 };
 
+type FormData = typeof EMPTY_FORM;
+
 const inputClass =
   "w-full h-[48px] px-4 rounded-xl text-slate-100 text-sm placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-[#FFD600]/50 focus:border-[#FFD600] transition break-keep border border-[#333] bg-[#131929]";
 
@@ -49,15 +52,65 @@ function FieldLabel({ children, required }: { children: React.ReactNode; require
   );
 }
 
-function SectionTitle({ children }: { children: React.ReactNode }) {
+function validateStep(step: number, data: FormData): string | null {
+  const trim = (s: string) => s.trim();
+  switch (step) {
+    case 0:
+      if (!trim(data.name)) return "성함을 입력해 주세요.";
+      if (!trim(data.contact)) return "연락처를 입력해 주세요.";
+      if (trim(data.contact).replace(/\D/g, "").length < 9) return "올바른 연락처를 입력해 주세요.";
+      return null;
+    case 1:
+      if (!trim(data.companyName)) return "상호명을 입력해 주세요.";
+      if (!trim(data.location)) return "소재지를 입력해 주세요.";
+      if (!data.industry) return "업종을 선택해 주세요.";
+      if (!data.operatingPeriod) return "운영기간을 선택해 주세요.";
+      if (!trim(data.naverPlaceUrl)) return "네이버플레이스 주소를 입력해 주세요. (미등록 시 「미등록」)";
+      return null;
+    case 2:
+      if (!data.marketingBudget) return "한 달 평균 마케팅 비용을 선택해 주세요.";
+      if (!data.monthlySalesRange) return "월 평균 매출 구간을 선택해 주세요.";
+      if (data.activeChannels.length === 0) return "진행 중인 마케팅 채널을 1개 이상 선택해 주세요.";
+      return null;
+    case 3:
+      if (!trim(data.mainConcern)) return "지금 가장 큰 고민을 적어 주세요.";
+      if (!data.preferredContactTime) return "상담 편한 시간을 선택해 주세요.";
+      return null;
+    default:
+      return null;
+  }
+}
+
+function StepSummary({ data }: { data: FormData }) {
+  const rows: [string, string][] = [
+    [FORM_FIELD_LABELS.name, data.name],
+    [FORM_FIELD_LABELS.contact, data.contact],
+    [FORM_FIELD_LABELS.companyName, data.companyName],
+    [FORM_FIELD_LABELS.location, data.location],
+    [FORM_FIELD_LABELS.industry, data.industry],
+    [FORM_FIELD_LABELS.operatingPeriod, data.operatingPeriod],
+    [FORM_FIELD_LABELS.marketingBudget, data.marketingBudget],
+    [FORM_FIELD_LABELS.monthlySalesRange, data.monthlySalesRange],
+    [FORM_FIELD_LABELS.activeChannels, data.activeChannels.join(", ")],
+  ];
   return (
-    <p className="text-[11px] font-semibold uppercase tracking-wider text-[#FFD600]/80 pt-1 break-keep">
-      {children}
-    </p>
+    <div className="rounded-xl border border-[#333] bg-[#0d1424] p-3 space-y-1.5">
+      <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-2">입력 요약</p>
+      {rows.map(([label, value]) =>
+        value ? (
+          <div key={label} className="flex gap-2 text-[11px] leading-snug">
+            <span className="text-slate-500 shrink-0 w-24">{label}</span>
+            <span className="text-slate-300 break-keep">{value}</span>
+          </div>
+        ) : null,
+      )}
+    </div>
   );
 }
 
 export function ConsultingForm() {
+  const [step, setStep] = useState(0);
+  const [stepError, setStepError] = useState<string | null>(null);
   const [leadSource, setLeadSource] = useState("direct");
   const [leadOrigin, setLeadOrigin] = useState("direct");
   const [formData, setFormData] = useState(EMPTY_FORM);
@@ -66,6 +119,10 @@ export function ConsultingForm() {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [toast, setToast] = useState<"success" | "error" | null>(null);
+
+  const currentStep = FORM_STEPS[step];
+  const isLastStep = step === FORM_STEPS.length - 1;
+  const progressPct = ((step + 1) / FORM_STEPS.length) * 100;
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -94,6 +151,7 @@ export function ConsultingForm() {
           : [...p.activeChannels, channel],
       };
     });
+    setStepError(null);
   };
 
   const preferredTimeDisplay = () => {
@@ -103,16 +161,35 @@ export function ConsultingForm() {
     return note ? `${base} / ${note}` : base;
   };
 
+  const goNext = () => {
+    const err = validateStep(step, formData);
+    if (err) {
+      setStepError(err);
+      return;
+    }
+    setStepError(null);
+    setStep((s) => Math.min(s + 1, FORM_STEPS.length - 1));
+  };
+
+  const goPrev = () => {
+    setStepError(null);
+    setStep((s) => Math.max(0, s - 1));
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!privacyAgree) return;
-    if (formData.activeChannels.length === 0) {
-      setToast("error");
-      setTimeout(() => setToast(null), 4000);
+    const err = validateStep(3, formData);
+    if (err) {
+      setStepError(err);
+      return;
+    }
+    if (!privacyAgree) {
+      setStepError("개인정보 수집·이용에 동의해 주세요.");
       return;
     }
 
     setSubmitting(true);
+    setStepError(null);
     setToast(null);
     try {
       const fd = new FormData();
@@ -146,6 +223,7 @@ export function ConsultingForm() {
         setSubmitted(true);
         setFormData(EMPTY_FORM);
         setPrivacyAgree(false);
+        setStep(0);
         setToast("success");
         try {
           window.dispatchEvent(
@@ -166,6 +244,285 @@ export function ConsultingForm() {
       setTimeout(() => setToast(null), 5000);
     } finally {
       setSubmitting(false);
+    }
+  };
+
+  const renderStepFields = () => {
+    switch (step) {
+      case 0:
+        return (
+          <div className="space-y-4">
+            <div>
+              <FieldLabel required>{FORM_FIELD_LABELS.name}</FieldLabel>
+              <input
+                type="text"
+                autoFocus
+                value={formData.name}
+                onChange={(e) => {
+                  setFormData((p) => ({ ...p, name: e.target.value }));
+                  setStepError(null);
+                }}
+                className={inputClass}
+                placeholder="홍길동"
+              />
+            </div>
+            <div>
+              <FieldLabel required>{FORM_FIELD_LABELS.contact}</FieldLabel>
+              <input
+                type="tel"
+                value={formData.contact}
+                onChange={(e) => {
+                  setFormData((p) => ({ ...p, contact: e.target.value }));
+                  setStepError(null);
+                }}
+                className={inputClass}
+                placeholder="010-0000-0000"
+              />
+            </div>
+          </div>
+        );
+      case 1:
+        return (
+          <div className="space-y-4">
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div>
+                <FieldLabel required>{FORM_FIELD_LABELS.companyName}</FieldLabel>
+                <input
+                  type="text"
+                  autoFocus
+                  value={formData.companyName}
+                  onChange={(e) => {
+                    setFormData((p) => ({ ...p, companyName: e.target.value }));
+                    setStepError(null);
+                  }}
+                  className={inputClass}
+                  placeholder="ex. 벨로 식당"
+                />
+              </div>
+              <div>
+                <FieldLabel required>{FORM_FIELD_LABELS.location}</FieldLabel>
+                <input
+                  type="text"
+                  value={formData.location}
+                  onChange={(e) => {
+                    setFormData((p) => ({ ...p, location: e.target.value }));
+                    setStepError(null);
+                  }}
+                  className={inputClass}
+                  placeholder="ex. 서울 강남구 역삼동"
+                />
+              </div>
+              <div>
+                <FieldLabel required>{FORM_FIELD_LABELS.industry}</FieldLabel>
+                <select
+                  value={formData.industry}
+                  onChange={(e) => {
+                    setFormData((p) => ({ ...p, industry: e.target.value }));
+                    setStepError(null);
+                  }}
+                  className={selectClass}
+                >
+                  <option value="" disabled>
+                    업종 선택
+                  </option>
+                  {INDUSTRY_OPTIONS.map((opt) => (
+                    <option key={opt} value={opt}>
+                      {opt}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <FieldLabel required>{FORM_FIELD_LABELS.operatingPeriod}</FieldLabel>
+                <select
+                  value={formData.operatingPeriod}
+                  onChange={(e) => {
+                    setFormData((p) => ({ ...p, operatingPeriod: e.target.value }));
+                    setStepError(null);
+                  }}
+                  className={selectClass}
+                >
+                  <option value="" disabled>
+                    운영 기간 선택
+                  </option>
+                  {OPERATING_PERIOD_OPTIONS.map((opt) => (
+                    <option key={opt} value={opt}>
+                      {opt}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+            <div>
+              <FieldLabel required>{FORM_FIELD_LABELS.naverPlaceUrl}</FieldLabel>
+              <input
+                type="text"
+                value={formData.naverPlaceUrl}
+                onChange={(e) => {
+                  setFormData((p) => ({ ...p, naverPlaceUrl: e.target.value }));
+                  setStepError(null);
+                }}
+                className={inputClass}
+                placeholder="플레이스 URL 또는 「미등록」"
+              />
+              <p className="text-[10px] text-slate-500 mt-1 break-keep">
+                아직 등록 전이면 「미등록」이라고 적어 주세요.
+              </p>
+            </div>
+          </div>
+        );
+      case 2:
+        return (
+          <div className="space-y-4">
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div>
+                <FieldLabel required>{FORM_FIELD_LABELS.marketingBudget}</FieldLabel>
+                <select
+                  value={formData.marketingBudget}
+                  onChange={(e) => {
+                    setFormData((p) => ({ ...p, marketingBudget: e.target.value }));
+                    setStepError(null);
+                  }}
+                  className={selectClass}
+                >
+                  <option value="" disabled>
+                    선택
+                  </option>
+                  {MARKETING_BUDGET_OPTIONS.map((opt) => (
+                    <option key={opt} value={opt}>
+                      {opt}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <FieldLabel required>{FORM_FIELD_LABELS.monthlySalesRange}</FieldLabel>
+                <select
+                  value={formData.monthlySalesRange}
+                  onChange={(e) => {
+                    setFormData((p) => ({ ...p, monthlySalesRange: e.target.value }));
+                    setStepError(null);
+                  }}
+                  className={selectClass}
+                >
+                  <option value="" disabled>
+                    선택
+                  </option>
+                  {SALES_RANGE_OPTIONS.map((opt) => (
+                    <option key={opt} value={opt}>
+                      {opt}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+            <div>
+              <FieldLabel required>{FORM_FIELD_LABELS.activeChannels}</FieldLabel>
+              <p className="text-[10px] text-slate-500 mb-2 break-keep">해당하는 채널을 모두 선택해 주세요.</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                {CHANNEL_OPTIONS.map((ch) => {
+                  const checked = formData.activeChannels.includes(ch);
+                  return (
+                    <label
+                      key={ch}
+                      className={`flex items-center gap-2 rounded-lg border px-3 py-2.5 text-xs cursor-pointer transition ${
+                        checked
+                          ? "border-[#FFD600]/50 bg-[#FFD600]/10 text-slate-100"
+                          : "border-[#333] bg-[#131929] text-slate-400 hover:border-[#444]"
+                      }`}
+                    >
+                      <input
+                        type="checkbox"
+                        checked={checked}
+                        onChange={() => toggleChannel(ch)}
+                        className="rounded border-white/20 bg-white/5 text-[#FFD600] focus:ring-[#FFD600]/50"
+                      />
+                      <span className="break-keep">{ch}</span>
+                    </label>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        );
+      case 3:
+        return (
+          <div className="space-y-4">
+            <StepSummary data={formData} />
+            <div>
+              <FieldLabel required>{FORM_FIELD_LABELS.mainConcern}</FieldLabel>
+              <textarea
+                autoFocus
+                rows={3}
+                value={formData.mainConcern}
+                onChange={(e) => {
+                  setFormData((p) => ({ ...p, mainConcern: e.target.value }));
+                  setStepError(null);
+                }}
+                className={textareaClass}
+                placeholder="노출, 리뷰, 예약·매출, 경쟁 업체 등 지금 가장 해결하고 싶은 문제를 적어 주세요."
+              />
+            </div>
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div>
+                <FieldLabel required>{FORM_FIELD_LABELS.preferredContactTime}</FieldLabel>
+                <select
+                  value={formData.preferredContactTime}
+                  onChange={(e) => {
+                    setFormData((p) => ({ ...p, preferredContactTime: e.target.value }));
+                    setStepError(null);
+                  }}
+                  className={selectClass}
+                >
+                  <option value="" disabled>
+                    시간대 선택
+                  </option>
+                  {CONTACT_TIME_OPTIONS.map((opt) => (
+                    <option key={opt} value={opt}>
+                      {opt}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <FieldLabel>추가 요청 (선택)</FieldLabel>
+                <input
+                  type="text"
+                  value={formData.preferredContactTimeNote}
+                  onChange={(e) =>
+                    setFormData((p) => ({ ...p, preferredContactTimeNote: e.target.value }))
+                  }
+                  className={inputClass}
+                  placeholder="ex. 평일 오후 2시 이후"
+                />
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <input
+                type="checkbox"
+                id="privacy"
+                checked={privacyAgree}
+                onChange={(e) => {
+                  setPrivacyAgree(e.target.checked);
+                  setStepError(null);
+                }}
+                className="mt-1 w-4 h-4 rounded border-white/20 bg-white/5 text-blue-500 focus:ring-blue-500/50"
+              />
+              <label htmlFor="privacy" className="text-sm text-slate-400 cursor-pointer break-keep">
+                <span className="text-amber-400">[필수]</span> 개인정보 수집 및 이용에 동의합니다.{" "}
+                <button
+                  type="button"
+                  onClick={() => setPrivacyModalOpen(true)}
+                  className="text-blue-400 hover:underline"
+                >
+                  자세히 보기
+                </button>
+              </label>
+            </div>
+          </div>
+        );
+      default:
+        return null;
     }
   };
 
@@ -199,11 +556,12 @@ export function ConsultingForm() {
                   ✅ 매출 상승 체크리스트 무료 제공
                 </p>
                 <p className="text-slate-500 text-xs mt-4 break-keep">⚡ 월 선착순 15개 업체 한정</p>
-                <p className="text-slate-500 text-[11px] mt-3 break-keep leading-relaxed hidden lg:block">
-                  아래 항목을 작성해 주시면 담당자가 매장·업종에 맞는 전략을 준비합니다.
-                  <br />
-                  <span className="text-slate-400">표시된 항목은 필수입니다.</span>
-                </p>
+                {!submitted && (
+                  <div className="mt-5 hidden lg:block rounded-xl border border-white/10 bg-white/[0.03] p-4">
+                    <p className="text-sm font-semibold text-white break-keep">{currentStep.headline}</p>
+                    <p className="text-xs text-slate-400 mt-1 break-keep">{currentStep.hint}</p>
+                  </div>
+                )}
               </div>
 
               <div className="min-w-0">
@@ -212,274 +570,103 @@ export function ConsultingForm() {
                     접수되었습니다. 작성해 주신 연락처로 빠른 시일 내에 연락드리겠습니다.
                   </p>
                 ) : (
-                  <form onSubmit={handleSubmit} className="space-y-5">
-                    <SectionTitle>기본 정보</SectionTitle>
-                    <div className="grid sm:grid-cols-2 gap-4">
-                      <div>
-                        <FieldLabel required>{FORM_FIELD_LABELS.name}</FieldLabel>
-                        <input
-                          type="text"
-                          name={FORM_FIELD_LABELS.name}
-                          required
-                          value={formData.name}
-                          onChange={(e) => setFormData((p) => ({ ...p, name: e.target.value }))}
-                          className={inputClass}
-                          placeholder="홍길동"
+                  <div>
+                    {/* 진행률 */}
+                    <div className="mb-5">
+                      <div className="flex items-center justify-between text-[11px] text-slate-400 mb-2">
+                        <span className="font-medium text-slate-300">
+                          {step + 1} / {FORM_STEPS.length} · {currentStep.title}
+                        </span>
+                        <span>{Math.round(progressPct)}%</span>
+                      </div>
+                      <div className="h-1.5 rounded-full bg-[#131929] overflow-hidden">
+                        <motion.div
+                          className="h-full bg-[#FFD600] rounded-full"
+                          initial={false}
+                          animate={{ width: `${progressPct}%` }}
+                          transition={{ duration: 0.35, ease: "easeOut" }}
                         />
                       </div>
-                      <div>
-                        <FieldLabel required>{FORM_FIELD_LABELS.contact}</FieldLabel>
-                        <input
-                          type="tel"
-                          name={FORM_FIELD_LABELS.contact}
-                          required
-                          value={formData.contact}
-                          onChange={(e) => setFormData((p) => ({ ...p, contact: e.target.value }))}
-                          className={inputClass}
-                          placeholder="010-0000-0000"
-                        />
+                      <div className="flex justify-between mt-2 gap-1">
+                        {FORM_STEPS.map((s, i) => (
+                          <span
+                            key={s.id}
+                            className={`text-[9px] sm:text-[10px] truncate flex-1 text-center ${
+                              i <= step ? "text-[#FFD600]/90 font-medium" : "text-slate-600"
+                            }`}
+                          >
+                            {s.title}
+                          </span>
+                        ))}
                       </div>
-                    </div>
-
-                    <SectionTitle>업체 정보</SectionTitle>
-                    <div className="grid sm:grid-cols-2 gap-4">
-                      <div>
-                        <FieldLabel required>{FORM_FIELD_LABELS.companyName}</FieldLabel>
-                        <input
-                          type="text"
-                          name={FORM_FIELD_LABELS.companyName}
-                          required
-                          value={formData.companyName}
-                          onChange={(e) => setFormData((p) => ({ ...p, companyName: e.target.value }))}
-                          className={inputClass}
-                          placeholder="ex. 벨로 식당"
-                        />
-                      </div>
-                      <div>
-                        <FieldLabel required>{FORM_FIELD_LABELS.location}</FieldLabel>
-                        <input
-                          type="text"
-                          name={FORM_FIELD_LABELS.location}
-                          required
-                          value={formData.location}
-                          onChange={(e) => setFormData((p) => ({ ...p, location: e.target.value }))}
-                          className={inputClass}
-                          placeholder="ex. 서울 강남구 역삼동"
-                        />
-                      </div>
-                      <div>
-                        <FieldLabel required>{FORM_FIELD_LABELS.industry}</FieldLabel>
-                        <select
-                          name={FORM_FIELD_LABELS.industry}
-                          required
-                          value={formData.industry}
-                          onChange={(e) => setFormData((p) => ({ ...p, industry: e.target.value }))}
-                          className={selectClass}
-                        >
-                          <option value="" disabled>
-                            업종 선택
-                          </option>
-                          {INDUSTRY_OPTIONS.map((opt) => (
-                            <option key={opt} value={opt}>
-                              {opt}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                      <div>
-                        <FieldLabel required>{FORM_FIELD_LABELS.operatingPeriod}</FieldLabel>
-                        <select
-                          name={FORM_FIELD_LABELS.operatingPeriod}
-                          required
-                          value={formData.operatingPeriod}
-                          onChange={(e) => setFormData((p) => ({ ...p, operatingPeriod: e.target.value }))}
-                          className={selectClass}
-                        >
-                          <option value="" disabled>
-                            운영 기간 선택
-                          </option>
-                          {OPERATING_PERIOD_OPTIONS.map((opt) => (
-                            <option key={opt} value={opt}>
-                              {opt}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                    </div>
-                    <div>
-                      <FieldLabel required>{FORM_FIELD_LABELS.naverPlaceUrl}</FieldLabel>
-                      <input
-                        type="url"
-                        name={FORM_FIELD_LABELS.naverPlaceUrl}
-                        required
-                        value={formData.naverPlaceUrl}
-                        onChange={(e) => setFormData((p) => ({ ...p, naverPlaceUrl: e.target.value }))}
-                        className={inputClass}
-                        placeholder="https://map.naver.com/... 또는 플레이스 링크"
-                      />
-                      <p className="text-[10px] text-slate-500 mt-1 break-keep">
-                        아직 등록 전이면 「미등록」이라고 적어 주세요.
+                      <p className="text-sm font-semibold text-white mt-3 break-keep lg:hidden">
+                        {currentStep.headline}
                       </p>
+                      <p className="text-xs text-slate-400 mt-0.5 break-keep lg:hidden">{currentStep.hint}</p>
                     </div>
 
-                    <SectionTitle>마케팅·매출 현황</SectionTitle>
-                    <div className="grid sm:grid-cols-2 gap-4">
-                      <div>
-                        <FieldLabel required>{FORM_FIELD_LABELS.marketingBudget}</FieldLabel>
-                        <select
-                          name={FORM_FIELD_LABELS.marketingBudget}
-                          required
-                          value={formData.marketingBudget}
-                          onChange={(e) => setFormData((p) => ({ ...p, marketingBudget: e.target.value }))}
-                          className={selectClass}
+                    <form onSubmit={isLastStep ? handleSubmit : (e) => e.preventDefault()} noValidate>
+                      <AnimatePresence mode="wait">
+                        <motion.div
+                          key={step}
+                          initial={{ opacity: 0, x: 16 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          exit={{ opacity: 0, x: -16 }}
+                          transition={{ duration: 0.22 }}
+                          className="min-h-[200px]"
                         >
-                          <option value="" disabled>
-                            선택
-                          </option>
-                          {MARKETING_BUDGET_OPTIONS.map((opt) => (
-                            <option key={opt} value={opt}>
-                              {opt}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                      <div>
-                        <FieldLabel required>{FORM_FIELD_LABELS.monthlySalesRange}</FieldLabel>
-                        <select
-                          name={FORM_FIELD_LABELS.monthlySalesRange}
-                          required
-                          value={formData.monthlySalesRange}
-                          onChange={(e) => setFormData((p) => ({ ...p, monthlySalesRange: e.target.value }))}
-                          className={selectClass}
-                        >
-                          <option value="" disabled>
-                            선택
-                          </option>
-                          {SALES_RANGE_OPTIONS.map((opt) => (
-                            <option key={opt} value={opt}>
-                              {opt}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                    </div>
+                          {renderStepFields()}
+                        </motion.div>
+                      </AnimatePresence>
 
-                    <div>
-                      <FieldLabel required>{FORM_FIELD_LABELS.activeChannels}</FieldLabel>
-                      <p className="text-[10px] text-slate-500 mb-2 break-keep">해당하는 채널을 모두 선택해 주세요.</p>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                        {CHANNEL_OPTIONS.map((ch) => {
-                          const checked = formData.activeChannels.includes(ch);
-                          return (
-                            <label
-                              key={ch}
-                              className={`flex items-center gap-2 rounded-lg border px-3 py-2.5 text-xs cursor-pointer transition ${
-                                checked
-                                  ? "border-[#FFD600]/50 bg-[#FFD600]/10 text-slate-100"
-                                  : "border-[#333] bg-[#131929] text-slate-400 hover:border-[#444]"
-                              }`}
-                            >
-                              <input
-                                type="checkbox"
-                                checked={checked}
-                                onChange={() => toggleChannel(ch)}
-                                className="rounded border-white/20 bg-white/5 text-[#FFD600] focus:ring-[#FFD600]/50"
-                              />
-                              <span className="break-keep">{ch}</span>
-                            </label>
-                          );
-                        })}
-                      </div>
-                    </div>
-
-                    <SectionTitle>상담 요청</SectionTitle>
-                    <div>
-                      <FieldLabel required>{FORM_FIELD_LABELS.mainConcern}</FieldLabel>
-                      <textarea
-                        name={FORM_FIELD_LABELS.mainConcern}
-                        required
-                        rows={3}
-                        value={formData.mainConcern}
-                        onChange={(e) => setFormData((p) => ({ ...p, mainConcern: e.target.value }))}
-                        className={textareaClass}
-                        placeholder="노출, 리뷰, 예약·매출, 경쟁 업체 등 지금 가장 해결하고 싶은 문제를 적어 주세요."
-                      />
-                    </div>
-                    <div className="grid sm:grid-cols-2 gap-4">
-                      <div>
-                        <FieldLabel required>{FORM_FIELD_LABELS.preferredContactTime}</FieldLabel>
-                        <select
-                          name={FORM_FIELD_LABELS.preferredContactTime}
-                          required
-                          value={formData.preferredContactTime}
-                          onChange={(e) =>
-                            setFormData((p) => ({ ...p, preferredContactTime: e.target.value }))
-                          }
-                          className={selectClass}
-                        >
-                          <option value="" disabled>
-                            시간대 선택
-                          </option>
-                          {CONTACT_TIME_OPTIONS.map((opt) => (
-                            <option key={opt} value={opt}>
-                              {opt}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                      <div>
-                        <FieldLabel>추가 요청 (선택)</FieldLabel>
-                        <input
-                          type="text"
-                          value={formData.preferredContactTimeNote}
-                          onChange={(e) =>
-                            setFormData((p) => ({ ...p, preferredContactTimeNote: e.target.value }))
-                          }
-                          className={inputClass}
-                          placeholder="ex. 평일 오후 2시 이후"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="flex items-start gap-3 pt-1">
-                      <input
-                        type="checkbox"
-                        id="privacy"
-                        name={FORM_FIELD_LABELS.privacyAgree}
-                        checked={privacyAgree}
-                        onChange={(e) => setPrivacyAgree(e.target.checked)}
-                        className="mt-1 w-4 h-4 rounded border-white/20 bg-white/5 text-blue-500 focus:ring-blue-500/50"
-                      />
-                      <label htmlFor="privacy" className="text-sm text-slate-400 cursor-pointer break-keep">
-                        <span className="text-amber-400">[필수]</span> 개인정보 수집 및 이용에 동의합니다.{" "}
-                        <button
-                          type="button"
-                          onClick={() => setPrivacyModalOpen(true)}
-                          className="text-blue-400 hover:underline"
-                        >
-                          자세히 보기
-                        </button>
-                      </label>
-                    </div>
-
-                    <button
-                      type="submit"
-                      disabled={!privacyAgree || submitting}
-                      className="w-full inline-flex items-center justify-center gap-2 h-12 px-6 rounded-xl bg-[#FFD700] text-[#0B1120] font-semibold hover:bg-[#FFE44D] transition-all duration-300 border border-amber-400/30 disabled:opacity-50 disabled:pointer-events-none"
-                    >
-                      {submitting ? (
-                        <>
-                          <Loader2 className="w-5 h-5 animate-spin shrink-0" />
-                          전송 중...
-                        </>
-                      ) : (
-                        <>
-                          지금 무료 전략 받기
-                          <Send className="w-5 h-5 shrink-0" />
-                        </>
+                      {stepError && (
+                        <p className="mt-3 text-xs text-red-400 bg-red-950/40 border border-red-500/30 rounded-lg px-3 py-2 break-keep">
+                          {stepError}
+                        </p>
                       )}
-                    </button>
-                  </form>
+
+                      <div className="flex gap-2 mt-5">
+                        {step > 0 && (
+                          <button
+                            type="button"
+                            onClick={goPrev}
+                            className="inline-flex items-center justify-center gap-1 h-12 px-4 rounded-xl border border-[#333] text-slate-300 text-sm font-medium hover:bg-white/5 transition shrink-0"
+                          >
+                            <ChevronLeft className="w-4 h-4" />
+                            이전
+                          </button>
+                        )}
+                        {!isLastStep ? (
+                          <button
+                            type="button"
+                            onClick={goNext}
+                            className="flex-1 inline-flex items-center justify-center gap-1 h-12 px-6 rounded-xl bg-[#FFD700] text-[#0B1120] font-semibold hover:bg-[#FFE44D] transition"
+                          >
+                            다음
+                            <ChevronRight className="w-4 h-4" />
+                          </button>
+                        ) : (
+                          <button
+                            type="submit"
+                            disabled={!privacyAgree || submitting}
+                            className="flex-1 inline-flex items-center justify-center gap-2 h-12 px-6 rounded-xl bg-[#FFD700] text-[#0B1120] font-semibold hover:bg-[#FFE44D] transition disabled:opacity-50 disabled:pointer-events-none"
+                          >
+                            {submitting ? (
+                              <>
+                                <Loader2 className="w-5 h-5 animate-spin shrink-0" />
+                                전송 중...
+                              </>
+                            ) : (
+                              <>
+                                지금 무료 전략 받기
+                                <Send className="w-5 h-5 shrink-0" />
+                              </>
+                            )}
+                          </button>
+                        )}
+                      </div>
+                    </form>
+                  </div>
                 )}
               </div>
             </div>
@@ -541,7 +728,7 @@ export function ConsultingForm() {
             className="fixed top-1/2 left-4 right-4 w-[calc(100vw-2rem)] max-w-sm sm:left-1/2 sm:right-auto sm:w-auto sm:-translate-x-1/2 z-50 flex items-center gap-3 glass-strong rounded-xl border border-red-500/30 bg-red-950/30 p-4 shadow-xl -translate-y-1/2 box-border"
           >
             <p className="text-sm font-medium text-red-200 break-keep">
-              전송에 실패했습니다. 필수 항목·마케팅 채널 선택을 확인한 뒤 다시 시도해 주세요.
+              전송에 실패했습니다. 잠시 후 다시 시도해 주세요.
             </p>
           </motion.div>
         )}

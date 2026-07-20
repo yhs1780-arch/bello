@@ -77,6 +77,34 @@ export const CONTACT_TIME_OPTIONS = [
   "문자·카톡 우선",
 ] as const;
 
+/** 멀티스텝 폼 단계 정의 */
+export const FORM_STEPS = [
+  {
+    id: "contact",
+    title: "연락처",
+    headline: "먼저 연락드릴 정보를 알려주세요",
+    hint: "약 1분이면 됩니다. 이름과 연락처만 입력해 주세요.",
+  },
+  {
+    id: "business",
+    title: "업체 정보",
+    headline: "매장·업체 정보를 알려주세요",
+    hint: "업종과 운영 기간을 바탕으로 맞춤 전략을 준비합니다.",
+  },
+  {
+    id: "marketing",
+    title: "마케팅 현황",
+    headline: "지금 마케팅·매출 상황은 어떠신가요?",
+    hint: "예산과 채널을 알면 더 정확한 진단이 가능합니다.",
+  },
+  {
+    id: "consult",
+    title: "상담 요청",
+    headline: "마지막으로 상담 내용을 적어주세요",
+    hint: "입력하신 내용을 확인한 뒤 제출해 주세요.",
+  },
+] as const;
+
 /** 폼 하단 [필수] 동의 모달용 요약 (개인정보보호법 수집·이용 동의) */
 export const PRIVACY_CONSENT_SUMMARY = `개인정보 수집 및 이용 동의
 
